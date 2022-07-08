@@ -3,17 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using UnityEngine.AI;
+using UnityEngine.InputSystem;
 
+//MAKE move to clicked area component
+
+//TODO use cinemachine instead of camera
 public class Mover : MonoBehaviour
 {
-    #region Parameters
-    [SerializeField]
-    private Transform _moveToObjectTransform;
-    #endregion
-
     #region Cache
     [HideInInspector]
     private NavMeshAgent _navMeshAgent;
+    [HideInInspector]
+    private Animator _animator;
+
+    private int _ForwardSpeedAnimId;
     #endregion
 
     ///////////////////////////////////////////////////////
@@ -22,19 +25,41 @@ public class Mover : MonoBehaviour
     private void OnValidate() 
     {        
         _navMeshAgent = GetComponent<NavMeshAgent>();
+        _animator = GetComponent<Animator>();
     }
 
-    private void Awake() 
+    private void Awake()
     {
-        UnityEngine.Assertions.Assert.IsNotNull(_moveToObjectTransform, $"{this.name} move to object has not been set");
+        _ForwardSpeedAnimId = Animator.StringToHash("ForwardSpeed");
     }
 
     private void Update() 
     {
-        _navMeshAgent.SetDestination(_moveToObjectTransform.transform.position);
+        if(Mouse.current.leftButton.wasPressedThisFrame)
+            MoveToCursor();
+
+        UpdateAnimator();
     }
     #endregion
 
     #region PrivateFunctionality
-    #endregion    
+    private void MoveToCursor()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        RaycastHit hit;
+        bool hasHit = Physics.Raycast(ray, out hit);
+
+        if(hasHit)
+            _navMeshAgent.SetDestination(hit.point);
+    }
+
+    private void UpdateAnimator()
+    {
+        Vector3 velocity = _navMeshAgent.velocity;
+        Vector3 localVelocity = transform.InverseTransformDirection(velocity);
+        float speed = localVelocity.z;
+        
+        GetComponent<Animator>().SetFloat(_ForwardSpeedAnimId, speed);
+    }
+    #endregion
 }

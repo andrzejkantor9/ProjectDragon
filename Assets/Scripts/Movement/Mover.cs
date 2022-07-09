@@ -35,7 +35,7 @@ public class Mover : MonoBehaviour
 
     private void Update() 
     {
-        if(Mouse.current.leftButton.wasPressedThisFrame)
+        if(Mouse.current.leftButton.isPressed)
             MoveToCursor();
 
         UpdateAnimator();

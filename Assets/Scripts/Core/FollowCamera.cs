@@ -16,7 +16,7 @@ public class FollowCamera : MonoBehaviour
     {
         UnityEngine.Assertions.Assert.IsNotNull(_target, "target object is null");
     }
-    private void Update()
+    private void LateUpdate()
     {
         transform.position = _target.position;
     }

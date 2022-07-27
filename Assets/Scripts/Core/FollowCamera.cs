@@ -2,23 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FollowCamera : MonoBehaviour
+namespace RPG.Core
 {
-    #region Cache
-    [SerializeField]
-    private Transform _target;
-    #endregion
-
-    ///////////////////////////////////////////////////////////
-
-    #region EngineFunctionality
-    private void Awake() 
+    public class FollowCamera : MonoBehaviour
     {
-        UnityEngine.Assertions.Assert.IsNotNull(_target, "target object is null");
+        #region Cache
+        [SerializeField]
+        private Transform _target;
+        #endregion
+
+        ///////////////////////////////////////////////////////////
+
+        #region EngineFunctionality
+        private void Awake() 
+        {
+            UnityEngine.Assertions.Assert.IsNotNull(_target, "target object is null");
+        }
+        private void LateUpdate()
+        {
+            transform.position = _target.position;
+        }
+        #endregion
     }
-    private void LateUpdate()
-    {
-        transform.position = _target.position;
-    }
-    #endregion
 }

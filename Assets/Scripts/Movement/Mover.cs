@@ -1,65 +1,88 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
 using UnityEngine.AI;
-using UnityEngine.InputSystem;
+
+using RPG.Core;
 
 //MAKE move to clicked area component
+    //decouple animations
+    //inject navmesh & make it a pure c# class
+    //inject action on which it should decide if click to move should apply
+    //make any point input work
+        //pass input action instead of doing it here
+    //remember it should work out of the box, when adding component - as little extra work as possible
 
 //TODO use cinemachine instead of camera
-public class Mover : MonoBehaviour
+namespace RPG.Movement
 {
-    #region Cache
-    [HideInInspector]
-    private NavMeshAgent _navMeshAgent;
-    [HideInInspector]
-    private Animator _animator;
-
-    private int _ForwardSpeedAnimId;
-    #endregion
-
-    ///////////////////////////////////////////////////////
-
-    #region EngineFunctionality
-    private void OnValidate() 
-    {        
-        _navMeshAgent = GetComponent<NavMeshAgent>();
-        _animator = GetComponent<Animator>();
-    }
-
-    private void Awake()
+    [RequireComponent(typeof(NavMeshAgent))]
+    [RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(ActionScheduler))]
+    public class Mover : MonoBehaviour, IAction
     {
-        _ForwardSpeedAnimId = Animator.StringToHash("ForwardSpeed");
+        #region Cache
+        [HideInInspector]
+        private NavMeshAgent _navMeshAgent;
+        [HideInInspector]
+        private Animator _animator;
+        [HideInInspector]
+        private ActionScheduler _actionScheduler;
+
+        private int _ForwardSpeedAnimId;
+        #endregion
+
+        ///////////////////////////////////////////////////////
+
+        #region EngineFunctionality
+        private void OnValidate() 
+        {        
+            _navMeshAgent = GetComponent<NavMeshAgent>();
+            _animator = GetComponent<Animator>();
+            _actionScheduler = GetComponent<ActionScheduler>();
+        }
+
+        private void Awake()
+        {
+            _ForwardSpeedAnimId = Animator.StringToHash("ForwardSpeed");
+        }
+
+        private void Update() 
+        {
+            UpdateAnimator();
+        }
+        #endregion
+
+        #region PublicFuncionality
+        public void StartMoveAction(Vector3 destination)
+        {
+            _actionScheduler.StartAction(this);
+            MoveTo(destination);
+        }
+
+        public void MoveTo(Vector3 destination)
+        {
+            _navMeshAgent.SetDestination(destination);
+            _navMeshAgent.isStopped = false;
+        }
+
+
+        #endregion
+
+        #region PrivateFunctionality
+        private void UpdateAnimator()
+        {
+            Vector3 velocity = _navMeshAgent.velocity;
+            Vector3 localVelocity = transform.InverseTransformDirection(velocity);
+            float speed = localVelocity.z;
+            
+            _animator.SetFloat(_ForwardSpeedAnimId, speed);
+        }
+        #endregion
+
+        #region Interfaces
+        public void Cancel()
+        {
+            _navMeshAgent.isStopped = true;
+        }
+        #endregion
     }
-
-    private void Update() 
-    {
-        if(Mouse.current.leftButton.isPressed)
-            MoveToCursor();
-
-        UpdateAnimator();
-    }
-    #endregion
-
-    #region PrivateFunctionality
-    private void MoveToCursor()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-        RaycastHit hit;
-        bool hasHit = Physics.Raycast(ray, out hit);
-
-        if(hasHit)
-            _navMeshAgent.SetDestination(hit.point);
-    }
-
-    private void UpdateAnimator()
-    {
-        Vector3 velocity = _navMeshAgent.velocity;
-        Vector3 localVelocity = transform.InverseTransformDirection(velocity);
-        float speed = localVelocity.z;
-        
-        GetComponent<Animator>().SetFloat(_ForwardSpeedAnimId, speed);
-    }
-    #endregion
 }

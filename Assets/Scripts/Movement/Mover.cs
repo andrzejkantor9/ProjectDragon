@@ -17,8 +17,14 @@ namespace RPG.Movement
     [RequireComponent(typeof(NavMeshAgent))]
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(ActionScheduler))]
+    [RequireComponent(typeof(Health))]
     public class Mover : MonoBehaviour, IAction
     {
+        #region Parameters
+        [SerializeField]
+        private float _maxSpeed = 6f;
+        #endregion
+
         #region Cache
         [HideInInspector]
         private NavMeshAgent _navMeshAgent;
@@ -26,6 +32,8 @@ namespace RPG.Movement
         private Animator _animator;
         [HideInInspector]
         private ActionScheduler _actionScheduler;
+        [HideInInspector]
+        private Health _health;
 
         private int _ForwardSpeedAnimId;
         #endregion
@@ -38,11 +46,22 @@ namespace RPG.Movement
             _navMeshAgent = GetComponent<NavMeshAgent>();
             _animator = GetComponent<Animator>();
             _actionScheduler = GetComponent<ActionScheduler>();
+            _health = GetComponent<Health>();
         }
 
         private void Awake()
         {
             _ForwardSpeedAnimId = Animator.StringToHash("ForwardSpeed");
+        }
+
+        private void OnEnable()
+        {
+            _health.OnDeath += Death;
+        }
+
+        private void OnDisable()
+        {
+            _health.OnDeath -= Death;
         }
 
         private void Update() 
@@ -52,15 +71,16 @@ namespace RPG.Movement
         #endregion
 
         #region PublicFuncionality
-        public void StartMoveAction(Vector3 destination)
+        public void StartMoveAction(Vector3 destination, float speedFraction)
         {
             _actionScheduler.StartAction(this);
-            MoveTo(destination);
+            MoveTo(destination, speedFraction);
         }
 
-        public void MoveTo(Vector3 destination)
+        public void MoveTo(Vector3 destination, float speedFraction)
         {
             _navMeshAgent.SetDestination(destination);
+            _navMeshAgent.speed = _maxSpeed * Mathf.Clamp01(speedFraction);
             _navMeshAgent.isStopped = false;
         }
 
@@ -75,6 +95,12 @@ namespace RPG.Movement
             float speed = localVelocity.z;
             
             _animator.SetFloat(_ForwardSpeedAnimId, speed);
+        }
+
+        private void Death()
+        {
+            _navMeshAgent.enabled = false;
+            enabled = false;
         }
         #endregion
 

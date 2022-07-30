@@ -8,6 +8,7 @@ namespace RPG.Combat
     [RequireComponent(typeof(Mover))]
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(ActionScheduler))]
+    [RequireComponent(typeof(Health))]
     public class Fighter : MonoBehaviour, IAction
     {
         #region Parameters
@@ -26,6 +27,8 @@ namespace RPG.Combat
         private Animator _animator;
         [HideInInspector]
         private ActionScheduler _actionScheduler;
+        [HideInInspector]
+        private Health _health;
 
         private Transform _target;
         private int _attackAnimId;
@@ -33,23 +36,34 @@ namespace RPG.Combat
         #endregion
 
         #region States
-        private float _timeSinceLastAttack = 0f;
+        private float _timeSinceLastAttack = Mathf.Infinity;
         #endregion
 
         ////////////////////////////////////////////////////////////////////////
 
-        #region EngineFunctionality
+        #region EngineFunctions
         private void OnValidate()
         {
             _mover = GetComponent<Mover>();
             _animator = GetComponent<Animator>();            
             _actionScheduler = GetComponent<ActionScheduler>(); 
+            _health = GetComponent<Health>();
         }
 
         private void Awake()
         {
             _attackAnimId = Animator.StringToHash("Attack");
             _stopAttackAnimId = Animator.StringToHash("StopAttack");
+        }
+
+        private void OnEnable()
+        {
+            _health.OnDeath += Death;
+        }
+
+        private void OnDisable()
+        {
+            _health.OnDeath -= Death;
         }
 
         private void Update()
@@ -62,7 +76,7 @@ namespace RPG.Combat
 
             if (!GetIsInRange() && !_target.GetComponent<Health>().IsDead)
             {
-                _mover.MoveTo(_target.position);
+                _mover.MoveTo(_target.position, 1f);
             }
             else
             {
@@ -71,27 +85,16 @@ namespace RPG.Combat
             }
 
         }
-
-        private void AttackBehaviour()
-        {
-            transform.LookAt(_target);  
-            
-            if(_timeSinceLastAttack > _timeBetweenAttacks)
-            {
-                _animator.SetTrigger(_attackAnimId);
-                _timeSinceLastAttack = 0f;
-            }            
-        }
         #endregion
 
-        #region PublicFunctionality
-        public void Attack(CombatTarget combatTarget)
+        #region PublicFunctions
+        public void Attack(GameObject combatTarget)
         {
             _animator.ResetTrigger(_stopAttackAnimId);
             _actionScheduler.StartAction(this);
             _target = combatTarget.transform;
         }
-        public bool CanAttack(CombatTarget combatTarget)
+        public bool CanAttack(GameObject combatTarget)
         {
             return combatTarget != null && !combatTarget.GetComponent<Health>().IsDead;
         }
@@ -102,10 +105,27 @@ namespace RPG.Combat
         {
             StopAttack();
             _target = null;
+            GetComponent<Mover>().Cancel();
         }
         #endregion
 
-        #region PrivateFunctionality
+        #region PrivateFunctions
+        private void AttackBehaviour()
+        {
+            transform.LookAt(_target);  
+            
+            if(_timeSinceLastAttack > _timeBetweenAttacks)
+            {
+                _animator.SetTrigger(_attackAnimId);
+                _timeSinceLastAttack = 0f;
+            }            
+        }
+
+        private void Death()
+        {
+            enabled = false;
+        }
+
         private bool GetIsInRange()
         {
             return Vector3.Distance(transform.position, _target.position) <= _weaponRange;
@@ -126,6 +146,7 @@ namespace RPG.Combat
             targetHealth.TakeDamage(_weaponDamage);
             if(targetHealth.IsDead)
             {
+                Logger.Log($"{gameObject.name} stop attacking - target is dead");
                 Cancel();
             }
         }

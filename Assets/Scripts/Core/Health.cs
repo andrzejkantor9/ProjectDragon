@@ -1,6 +1,8 @@
+using System;
+
 using UnityEngine;
 
-namespace RPG.Combat
+namespace RPG.Core
 {
     [RequireComponent(typeof(Animator))]
     public class Health : MonoBehaviour
@@ -19,6 +21,10 @@ namespace RPG.Combat
 
         #region States
         public bool IsDead {get; private set;} = false;
+        #endregion
+
+        #region Events
+        public event Action OnDeath;
         #endregion
 
         /////////////////////////////////////////////////////////
@@ -52,6 +58,9 @@ namespace RPG.Combat
             {
                 _animator.SetTrigger(_deathAnimId);
                 IsDead = true;
+
+                GetComponent<ActionScheduler>().CancelCurrentAction();
+                OnDeath?.Invoke();
             }
 
             return IsDead;

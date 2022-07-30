@@ -20,15 +20,28 @@ namespace RPG.Control
         private Mover _mover;
         [HideInInspector]
         private Fighter _fighter;
+        [HideInInspector]
+        private Health _health;
         #endregion
 
         ///////////////////////////////////////////////////
 
-        #region EngineFunctionality
+        #region EngineFunctions
         private void OnValidate()
         {
             _mover = GetComponent<Mover>();
             _fighter = GetComponent<Fighter>();
+            _health = GetComponent<Health>();
+        }
+
+        private void OnEnable()
+        {
+            _health.OnDeath += Death;
+        }
+
+        private void OnDisable()
+        {
+            _health.OnDeath -= Death;
         }
 
         void Update()
@@ -43,7 +56,12 @@ namespace RPG.Control
         }
         #endregion
 
-        #region PrivateFunctionality
+        #region PrivateFunctions
+        private void Death()
+        {
+            enabled = false;
+        }
+
         private bool InteractWithCombat()
         {
             RaycastHit[] hits = Physics.RaycastAll(GetPointerRay());
@@ -51,10 +69,12 @@ namespace RPG.Control
             foreach (RaycastHit hit in hits)
             {
                 CombatTarget target = hit.transform.GetComponent<CombatTarget>();
-                if(target && target.GetComponent<Fighter>().CanAttack(target))
+                if(target == null) continue;
+
+                if(_fighter.CanAttack(target.gameObject))
                 {
-                    if (InputManager.WasPointerPressedThisFrame())
-                        _fighter.Attack(target);
+                    if (InputManager.IsPointerPressed())
+                        _fighter.Attack(target.gameObject);
 
                     return true;                        
                 }
@@ -71,7 +91,7 @@ namespace RPG.Control
             if (hasHit)
             {
                 if (InputManager.IsPointerPressed())
-                    _mover.StartMoveAction(hit.point);
+                    _mover.StartMoveAction(hit.point, 1f);
 
                 return true;
             }

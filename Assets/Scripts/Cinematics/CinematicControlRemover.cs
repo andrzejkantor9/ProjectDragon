@@ -17,7 +17,7 @@ namespace RPG.Cinematics
         #region EngineMethods
         private void Start()
         {
-            _playerGameObject = GameObject.FindWithTag(Enums.EnumToString<Enums.Tags>(Enums.Tags.Player));        
+            _playerGameObject = GameObject.FindWithTag(Enums.EnumToString<Tags>(Tags.Player));        
         }
 
         private void OnEnable()

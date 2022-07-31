@@ -73,6 +73,11 @@ PrefabInstance:
       propertyPath: _hitPoints
       value: 200
       objectReference: {fileID: 0}
+    - target: {fileID: 7044451546472220492, guid: 4a09ab9cc4f6d0b4bb0921122742bd3d,
+        type: 3}
+      propertyPath: uniqueIdentifier
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 8581600308527053056, guid: 4a09ab9cc4f6d0b4bb0921122742bd3d,
         type: 3}
       propertyPath: m_Name

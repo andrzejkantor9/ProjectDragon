@@ -2,10 +2,12 @@ using System;
 
 using UnityEngine;
 
+using RPG.Saving;
+
 namespace RPG.Core
 {
     [RequireComponent(typeof(Animator))]
-    public class Health : MonoBehaviour
+    public class Health : MonoBehaviour, ISaveable
     {
         #region Parameters
         [SerializeField]
@@ -64,6 +66,19 @@ namespace RPG.Core
             }
 
             return IsDead;
+        }
+        #endregion
+
+        #region Interfaces
+        public object CaptureState()
+        {
+            return _hitPoints;
+        }
+
+        public void RestoreState(object state)
+        {
+            _hitPoints = (float)state;
+            CheckDeath();
         }
         #endregion
     }

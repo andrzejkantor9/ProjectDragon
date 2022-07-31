@@ -1,16 +1,24 @@
+using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.AI;
 
 using RPG.Core;
+using RPG.Saving;
 
 //MAKE move to clicked area component
-    //decouple animations
-    //inject navmesh & make it a pure c# class
-    //inject action on which it should decide if click to move should apply
-    //make any point input work
-        //pass input action instead of doing it here
-    //remember it should work out of the box, when adding component - as little extra work as possible
+//decouple animations
+//inject navmesh & make it a pure c# class
+//inject action on which it should decide if click to move should apply
+//make any point input work
+//pass input action instead of doing it here
+//remember it should work out of the box, when adding component - as little extra work as possible
 
+//TODO use custom ienumerator with yield return
+//get one card from deck? (or queue / stack? - lazily produce value?)
+//wait for certain conditions (boss hp, player position)
+//chai quests, story state
+//book pages
 //TODO use cinemachine instead of camera
 namespace RPG.Movement
 {
@@ -18,7 +26,7 @@ namespace RPG.Movement
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(ActionScheduler))]
     [RequireComponent(typeof(Health))]
-    public class Mover : MonoBehaviour, IAction
+    public class Mover : MonoBehaviour, IAction, ISaveable
     {
         #region Parameters
         [SerializeField]
@@ -108,6 +116,41 @@ namespace RPG.Movement
         public void Cancel()
         {
             _navMeshAgent.isStopped = true;
+        }
+
+        // [System.Serializable]
+        // private struct MoverSaveData
+        // {
+        //     public SerializableVector3 position;
+        //     public SerializableVector3 rotation;
+        // }
+
+        public object CaptureState()
+        {
+            // Dictionary<string, object> data = new Dictionary<string, object>();
+            // data["position"] = new SerializableVector3(transform.position);
+            // data["rotation"] = new SerializableVector3(transform.eulerAngles);
+
+            // MoverSaveData data = new MoverSaveData();
+            // data.position = new SerializableVector3(transform.position);
+            // data.rotation = new SerializableVector3(transform.eulerAngles);
+
+            return new SerializableVector3(transform.position);
+        }
+
+        public void RestoreState(object state)
+        {
+            // Dictionary<string, object> data = (Dictionary<string, object>)state;
+            // GetComponent<NavMeshAgent>().Warp(
+            //     ((SerializableVector3)data["position"]).ToVector());
+            // transform.eulerAngles = ((SerializableVector3)data["rotation"]).ToVector();
+
+            // MoverSaveData data = (MoverSaveData)state;
+            // GetComponent<NavMeshAgent>().Warp(data.position.ToVector());
+            // transform.eulerAngles = data.rotation.ToVector();
+
+            SerializableVector3 position = (SerializableVector3) state;
+            GetComponent<NavMeshAgent>().Warp(position.ToVector());
         }
         #endregion
     }

@@ -79,7 +79,7 @@ namespace RPG.Control
         private void Update()
         {
             if (!_playerGameObject)
-                _playerGameObject = GameObject.FindWithTag(Enums.EnumToString<Enums.Tags>(Enums.Tags.Player));
+                _playerGameObject = GameObject.FindWithTag(Enums.EnumToString<Tags>(Tags.Player));
 
             if (IsInAttackRangeOfPlayer() && _fighter.CanAttack(_playerGameObject))
             {

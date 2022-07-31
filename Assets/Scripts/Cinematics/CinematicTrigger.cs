@@ -1,8 +1,6 @@
 using UnityEngine;
 using UnityEngine.Playables;
 
-using RPG.Core;
-
 namespace RPG.Cinematics
 {
     public class CinematicTrigger : MonoBehaviour
@@ -15,7 +13,7 @@ namespace RPG.Cinematics
 
         private void OnTriggerEnter(Collider other)
         {
-            if(!_hasPlayed && other.CompareTag(Enums.EnumToString<Enums.Tags>(Enums.Tags.Player)))
+            if(!_hasPlayed && other.CompareTag(Enums.EnumToString<Tags>(Tags.Player)))
             {
                 GetComponent<PlayableDirector>().Play();
                 _hasPlayed = true;

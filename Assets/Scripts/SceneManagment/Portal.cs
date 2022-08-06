@@ -1,9 +1,12 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.AI;
+
+using RPG.Saving;
 
 namespace RPG.SceneManagment
 {
@@ -36,6 +39,10 @@ namespace RPG.SceneManagment
         }
         #endregion
 
+        #region Statics
+        private static List<Coroutine> _runningCoroutines = new List<Coroutine>();
+        #endregion
+
         ////////////////////////////////////////////
 
         #region EngineMethods
@@ -48,7 +55,15 @@ namespace RPG.SceneManagment
         {            
             if(other.CompareTag(Enums.EnumToString<Tags>(Tags.Player)))
             {
-                StartCoroutine(TransitionScene());
+                // foreach (Coroutine coroutine in _runningCoroutines)
+                // {
+                //     StopCoroutine(coroutine);
+                //     _runningCoroutines.Remove(coroutine);
+                // }
+                StopAllCoroutines();
+
+                Coroutine transitionSceneCoroutine = StartCoroutine(TransitionScene());
+                // _runningCoroutines.Add(transitionSceneCoroutine);
             }
         }
         #endregion
@@ -61,19 +76,29 @@ namespace RPG.SceneManagment
             Fader fader = FindObjectOfType<Fader>();
             SavingWrapper savingWrapper = FindObjectOfType<SavingWrapper>();
             
-            yield return fader.FadeOut(_fadeOutDuration);
+            Coroutine fadeOut = StartCoroutine(fader.FadeOut(_fadeOutDuration));
+            _runningCoroutines.Add(fadeOut);
+            yield return fadeOut;
+            // _runningCoroutines.Remove(fadeOut);
 
             savingWrapper.Save();
+            Logger.Log("loading scene");
             yield return LoadSceneByIndexAsync(_sceneToLoad);
+
+            Logger.Log("scene loaded");
             savingWrapper.Load();
 
             Portal otherPortal = GetOtherPortal();
             UpdatePlayer(otherPortal);
             savingWrapper.Save();
-            
+
             yield return new WaitForSeconds(_fadeOutDelay);
 
-            yield return fader.FadeIn(_fadeInDuration);
+            Coroutine fadeIn = StartCoroutine(fader.FadeIn(_fadeInDuration));
+            _runningCoroutines.Add(fadeIn);
+            yield return fadeIn;
+            // _runningCoroutines.Remove(fadeIn);
+    
             Destroy(gameObject);
         }
 

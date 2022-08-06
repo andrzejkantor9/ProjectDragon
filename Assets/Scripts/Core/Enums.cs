@@ -13,6 +13,15 @@ namespace RPG
         GameController
     }
 
+    public enum WeaponNames
+    {
+        Unarmed,
+        Fireball,
+        Sword,
+        RedBow,
+        BlueBow
+    }
+
     public static class Enums
     {
         ////////////////////////////////////////////////////////////////////////////////

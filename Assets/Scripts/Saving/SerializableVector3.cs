@@ -14,9 +14,6 @@ namespace RPG.Saving
             z = vector.z;
         }
 
-        public Vector3 ToVector()
-        {
-            return new Vector3(x, y, z);
-        }
+        public Vector3 ToVector() => new Vector3(x, y, z);
     }
 }

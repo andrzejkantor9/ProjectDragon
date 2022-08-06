@@ -83,9 +83,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8826979614403593054, guid: 4a09ab9cc4f6d0b4bb0921122742bd3d,
         type: 3}
+      propertyPath: _weapon
+      value: 
+      objectReference: {fileID: 11400000, guid: 0250492ffdc62f741bc23d2ca4f0bb1b,
+        type: 2}
+    - target: {fileID: 8826979614403593054, guid: 4a09ab9cc4f6d0b4bb0921122742bd3d,
+        type: 3}
       propertyPath: _weaponDamage
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 8826979614403593054, guid: 4a09ab9cc4f6d0b4bb0921122742bd3d,
+        type: 3}
+      propertyPath: _defaultWeapon
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8826979614403593054, guid: 4a09ab9cc4f6d0b4bb0921122742bd3d,
+        type: 3}
+      propertyPath: _handTransformWeapon
+      value: 
+      objectReference: {fileID: 2401789784370481956}
+    - target: {fileID: 8826979614403593054, guid: 4a09ab9cc4f6d0b4bb0921122742bd3d,
+        type: 3}
+      propertyPath: _leftHandTransformWeapon
+      value: 
+      objectReference: {fileID: 2401789784370555686}
+    - target: {fileID: 8826979614403593054, guid: 4a09ab9cc4f6d0b4bb0921122742bd3d,
+        type: 3}
+      propertyPath: _rightHandTransformWeapon
+      value: 
+      objectReference: {fileID: 2401789784370481956}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a09ab9cc4f6d0b4bb0921122742bd3d, type: 3}
 --- !u!1 &8394737128978578272 stripped
@@ -94,20 +120,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 258922835222708832}
   m_PrefabAsset: {fileID: 0}
---- !u!136 &6892937662233743332
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8394737128978578272}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.89, z: 0}
 --- !u!114 &1576694208243177472
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,6 +147,7 @@ MonoBehaviour:
   _chaseDistance: 5
   _suspicionTime: 5
   _dwellingTime: 3
+  _patrolSpeedFraction: 0.2
   _patrolPath: {fileID: 0}
   _waypointTolerance: 1
 --- !u!4 &8394737128978578284 stripped
@@ -201,3 +214,15 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 9572094, guid: 30cf93deff988e74e88a144bd2127c18, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 30cf93deff988e74e88a144bd2127c18, type: 3}
+--- !u!4 &2401789784370481956 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 423694, guid: 30cf93deff988e74e88a144bd2127c18,
+    type: 3}
+  m_PrefabInstance: {fileID: 2401789784370904106}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2401789784370555686 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 481036, guid: 30cf93deff988e74e88a144bd2127c18,
+    type: 3}
+  m_PrefabInstance: {fileID: 2401789784370904106}
+  m_PrefabAsset: {fileID: 0}

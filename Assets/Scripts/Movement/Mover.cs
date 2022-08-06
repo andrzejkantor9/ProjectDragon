@@ -14,11 +14,17 @@ using RPG.Saving;
 //pass input action instead of doing it here
 //remember it should work out of the box, when adding component - as little extra work as possible
 
+//TODO use addressables instead of resources
+//TODO fix fading bug if switching scenes fast
 //TODO use custom ienumerator with yield return
-//get one card from deck? (or queue / stack? - lazily produce value?)
-//wait for certain conditions (boss hp, player position)
-//chai quests, story state
-//book pages
+    //get one card from deck? (or queue / stack? - lazily produce value?)
+    //wait for certain conditions (boss hp, player position)
+    //chain quests, story state
+    //book pages
+//TODO should i initialize variables or not needed
+//TODO debug script calling functions on object's components
+//TODO make everything possible as standalone components (for any unity project)
+//TODO save data in editor without serializefield for objects instantiated in runtime (hide in inspector + on validate does not work)
 //TODO use cinemachine instead of camera
 namespace RPG.Movement
 {
@@ -118,12 +124,12 @@ namespace RPG.Movement
             _navMeshAgent.isStopped = true;
         }
 
-        // [System.Serializable]
-        // private struct MoverSaveData
-        // {
-        //     public SerializableVector3 position;
-        //     public SerializableVector3 rotation;
-        // }
+        // // [System.Serializable]
+        // // private struct MoverSaveData
+        // // {
+        // //     public SerializableVector3 position;
+        // //     public SerializableVector3 rotation;
+        // // }
 
         public object CaptureState()
         {
@@ -149,8 +155,8 @@ namespace RPG.Movement
             // GetComponent<NavMeshAgent>().Warp(data.position.ToVector());
             // transform.eulerAngles = data.rotation.ToVector();
 
-            SerializableVector3 position = (SerializableVector3) state;
-            GetComponent<NavMeshAgent>().Warp(position.ToVector());
+            GetComponent<NavMeshAgent>().Warp(((SerializableVector3)state).ToVector());
+            GetComponent<ActionScheduler>().CancelCurrentAction();
         }
         #endregion
     }

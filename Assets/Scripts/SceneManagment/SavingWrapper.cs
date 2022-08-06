@@ -6,41 +6,43 @@ using UnityEngine.InputSystem;
 using RPG.Saving;
 
 namespace RPG.SceneManagment
-{
+{    
     public class SavingWrapper : MonoBehaviour
-    {
+    {      
         #region Parameters
         [SerializeField]
-        private float _fadeInTime = .2f;
+        private float _fadeInTime = 1f;
         #endregion
 
-        #region Cache
-        const string DEFAULT_SAVE_FILE = "save";
+        #region StaticVariables
+        private const string DEFAULT_SAVE_FILE = "save";
         #endregion
 
-        /////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////
 
         #region EngineMethods
         private IEnumerator Start()
         {
             Fader fader = FindObjectOfType<Fader>();
             fader.FadeOutImmediate();
+
             yield return GetComponent<SavingSystem>().LoadLastScene(DEFAULT_SAVE_FILE);
+
             yield return fader.FadeIn(_fadeInTime);
         }
+
         private void Update()
         {
-            if(Keyboard.current.lKey.wasPressedThisFrame)
-                Load();
-            else if(Keyboard.current.sKey.wasPressedThisFrame)
+            if (Keyboard.current.sKey.wasPressedThisFrame)
                 Save();
+            else if (Keyboard.current.lKey.wasPressedThisFrame)
+                Load();
         }
         #endregion
 
-        #region PublicMethods
+        #region PublicFunctions
         public void Load()
         {
-            GetComponent<SavingSystem>().LoadLastScene(DEFAULT_SAVE_FILE);
             GetComponent<SavingSystem>().Load(DEFAULT_SAVE_FILE);
         }
 
@@ -48,6 +50,6 @@ namespace RPG.SceneManagment
         {
             GetComponent<SavingSystem>().Save(DEFAULT_SAVE_FILE);
         }
-        #endregion 
+        #endregion
     }
 }

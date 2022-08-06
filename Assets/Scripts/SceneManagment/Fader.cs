@@ -2,6 +2,7 @@ using System.Collections;
 
 using UnityEngine;
 
+//TODO fix fading when changing scenes before it fades in
 namespace RPG.SceneManagment
 {
     public class Fader : MonoBehaviour
@@ -29,6 +30,9 @@ namespace RPG.SceneManagment
         #region Coroutines
         public IEnumerator FadeOut(float time)
         {
+            _canvasGroup.alpha = 0f;
+            yield return null;
+            
             //it is clamped to 1
             while(_canvasGroup.alpha != 1f)
             {
@@ -39,14 +43,15 @@ namespace RPG.SceneManagment
 
         public IEnumerator FadeIn(float time)
         {
-            Logger.Log("start fade in");
+            _canvasGroup.alpha = 1f;
+            yield return null;
+
             //it is clamped to 0
             while(_canvasGroup.alpha != 0f)
             {
                 _canvasGroup.alpha -= Time.deltaTime / time;
                 yield return null;
             }
-            Logger.Log("finish fade in");
         }
         #endregion
     }

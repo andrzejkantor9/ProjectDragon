@@ -1,25 +1,21 @@
+using System;
+
 using UnityEngine;
 
 using RPG.Movement;
 using RPG.Core;
 
+//TODO on target death event wycieki możliwe?
 namespace RPG.Combat
 {
     [RequireComponent(typeof(Mover))]
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(ActionScheduler))]
     [RequireComponent(typeof(Health))]
-    public class Fighter : MonoBehaviour, IAction
+    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(CapsuleCollider))]
+    public class Fighter : MonoBehaviour, IAction, ISaveable
     {
-        #region Parameters
-        [SerializeField]
-        private float _weaponRange = 2f;
-        [SerializeField]
-        private float _timeBetweenAttacks = 2f;
-        [SerializeField]
-        private float _weaponDamage = 5f;
-        #endregion
-
         #region Cache
         [HideInInspector]
         private Mover _mover;
@@ -30,6 +26,13 @@ namespace RPG.Combat
         [HideInInspector]
         private Health _health;
 
+        [SerializeField]
+        private Transform _rightHandTransformWeapon;
+        [SerializeField]
+        private Transform _leftHandTransformWeapon;
+        [SerializeField]
+        private WeaponNames _defaultWeapon = WeaponNames.Unarmed;
+
         private Transform _target;
         private int _attackAnimId;
         private int _stopAttackAnimId;
@@ -37,6 +40,8 @@ namespace RPG.Combat
 
         #region States
         private float _timeSinceLastAttack = Mathf.Infinity;
+        private Weapon _currentWeapon;
+        private Health _targetHealth;
         #endregion
 
         ////////////////////////////////////////////////////////////////////////
@@ -54,6 +59,20 @@ namespace RPG.Combat
         {
             _attackAnimId = Animator.StringToHash("Attack");
             _stopAttackAnimId = Animator.StringToHash("StopAttack");
+
+            // UnityEngine.Assertions.Assert.IsNotNull(_weaponPrefab, "weapon prefab null");
+            // UnityEngine.Assertions.Assert.IsNotNull(_handTransformWeapon, "_handTransformWeapon null");
+        }
+
+        private void Start()
+        {
+            if(_currentWeapon == null)
+            {
+                Weapon weapon = Resources.Load<Weapon>(Enums.EnumToString<WeaponNames>(_defaultWeapon));
+                EquipWeapon(weapon);
+
+                Logger.Log($"set weapon (start): {Enums.EnumToString<WeaponNames>(_defaultWeapon)}, for character: {gameObject.name}");
+            }
         }
 
         private void OnEnable()
@@ -92,7 +111,10 @@ namespace RPG.Combat
         {
             _animator.ResetTrigger(_stopAttackAnimId);
             _actionScheduler.StartAction(this);
+
             _target = combatTarget.transform;
+            _targetHealth = _target.GetComponent<Health>();
+            _targetHealth.OnDeath += OnTargetDeath;
         }
         public bool CanAttack(GameObject combatTarget)
         {
@@ -107,14 +129,39 @@ namespace RPG.Combat
             _target = null;
             GetComponent<Mover>().Cancel();
         }
+
+        public object CaptureState()
+        {
+            WeaponNames weaponName = (WeaponNames) Enum.Parse(typeof(WeaponNames), _currentWeapon.name);
+            Logger.Log($"saved weapon: {Enums.EnumToString<WeaponNames>(weaponName)}, for character: {gameObject.name}");
+            return weaponName;
+        }
+
+        public void RestoreState(object state)
+        {
+            WeaponNames weaponName = (WeaponNames)state;
+            Weapon weapon = Resources.Load<Weapon>(Enums.EnumToString<WeaponNames>(weaponName));
+            Logger.Log($"loaded weapon: {Enums.EnumToString<WeaponNames>(weaponName)}, for character: {gameObject.name}");
+
+            _currentWeapon = weapon;
+            EquipWeapon(weapon);
+        }
         #endregion
 
         #region PrivateFunctions
+        public void EquipWeapon(Weapon weapon)
+        {
+            Logger.Log($"equip weapon: {weapon.name}, for character: {gameObject.name}");
+            _currentWeapon = weapon;
+
+            Animator animator = GetComponent<Animator>();
+            weapon.Spawn(_rightHandTransformWeapon, _leftHandTransformWeapon, animator);
+        }
         private void AttackBehaviour()
         {
             transform.LookAt(_target);  
             
-            if(_timeSinceLastAttack > _timeBetweenAttacks)
+            if(_timeSinceLastAttack > _currentWeapon.TimeBetweenAttacks)
             {
                 _animator.SetTrigger(_attackAnimId);
                 _timeSinceLastAttack = 0f;
@@ -123,32 +170,58 @@ namespace RPG.Combat
 
         private void Death()
         {
+            GetComponent<Rigidbody>().isKinematic = true;
+            GetComponent<CapsuleCollider>().enabled = false;
             enabled = false;
         }
 
         private bool GetIsInRange()
         {
-            return Vector3.Distance(transform.position, _target.position) <= _weaponRange;
+            return Vector3.Distance(transform.position, _target.position) <= _currentWeapon.WeaponRange;
         }
 
         private void StopAttack()
         {
+            if(_targetHealth)
+                _targetHealth.OnDeath -= OnTargetDeath;
+
             _animator.ResetTrigger(_attackAnimId);
             _animator.SetTrigger(_stopAttackAnimId);
         }
+        #endregion
 
-        //animation event
+        #region Events
+        private void OnTargetDeath()
+        {
+            Cancel();
+        }
+        #endregion
+
+        #region Animation Events
         private void Hit()
         {
-            if(_target == null) return;
+            if(_target == null) 
+                return;
 
-            Health targetHealth = _target.GetComponent<Health>();
-            targetHealth.TakeDamage(_weaponDamage);
-            if(targetHealth.IsDead)
+            if(_currentWeapon.HasProjectile)
             {
-                Logger.Log($"{gameObject.name} stop attacking - target is dead");
-                Cancel();
+                if(!_targetHealth.IsDead)
+                    _currentWeapon.LaunchProjectile(_rightHandTransformWeapon, _leftHandTransformWeapon, _target.GetComponent<Health>());  
             }
+            else
+            {
+                _targetHealth.TakeDamage(_currentWeapon.WeaponDamage);
+                if(_targetHealth.IsDead)
+                {
+                    Logger.Log($"{gameObject.name} stop attacking - target is dead");
+                    Cancel();
+                }
+            }
+        }
+
+        private void Shoot()
+        {
+            Hit();
         }
         #endregion
     }

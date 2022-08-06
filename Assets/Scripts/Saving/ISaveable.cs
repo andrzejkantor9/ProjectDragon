@@ -1,8 +1,7 @@
-namespace RPG.Saving
+using UnityEngine;
+
+public interface ISaveable
 {
-    public interface ISaveable
-    {
-        object CaptureState();
-        void RestoreState(object state);
-    }
+    object CaptureState();
+    void RestoreState(object state);
 }

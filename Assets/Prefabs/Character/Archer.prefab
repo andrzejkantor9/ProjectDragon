@@ -17,6 +17,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: bfbe2e8b331e2cc42be1591f949c0e41, type: 2}
+    - target: {fileID: 5539050490909133572, guid: 9c7fd9b6f60fd6a438de2d0e18dedca4,
+        type: 3}
+      propertyPath: _characterClass
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8394737128978578272, guid: 9c7fd9b6f60fd6a438de2d0e18dedca4,
         type: 3}
       propertyPath: m_Name
@@ -80,8 +85,9 @@ PrefabInstance:
     - target: {fileID: 8784371967429689662, guid: 9c7fd9b6f60fd6a438de2d0e18dedca4,
         type: 3}
       propertyPath: _defaultWeapon
-      value: 3
-      objectReference: {fileID: 0}
+      value: 
+      objectReference: {fileID: 11400000, guid: a55197a1de667094599a00b4faa01ef0,
+        type: 2}
     - target: {fileID: 8898115319312392515, guid: 9c7fd9b6f60fd6a438de2d0e18dedca4,
         type: 3}
       propertyPath: _uniqueIdentifier

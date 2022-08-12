@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87c5f53c549d2344d90430f4c9c9c3f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 10
+  _speed: 30
   _homing: 0
   _hitEffect: {fileID: 7192834347749319033, guid: 53894c0b0f2b34c4bac63499a7f7fa47,
     type: 3}

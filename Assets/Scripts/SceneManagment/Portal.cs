@@ -82,10 +82,10 @@ namespace RPG.SceneManagment
             // _runningCoroutines.Remove(fadeOut);
 
             savingWrapper.Save();
-            Logger.Log("loading scene");
+            Logger.Log("loading scene", LogFrequency.Rare);
             yield return LoadSceneByIndexAsync(_sceneToLoad);
 
-            Logger.Log("scene loaded");
+            Logger.Log("scene loaded", LogFrequency.Rare);
             savingWrapper.Load();
 
             Portal otherPortal = GetOtherPortal();
@@ -139,7 +139,7 @@ namespace RPG.SceneManagment
             int nextSceneBuildIndex = SceneManager.sceneCountInBuildSettings == currentSceneBuildIndex + 1 ? 0 : currentSceneBuildIndex + 1;
 
             SceneManager.LoadScene(nextSceneBuildIndex);
-            Logger.Log($"next scene build index: {nextSceneBuildIndex}, current scene build index: {currentSceneBuildIndex}");
+            Logger.Log($"next scene build index: {nextSceneBuildIndex}, current scene build index: {currentSceneBuildIndex}", LogFrequency.Rare);
         }
         #endregion
     }

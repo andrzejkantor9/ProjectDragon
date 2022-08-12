@@ -15,7 +15,7 @@ namespace RPG.Cinematics
         ///////////////////////////////////////////////////////
 
         #region EngineMethods
-        private void Start()
+        private void Awake()
         {
             _playerGameObject = GameObject.FindWithTag(Enums.EnumToString<Tags>(Tags.Player));        
         }
@@ -36,14 +36,14 @@ namespace RPG.Cinematics
         #region PrivateMethods
         private void EnableControl(PlayableDirector playableDirector)
         {
-            Logger.Log("enable control by cinematic");
+            Logger.Log("enable control by cinematic", LogFrequency.Rare);
 
             _playerGameObject.GetComponent<PlayerController>().enabled = true;
         }
 
         private void DisableControl(PlayableDirector playableDirector)
         {
-            Logger.Log("disable control by cinematic");
+            Logger.Log("disable control by cinematic", LogFrequency.Rare);
 
             _playerGameObject.GetComponent<ActionScheduler>().CancelCurrentAction();
             _playerGameObject.GetComponent<PlayerController>().enabled = false;

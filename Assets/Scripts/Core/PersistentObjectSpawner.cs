@@ -23,7 +23,7 @@ namespace RPG.Core
 
             SpawnPersistentObjects();
 
-            _hasSpawned = true;
+            _hasSpawned = true;   
         }
         #endregion
 

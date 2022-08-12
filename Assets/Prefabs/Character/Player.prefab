@@ -85,6 +85,27 @@ PrefabInstance:
       propertyPath: _hitPoints
       value: 200
       objectReference: {fileID: 0}
+    - target: {fileID: 5713178834727618916, guid: 4a09ab9cc4f6d0b4bb0921122742bd3d,
+        type: 3}
+      propertyPath: _startingLevel
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5713178834727618916, guid: 4a09ab9cc4f6d0b4bb0921122742bd3d,
+        type: 3}
+      propertyPath: _characterClass
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5713178834727618916, guid: 4a09ab9cc4f6d0b4bb0921122742bd3d,
+        type: 3}
+      propertyPath: _shouldUseModifiers
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5713178834727618916, guid: 4a09ab9cc4f6d0b4bb0921122742bd3d,
+        type: 3}
+      propertyPath: _levelUpParticleEffect
+      value: 
+      objectReference: {fileID: 5126697594261209345, guid: 5b41a1a238e5c61419542efd2dccad35,
+        type: 3}
     - target: {fileID: 7044451546472220492, guid: 4a09ab9cc4f6d0b4bb0921122742bd3d,
         type: 3}
       propertyPath: uniqueIdentifier
@@ -179,11 +200,6 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 8826979614403593054, guid: 4a09ab9cc4f6d0b4bb0921122742bd3d,
         type: 3}
-      propertyPath: _defaultWeapon
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8826979614403593054, guid: 4a09ab9cc4f6d0b4bb0921122742bd3d,
-        type: 3}
       propertyPath: _handTransformWeapon
       value: 
       objectReference: {fileID: 3036040869609271329}
@@ -217,6 +233,19 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 4003035147261276251}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2818270998031520727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4655133506245642587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc6f25b6d915aed4eb4c6cec7d14978f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _experiencePoints: 0
 --- !u!114 &7723933220864237550
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,14 +1,18 @@
+using System;
+
 using UnityEngine;
+
+using GameDevTV.Utils;
 
 using RPG.Core;
 using RPG.Combat;
 using RPG.Movement;
-using System;
+using RPG.Attributes;
 
 namespace RPG.Control
 {
     [RequireComponent(typeof(Fighter))]
-    [RequireComponent(typeof(Health))]
+    [RequireComponent(typeof(HitPoints))]
     [RequireComponent(typeof(Mover))]
     [RequireComponent(typeof(ActionScheduler))]
     public class AIController : MonoBehaviour
@@ -28,7 +32,7 @@ namespace RPG.Control
         [HideInInspector]
         private Fighter _fighter;
         [HideInInspector]
-        private Health _health;
+        private HitPoints _health;
         [HideInInspector]
         private Mover _mover;
         [HideInInspector]
@@ -40,7 +44,7 @@ namespace RPG.Control
         private float _waypointTolerance = 1f;
 
         private GameObject _playerGameObject;
-        private Vector3 _guardLocation;
+        private LazyValue<Vector3> _guardLocation;
         #endregion
 
         #region States
@@ -55,15 +59,23 @@ namespace RPG.Control
         private void OnValidate()
         {
             _fighter = GetComponent<Fighter>();
-            _health = GetComponent<Health>();
+            _health = GetComponent<HitPoints>();
             _mover = GetComponent<Mover>();
             _actionScheduler = GetComponent<ActionScheduler>();
         }
 
         private void Awake()
         {
-            _guardLocation = transform.position; 
             UnityEngine.Assertions.Assert.IsNotNull(_patrolPath, "_patrolPath object is null");  
+
+            _playerGameObject = GameObject.FindWithTag(Enums.EnumToString<Tags>(Tags.Player));
+
+            _guardLocation = new LazyValue<Vector3>(GetGuardPosition);
+        }
+
+        private void Start()
+        {
+            _guardLocation.ForceInit();
         }
 
         private void OnEnable()
@@ -78,9 +90,6 @@ namespace RPG.Control
 
         private void Update()
         {
-            if (!_playerGameObject)
-                _playerGameObject = GameObject.FindWithTag(Enums.EnumToString<Tags>(Tags.Player));
-
             if (IsInAttackRangeOfPlayer() && _fighter.CanAttack(_playerGameObject))
             {
                 AttackBehaviour();
@@ -120,7 +129,7 @@ namespace RPG.Control
         {
             _fighter.Cancel();
 
-            Vector3 nextPosition = _guardLocation;
+            Vector3 nextPosition = _guardLocation.value;
             if(_patrolPath)
             {
                 if(AtWaypoint())
@@ -140,6 +149,11 @@ namespace RPG.Control
         private void CycleWaypoint()
         {
             _waypointIndex = _patrolPath.GetNextIndex(_waypointIndex);
+        }
+
+        private Vector3 GetGuardPosition()
+        {
+            return transform.position;
         }
 
         private void SuspicionBehavior()

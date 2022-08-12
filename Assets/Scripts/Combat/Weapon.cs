@@ -1,6 +1,6 @@
 using UnityEngine;
 
-using RPG.Core;
+using RPG.Attributes;
 
 namespace RPG.Combat
 {
@@ -14,6 +14,8 @@ namespace RPG.Combat
         public float TimeBetweenAttacks {get; private set;} = 2f;
         [field: SerializeField]
         public float WeaponDamage {get; private set;} = 5f;
+        [field: SerializeField]
+        public float PercentageModifier {get; private set;} = 0f;
         [SerializeField]
         private bool _isRightHanded = true;
         [SerializeField]
@@ -36,10 +38,11 @@ namespace RPG.Combat
         //////////////////////////////////////////////////////////////////
 
         #region PublicMethods
-        public void LaunchProjectile(Transform rightHand, Transform leftHand, Health targetHealth)
+        public void LaunchProjectile(Transform rightHand, Transform leftHand, HitPoints targetHealth, GameObject instigator, float calculatedDamage)
         {
             Projectile projectileInstance = Instantiate(projectile, GetWeaponPosition(rightHand, leftHand).position, Quaternion.identity);
-            projectileInstance.SetTarget(targetHealth, WeaponDamage);
+            // projectileInstance.SetTarget(targetHealth, instigator, WeaponDamage);
+            projectileInstance.SetTarget(targetHealth, instigator, calculatedDamage);
         }
 
         public void Spawn(Transform rightHand, Transform leftHand, Animator animator)

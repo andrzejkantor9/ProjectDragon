@@ -21,14 +21,10 @@ namespace RPG.SceneManagment
         ///////////////////////////////////////////////////////////////////////////
 
         #region EngineMethods
-        private IEnumerator Start()
-        {
-            Fader fader = FindObjectOfType<Fader>();
-            fader.FadeOutImmediate();
-
-            yield return GetComponent<SavingSystem>().LoadLastScene(DEFAULT_SAVE_FILE);
-
-            yield return fader.FadeIn(_fadeInTime);
+        
+        private void Awake()
+        {    
+            StartCoroutine(LoadLastScene());
         }
 
         private void Update()
@@ -37,6 +33,8 @@ namespace RPG.SceneManagment
                 Save();
             else if (Keyboard.current.lKey.wasPressedThisFrame)
                 Load();
+            else if (Keyboard.current.deleteKey.wasPressedThisFrame)
+                DeleteSave();
         }
         #endregion
 
@@ -50,6 +48,23 @@ namespace RPG.SceneManagment
         {
             GetComponent<SavingSystem>().Save(DEFAULT_SAVE_FILE);
         }
+
+        public void DeleteSave()
+        {
+            GetComponent<SavingSystem>().Delete(DEFAULT_SAVE_FILE);
+        }
+
+        #region Coroutines
+        private IEnumerator LoadLastScene()
+        {
+            yield return GetComponent<SavingSystem>().LoadLastScene(DEFAULT_SAVE_FILE);
+            
+            Fader fader = FindObjectOfType<Fader>();
+            fader.FadeOutImmediate();
+
+            yield return fader.FadeIn(_fadeInTime);
+        }
+        #endregion
         #endregion
     }
 }

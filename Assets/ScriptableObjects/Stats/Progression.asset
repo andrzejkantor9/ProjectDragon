@@ -1,0 +1,263 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbcfbc5dcd5cd494ba40599e01720e50, type: 3}
+  m_Name: Progression
+  m_EditorClassIdentifier: 
+  _characterClases:
+  - <CharacterClass>k__BackingField: 0
+    <Stats>k__BackingField:
+    - <Stat>k__BackingField: 0
+      <Levels>k__BackingField:
+      - 200
+      - 240
+      - 280
+      - 320
+      - 360
+      - 400
+      - 440
+      - 480
+      - 520
+      - 560
+      - 600
+      - 640
+      - 680
+      - 720
+      - 760
+      - 800
+      - 840
+      - 880
+    - <Stat>k__BackingField: 2
+      <Levels>k__BackingField:
+      - 2000
+      - 6000
+      - 12000
+      - 20000
+      - 30000
+      - 42000
+      - 56000
+      - 72000
+      - 90000
+      - 110000
+      - 132000
+      - 156000
+      - 182000
+      - 210000
+      - 240000
+      - 272000
+      - 306000
+      - 342000
+    - <Stat>k__BackingField: 3
+      <Levels>k__BackingField:
+      - 10
+      - 15
+      - 20
+      - 25
+      - 30
+      - 35
+      - 40
+      - 45
+      - 50
+      - 55
+      - 60
+      - 65
+      - 70
+      - 75
+      - 80
+      - 85
+      - 90
+      - 95
+  - <CharacterClass>k__BackingField: 1
+    <Stats>k__BackingField:
+    - <Stat>k__BackingField: 0
+      <Levels>k__BackingField:
+      - 60
+      - 90
+      - 120
+      - 150
+      - 180
+      - 210
+      - 240
+      - 270
+      - 300
+      - 330
+      - 360
+      - 390
+      - 420
+      - 450
+      - 480
+      - 510
+      - 540
+      - 570
+    - <Stat>k__BackingField: 1
+      <Levels>k__BackingField:
+      - 80
+      - 120
+      - 160
+      - 200
+      - 240
+      - 280
+      - 320
+      - 360
+      - 400
+      - 440
+      - 480
+      - 520
+      - 560
+      - 600
+      - 640
+      - 680
+      - 720
+      - 760
+    - <Stat>k__BackingField: 3
+      <Levels>k__BackingField:
+      - 8
+      - 10
+      - 11
+      - 13
+      - 14
+      - 16
+      - 18
+      - 19
+      - 21
+      - 22
+      - 24
+      - 26
+      - 27
+      - 29
+      - 30
+      - 32
+      - 34
+      - 35
+  - <CharacterClass>k__BackingField: 2
+    <Stats>k__BackingField:
+    - <Stat>k__BackingField: 0
+      <Levels>k__BackingField:
+      - 42
+      - 63
+      - 84
+      - 105
+      - 126
+      - 147
+      - 168
+      - 189
+      - 210
+      - 231
+      - 252
+      - 273
+      - 294
+      - 315
+      - 336
+      - 357
+      - 378
+      - 399
+    - <Stat>k__BackingField: 1
+      <Levels>k__BackingField:
+      - 64
+      - 96
+      - 128
+      - 160
+      - 192
+      - 224
+      - 256
+      - 288
+      - 320
+      - 252
+      - 384
+      - 416
+      - 448
+      - 480
+      - 512
+      - 544
+      - 576
+      - 608
+    - <Stat>k__BackingField: 3
+      <Levels>k__BackingField:
+      - 12
+      - 14
+      - 17
+      - 19
+      - 22
+      - 24
+      - 26
+      - 29
+      - 31
+      - 34
+      - 36
+      - 38
+      - 41
+      - 43
+      - 46
+      - 48
+      - 50
+      - 53
+  - <CharacterClass>k__BackingField: 3
+    <Stats>k__BackingField:
+    - <Stat>k__BackingField: 0
+      <Levels>k__BackingField:
+      - 42
+      - 63
+      - 84
+      - 105
+      - 126
+      - 147
+      - 168
+      - 189
+      - 210
+      - 231
+      - 252
+      - 273
+      - 294
+      - 315
+      - 336
+      - 357
+      - 378
+      - 399
+    - <Stat>k__BackingField: 1
+      <Levels>k__BackingField:
+      - 64
+      - 96
+      - 128
+      - 160
+      - 192
+      - 224
+      - 256
+      - 288
+      - 320
+      - 252
+      - 384
+      - 416
+      - 448
+      - 480
+      - 512
+      - 544
+      - 576
+      - 608
+    - <Stat>k__BackingField: 3
+      <Levels>k__BackingField:
+      - 12
+      - 14
+      - 17
+      - 19
+      - 22
+      - 24
+      - 26
+      - 29
+      - 31
+      - 34
+      - 36
+      - 38
+      - 41
+      - 43
+      - 46
+      - 48
+      - 50
+      - 53

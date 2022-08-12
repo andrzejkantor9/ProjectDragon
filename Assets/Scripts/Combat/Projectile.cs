@@ -1,6 +1,6 @@
 using UnityEngine;
 
-using RPG.Core;
+using RPG.Attributes;
 
 namespace RPG.Combat
 {
@@ -24,7 +24,8 @@ namespace RPG.Combat
         #endregion
 
         #region States
-        private Health _targetHealth;
+        private HitPoints _targetHealth;
+        private GameObject _instigator;
         #endregion
 
         ///////////////////////////////////////////////////////////////////////////
@@ -48,14 +49,14 @@ namespace RPG.Combat
 
         private void OnTriggerEnter(Collider other)
         {
-            Health colliderHealth = other.GetComponent<Health>();
+            HitPoints colliderHealth = other.GetComponent<HitPoints>();
             if(colliderHealth && colliderHealth.IsDead)
             {
                 return;
             }
             else if(colliderHealth && colliderHealth == _targetHealth)
             {
-                colliderHealth.TakeDamage(_damage);
+                colliderHealth.TakeDamage(_instigator, _damage);
                 _speed = 0f;
 
                 if(_hitEffect)
@@ -72,10 +73,11 @@ namespace RPG.Combat
         #endregion
 
         #region PublicMethods
-        public void SetTarget(Health target, float damage)
+        public void SetTarget(HitPoints target, GameObject instigator, float damage)
         {
             _targetHealth = target;
             _damage = damage;
+            _instigator = instigator;
 
             Destroy(gameObject, _maxLifeTime);
         }

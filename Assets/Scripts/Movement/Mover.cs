@@ -1,10 +1,9 @@
-using System.Collections.Generic;
-
 using UnityEngine;
 using UnityEngine.AI;
 
 using RPG.Core;
 using RPG.Saving;
+using RPG.Attributes;
 
 //MAKE move to clicked area component
 //decouple animations
@@ -14,6 +13,8 @@ using RPG.Saving;
 //pass input action instead of doing it here
 //remember it should work out of the box, when adding component - as little extra work as possible
 
+//TODO make checker if all levels values are set in progression
+//TODO internal vs public vs etc
 //TODO use addressables instead of resources
 //TODO fix fading bug if switching scenes fast
 //TODO use custom ienumerator with yield return
@@ -26,12 +27,17 @@ using RPG.Saving;
 //TODO make everything possible as standalone components (for any unity project)
 //TODO save data in editor without serializefield for objects instantiated in runtime (hide in inspector + on validate does not work)
 //TODO use cinemachine instead of camera
+
+//TODO add audio
+//TODO attacked enemies auto chase
+
+//TODO add list of buffs like in bdo and prep phase
 namespace RPG.Movement
 {
     [RequireComponent(typeof(NavMeshAgent))]
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(ActionScheduler))]
-    [RequireComponent(typeof(Health))]
+    [RequireComponent(typeof(HitPoints))]
     public class Mover : MonoBehaviour, IAction, ISaveable
     {
         #region Parameters
@@ -47,7 +53,7 @@ namespace RPG.Movement
         [HideInInspector]
         private ActionScheduler _actionScheduler;
         [HideInInspector]
-        private Health _health;
+        private HitPoints _health;
 
         private int _ForwardSpeedAnimId;
         #endregion
@@ -60,7 +66,7 @@ namespace RPG.Movement
             _navMeshAgent = GetComponent<NavMeshAgent>();
             _animator = GetComponent<Animator>();
             _actionScheduler = GetComponent<ActionScheduler>();
-            _health = GetComponent<Health>();
+            _health = GetComponent<HitPoints>();
         }
 
         private void Awake()
@@ -121,7 +127,11 @@ namespace RPG.Movement
         #region Interfaces
         public void Cancel()
         {
+            bool navMeshEnabled = _navMeshAgent.enabled;
+            _navMeshAgent.enabled = true;
+
             _navMeshAgent.isStopped = true;
+            _navMeshAgent.enabled = navMeshEnabled;
         }
 
         // // [System.Serializable]

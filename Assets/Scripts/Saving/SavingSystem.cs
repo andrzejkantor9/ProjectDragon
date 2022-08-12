@@ -17,14 +17,13 @@ namespace RPG.Saving
         public IEnumerator LoadLastScene(string saveFile)
         {
             Dictionary<string, object> state = LoadFile(saveFile);
+            int sceneBuildIndex = SceneManager.GetActiveScene().buildIndex;
             if(state.ContainsKey(LAST_SCENE_ID))
             {
-                int sceneBuildIndex = (int)state[LAST_SCENE_ID];
-
-                if(sceneBuildIndex != SceneManager.GetActiveScene().buildIndex)
-                    yield return SceneManager.LoadSceneAsync(sceneBuildIndex);
+                sceneBuildIndex = (int)state[LAST_SCENE_ID];                    
             }
 
+            yield return SceneManager.LoadSceneAsync(sceneBuildIndex);
             RestoreState(state);
         }
 
@@ -34,10 +33,18 @@ namespace RPG.Saving
             CaptureState(state);
             SaveFile(saveFile, state);
         }       
+
         public void Load(string saveFile)
         {
             RestoreState(LoadFile(saveFile));
-        }       
+        }    
+
+        public void Delete(string saveFile)
+        {
+            string path = GetPathFromSaveFile(saveFile);
+            File.Delete(path);
+            Logger.Log($"delete save from: {path}", LogFrequency.Sporadic);
+        }   
         #endregion
 
         #region PrivateMethods
@@ -46,7 +53,7 @@ namespace RPG.Saving
             if(state == null) return;
 
             string path = GetPathFromSaveFile(saveFile);
-            Logger.Log($"saving to: {path}");
+            Logger.Log($"saving to: {path}", LogFrequency.Sporadic);
 
             using (FileStream fileStream = File.Open(path, FileMode.Create))
             {
@@ -58,7 +65,7 @@ namespace RPG.Saving
         private Dictionary<string, object> LoadFile(string saveFile)
         {
             string path = GetPathFromSaveFile(saveFile);
-            Logger.Log($"loading from: {path}");
+            Logger.Log($"loading from: {path}", LogFrequency.Sporadic);
 
             if(File.Exists(path))
             {

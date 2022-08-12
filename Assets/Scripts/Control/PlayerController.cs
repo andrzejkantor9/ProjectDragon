@@ -1,10 +1,9 @@
 using UnityEngine;
 
-using UnityEngine.InputSystem;
-
 using RPG.Movement;
 using RPG.Combat;
 using RPG.Core;
+using RPG.Attributes;
 
 //TODO my own fps on screen counter
 
@@ -21,7 +20,7 @@ namespace RPG.Control
         [HideInInspector]
         private Fighter _fighter;
         [HideInInspector]
-        private Health _health;
+        private HitPoints _health;
         #endregion
 
         ///////////////////////////////////////////////////
@@ -31,7 +30,7 @@ namespace RPG.Control
         {
             _mover = GetComponent<Mover>();
             _fighter = GetComponent<Fighter>();
-            _health = GetComponent<Health>();
+            _health = GetComponent<HitPoints>();
         }
 
         private void OnEnable()
@@ -52,7 +51,7 @@ namespace RPG.Control
             if(InteractWithMovement())
                 return;
 
-            Logger.Log("nothing to do.");
+            Logger.Log("nothing to do.", LogFrequency.MostFrames);
         }
         #endregion
 

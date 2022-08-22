@@ -23,9 +23,13 @@ namespace RPG.Control
         [SerializeField]
         private float _suspicionTime = 5f;
         [SerializeField]
+        private float _aggroCooldownTime = 5f;
+        [SerializeField]
         private float _dwellingTime = 3f;
         [SerializeField] [Range(0,1)]
         private float _patrolSpeedFraction = 0.2f;
+        [SerializeField]
+        private float _aggrevateRadius = 5f;
         #endregion
 
         #region Cache
@@ -51,6 +55,7 @@ namespace RPG.Control
         private int _waypointIndex =0;
         private float _timeSinceLastSawPlayer = Mathf.Infinity;
         private float _timeSinceReachedWaypoint = Mathf.Infinity;
+        private float _timeSinceAggrevated = Mathf.Infinity;
         #endregion
 
         ////////////////////////////////////////////////////////////////////////////////
@@ -68,7 +73,7 @@ namespace RPG.Control
         {
             UnityEngine.Assertions.Assert.IsNotNull(_patrolPath, "_patrolPath object is null");  
 
-            _playerGameObject = GameObject.FindWithTag(Enums.EnumToString<Tags>(Tags.Player));
+            _playerGameObject = GameManager.PlayerGameObject;
 
             _guardLocation = new LazyValue<Vector3>(GetGuardPosition);
         }
@@ -90,7 +95,7 @@ namespace RPG.Control
 
         private void Update()
         {
-            if (IsInAttackRangeOfPlayer() && _fighter.CanAttack(_playerGameObject))
+            if (IsAggrevated() && _fighter.CanAttack(_playerGameObject))
             {
                 AttackBehaviour();
             }
@@ -110,6 +115,7 @@ namespace RPG.Control
         {
             _timeSinceLastSawPlayer += Time.deltaTime;
             _timeSinceReachedWaypoint += Time.deltaTime;
+            _timeSinceAggrevated += Time.deltaTime;
         }
 
         private void OnDrawGizmosSelected()
@@ -119,7 +125,14 @@ namespace RPG.Control
         }
         #endregion
 
-        #region PrivateFunctionsVoid
+        #region PublicMethods
+        public void Aggrevate()
+        {
+            _timeSinceAggrevated = 0f;
+        }
+        #endregion
+
+        #region PrivateMethodsVoid
         private void Death()
         {
             enabled = false;
@@ -165,14 +178,27 @@ namespace RPG.Control
         {
             _timeSinceLastSawPlayer = 0;
             _fighter.Attack(_playerGameObject);
+
+            AggrevateNearbyEnemies();
+        }
+
+        private void AggrevateNearbyEnemies()
+        {
+            RaycastHit[] hits = Physics.SphereCastAll(transform.position, _aggrevateRadius, Vector3.up, 0f);
+            foreach (RaycastHit hit in hits)
+            {
+                AIController aIController = hit.collider.GetComponent<AIController>();
+                if(aIController)
+                    aIController.Aggrevate();
+            }
         }
         #endregion
 
         #region PrivateMethodsReturn
-        private bool IsInAttackRangeOfPlayer()
+        private bool IsAggrevated()
         {
             float distanceToPlayer = Vector3.Distance(transform.position, _playerGameObject.transform.position);
-            return distanceToPlayer <= _chaseDistance;
+            return distanceToPlayer <= _chaseDistance || _timeSinceAggrevated < _aggroCooldownTime;
         }
 
         private bool AtWaypoint()

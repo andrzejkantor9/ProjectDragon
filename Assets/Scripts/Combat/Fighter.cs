@@ -36,7 +36,7 @@ namespace RPG.Combat
         [SerializeField]
         private Transform _leftHandTransformWeapon;
         [SerializeField]
-        private Weapon _defaultWeapon;
+        private WeaponConfig _defaultWeapon;
 
         private Transform _target;
         private int _attackAnimId;
@@ -45,6 +45,7 @@ namespace RPG.Combat
 
         #region States
         private float _timeSinceLastAttack = Mathf.Infinity;
+        private WeaponConfig _currentWeaponConfig;
         private LazyValue<Weapon> _currentWeapon;
 
         private HitPoints _targetHealth;
@@ -68,19 +69,12 @@ namespace RPG.Combat
 
             UnityEngine.Assertions.Assert.IsNotNull(_defaultWeapon, "_defaultWeapon is null");
 
+            _currentWeaponConfig = _defaultWeapon;
             _currentWeapon = new LazyValue<Weapon>(SetupDefaultWeapon);
         }
 
         private void Start()
         {
-            // if(_currentWeapon == null)
-            // {
-            //     Weapon weapon = Resources.Load<Weapon>(Enums.EnumToString<WeaponNames>(_defaultWeaponName));
-            //     EquipWeapon(weapon);
-
-            //     Logger.Log($"set weapon (start): {Enums.EnumToString<WeaponNames>(_defaultWeaponName)}, for character: {gameObject.name}", LogFrequency.Rare);
-            // }
-
             _currentWeapon.ForceInit();
         }
 
@@ -102,7 +96,7 @@ namespace RPG.Combat
 
             _actionScheduler.StartAction(this);
 
-            if (!GetIsInRange() && !_target.GetComponent<HitPoints>().IsDead)
+            if (!GetIsInRange(_target.transform) && !_target.GetComponent<HitPoints>().IsDead)
             {
                 _mover.MoveTo(_target.position, 1f);
             }
@@ -128,7 +122,13 @@ namespace RPG.Combat
         
         public bool CanAttack(GameObject combatTarget)
         {
-            return combatTarget != null && !combatTarget.GetComponent<HitPoints>().IsDead;
+            if(!combatTarget)
+                return false;
+            if(!GetComponent<Mover>().CanMoveTo(combatTarget.transform.position) && !GetIsInRange(combatTarget.transform))
+                return false;
+            
+            HitPoints targetHitpoints = combatTarget.GetComponent<HitPoints>();
+            return targetHitpoints && !targetHitpoints.IsDead;
         }
 
         public HitPoints GetTargetHitPoints() => _targetHealth;
@@ -146,19 +146,19 @@ namespace RPG.Combat
         {
             if(stat == Stat.Damage)
             {
-                yield return _currentWeapon.value.WeaponDamage;
+                yield return _currentWeaponConfig.WeaponDamage;
             }
         }    
 
         public IEnumerable<float> GetPercentageModifiers(Stat stat)
         {
             if(stat == Stat.Damage)
-                yield return _currentWeapon.value.PercentageModifier;
+                yield return _currentWeaponConfig.PercentageModifier;
         }    
 
         public object CaptureState()
         {
-            WeaponNames weaponName = (WeaponNames) Enum.Parse(typeof(WeaponNames), _currentWeapon.value.name);
+            WeaponNames weaponName = (WeaponNames) Enum.Parse(typeof(WeaponNames), _currentWeaponConfig.name);
             Logger.Log($"saved weapon: {Enums.EnumToString<WeaponNames>(weaponName)}, for character: {gameObject.name}", LogFrequency.Rare);
             return weaponName;
         }
@@ -166,40 +166,39 @@ namespace RPG.Combat
         public void RestoreState(object state)
         {
             WeaponNames weaponName = (WeaponNames)state;
-            Weapon weapon = Resources.Load<Weapon>(Enums.EnumToString<WeaponNames>(weaponName));
+            WeaponConfig weapon = Resources.Load<WeaponConfig>(Enums.EnumToString<WeaponNames>(weaponName));
             Logger.Log($"loaded weapon: {Enums.EnumToString<WeaponNames>(weaponName)}, for character: {gameObject.name}", LogFrequency.Rare);
 
-            _currentWeapon.value = weapon;
+            _currentWeaponConfig = weapon;
             EquipWeapon(weapon);
         }
         #endregion
 
         #region PrivateFunctions
-        public void EquipWeapon(Weapon weapon)
+        public void EquipWeapon(WeaponConfig weapon)
         {
             Logger.Log($"equip weapon: {weapon.name}, for character: {gameObject.name}", LogFrequency.Regular);
-            _currentWeapon.value = weapon;
+            _currentWeaponConfig = weapon;
 
-            AttachWeapon(weapon);
+            _currentWeapon.value = AttachWeapon(weapon);
         }
 
-        private void AttachWeapon(Weapon weapon)
+        private Weapon AttachWeapon(WeaponConfig weapon)
         {
             Animator animator = GetComponent<Animator>();
-            weapon.Spawn(_rightHandTransformWeapon, _leftHandTransformWeapon, animator);
+            return weapon.Spawn(_rightHandTransformWeapon, _leftHandTransformWeapon, animator);
         }
 
         private Weapon SetupDefaultWeapon()
         {
-            AttachWeapon(_defaultWeapon);
-            return _defaultWeapon;
+            return AttachWeapon(_defaultWeapon);
         }
 
         private void AttackBehaviour()
         {
             transform.LookAt(_target);  
             
-            if(_timeSinceLastAttack > _currentWeapon.value.TimeBetweenAttacks)
+            if(_timeSinceLastAttack > _currentWeaponConfig.TimeBetweenAttacks)
             {
                 _animator.SetTrigger(_attackAnimId);
                 _timeSinceLastAttack = 0f;
@@ -213,9 +212,9 @@ namespace RPG.Combat
             enabled = false;
         }
 
-        private bool GetIsInRange()
+        private bool GetIsInRange(Transform targetTransform)
         {
-            return Vector3.Distance(transform.position, _target.position) <= _currentWeapon.value.WeaponRange;
+            return Vector3.Distance(transform.position, targetTransform.position) <= _currentWeaponConfig.WeaponRange;
         }
 
         private void StopAttack()
@@ -242,10 +241,14 @@ namespace RPG.Combat
                 return;
 
             float damage = GetComponent<BaseStats>().GetStat(Stat.Damage);
-            if(_currentWeapon.value.HasProjectile)
+
+            if(_currentWeapon.value)
+                _currentWeapon.value.Hit();
+
+            if(_currentWeaponConfig.HasProjectile)
             {
                 if(!_targetHealth.IsDead)
-                    _currentWeapon.value.LaunchProjectile(_rightHandTransformWeapon, _leftHandTransformWeapon, _target.GetComponent<HitPoints>(), gameObject, damage);  
+                    _currentWeaponConfig.LaunchProjectile(_rightHandTransformWeapon, _leftHandTransformWeapon, _target.GetComponent<HitPoints>(), gameObject, damage);  
             }
             else
             {

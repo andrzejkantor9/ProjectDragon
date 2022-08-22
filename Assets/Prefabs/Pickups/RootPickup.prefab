@@ -44,7 +44,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.55
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 1.16}
 --- !u!114 &3795809903882262966
 MonoBehaviour:
@@ -59,3 +59,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _weapon: {fileID: 11400000, guid: 0250492ffdc62f741bc23d2ca4f0bb1b, type: 2}
+  _hitPointsToRestore: 0
+  _respawnTime: 5

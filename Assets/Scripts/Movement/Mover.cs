@@ -12,6 +12,7 @@ using RPG.Attributes;
 //make any point input work
 //pass input action instead of doing it here
 //remember it should work out of the box, when adding component - as little extra work as possible
+//make editor functionality to find ALL things referencing script (enum as int placing in middle a new state)
 
 //TODO make checker if all levels values are set in progression
 //TODO internal vs public vs etc
@@ -43,6 +44,8 @@ namespace RPG.Movement
         #region Parameters
         [SerializeField]
         private float _maxSpeed = 6f;
+        [SerializeField]
+        private float _maxNavMeshPathLength = 40f;
         #endregion
 
         #region Cache
@@ -90,11 +93,23 @@ namespace RPG.Movement
         }
         #endregion
 
-        #region PublicFuncionality
+        #region PublicMethods
         public void StartMoveAction(Vector3 destination, float speedFraction)
         {
             _actionScheduler.StartAction(this);
             MoveTo(destination, speedFraction);
+        }
+
+        public bool CanMoveTo(Vector3 destination)
+        {
+            NavMeshPath navMeshPath = new NavMeshPath();
+            bool hasPath = NavMesh.CalculatePath(transform.position, destination, NavMesh.AllAreas, navMeshPath);
+            if(!hasPath || navMeshPath.status != NavMeshPathStatus.PathComplete)
+                return false;
+            if(GetPathLength(navMeshPath) > _maxNavMeshPathLength)
+                return false;
+
+            return true;
         }
 
         public void MoveTo(Vector3 destination, float speedFraction)
@@ -103,11 +118,23 @@ namespace RPG.Movement
             _navMeshAgent.speed = _maxSpeed * Mathf.Clamp01(speedFraction);
             _navMeshAgent.isStopped = false;
         }
-
-
         #endregion
 
-        #region PrivateFunctionality
+        #region PrivateMethods
+        private float GetPathLength(NavMeshPath navMeshPath)
+        {
+            float totalDistance = 0f;
+            if(navMeshPath.corners.Length < 2f)
+                return totalDistance;
+
+            for(int i =0; i < navMeshPath.corners.Length - 1; ++i)
+            {
+                totalDistance += Vector3.Distance(navMeshPath.corners[i], navMeshPath.corners[i+1]);
+            }
+
+            return totalDistance;
+        }
+
         private void UpdateAnimator()
         {
             Vector3 velocity = _navMeshAgent.velocity;

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 using RPG.Attributes;
 
@@ -26,6 +27,11 @@ namespace RPG.Combat
         #region States
         private HitPoints _targetHealth;
         private GameObject _instigator;
+        #endregion
+
+        #region Events
+        [SerializeField]
+        private UnityEvent OnProjectileHit;
         #endregion
 
         ///////////////////////////////////////////////////////////////////////////
@@ -67,6 +73,7 @@ namespace RPG.Combat
                     Destroy(objectToDestory);
                 }
                 
+                OnProjectileHit?.Invoke();
                 Destroy(gameObject, _lifeAfterImpact);
             }
         }

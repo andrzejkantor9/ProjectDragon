@@ -80,10 +80,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 123368843, guid: 4a09ab9cc4f6d0b4bb0921122742bd3d, type: 3}
+      propertyPath: _maxNavMeshPathLength
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 2112417346504675999, guid: 4a09ab9cc4f6d0b4bb0921122742bd3d,
         type: 3}
       propertyPath: _hitPoints
       value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 4785009207475966631, guid: 4a09ab9cc4f6d0b4bb0921122742bd3d,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5713178834727618916, guid: 4a09ab9cc4f6d0b4bb0921122742bd3d,
         type: 3}
@@ -270,3 +279,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57521157d97396e4bbcb90bbe1bf29e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _navMeshProjectionDistance: 1
+  _cursorMappings:
+  - <Type>k__BackingField: 0
+    <Texture>k__BackingField: {fileID: 2800000, guid: 21628736160fcc9488493401da3ef621,
+      type: 3}
+    <Hotspot>k__BackingField: {x: 0, y: 0}
+  - <Type>k__BackingField: 1
+    <Texture>k__BackingField: {fileID: 2800000, guid: 8859fce41c5d0a148ad0b7eebfca7fe9,
+      type: 3}
+    <Hotspot>k__BackingField: {x: 0, y: 0}
+  - <Type>k__BackingField: 2
+    <Texture>k__BackingField: {fileID: 2800000, guid: 2d18e23e3ce249b4489b8bcdd02d3f48,
+      type: 3}
+    <Hotspot>k__BackingField: {x: 0, y: 0}
+  - <Type>k__BackingField: 3
+    <Texture>k__BackingField: {fileID: 2800000, guid: 2e71a8202d3b4a3448ec85ced5a40265,
+      type: 3}
+    <Hotspot>k__BackingField: {x: 0, y: 0}
+  - <Type>k__BackingField: 4
+    <Texture>k__BackingField: {fileID: 2800000, guid: f8c873f1e53e83f4aabf342d6be1dfc3,
+      type: 3}
+    <Hotspot>k__BackingField: {x: 0, y: 0}

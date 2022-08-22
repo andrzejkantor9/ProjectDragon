@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine.AI;
 
 using RPG.Saving;
+using RPG.Core;
+using RPG.Control;
 
 namespace RPG.SceneManagment
 {
@@ -75,15 +77,18 @@ namespace RPG.SceneManagment
             DontDestroyOnLoad(gameObject);
             Fader fader = FindObjectOfType<Fader>();
             SavingWrapper savingWrapper = FindObjectOfType<SavingWrapper>();
+            PlayerController playerController = GameManager.PlayerGameObject.GetComponent<PlayerController>();
+            playerController.enabled = false;
             
-            Coroutine fadeOut = StartCoroutine(fader.FadeOut(_fadeOutDuration));
-            _runningCoroutines.Add(fadeOut);
-            yield return fadeOut;
+            yield return fader.FadeOut(_fadeOutDuration);
             // _runningCoroutines.Remove(fadeOut);
 
             savingWrapper.Save();
             Logger.Log("loading scene", LogFrequency.Rare);
             yield return LoadSceneByIndexAsync(_sceneToLoad);
+
+            PlayerController newPlayerController = GameManager.PlayerGameObject.GetComponent<PlayerController>();
+            newPlayerController.enabled = false;
 
             Logger.Log("scene loaded", LogFrequency.Rare);
             savingWrapper.Load();
@@ -93,18 +98,16 @@ namespace RPG.SceneManagment
             savingWrapper.Save();
 
             yield return new WaitForSeconds(_fadeOutDelay);
-
-            Coroutine fadeIn = StartCoroutine(fader.FadeIn(_fadeInDuration));
-            _runningCoroutines.Add(fadeIn);
-            yield return fadeIn;
+            fader.FadeIn(_fadeInDuration);
             // _runningCoroutines.Remove(fadeIn);
     
+            newPlayerController.enabled = true;
             Destroy(gameObject);
         }
 
         private void UpdatePlayer(Portal otherPortal)
         {
-            GameObject playerGameObject = GameObject.FindWithTag(Enums.EnumToString<Tags>(Tags.Player));
+            GameObject playerGameObject = GameManager.PlayerGameObject;
 
             playerGameObject.GetComponent<NavMeshAgent>().Warp(otherPortal.SpawnPoint.position);
             playerGameObject.transform.rotation = otherPortal.SpawnPoint.rotation;

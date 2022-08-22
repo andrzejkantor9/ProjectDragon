@@ -4,6 +4,8 @@ using UnityEngine;
 
 using TMPro;
 
+using RPG.Core;
+
 namespace RPG.Stats
 {
     public class ExperienceDisplay : MonoBehaviour
@@ -25,7 +27,7 @@ namespace RPG.Stats
 
         private void Awake()
         {
-            _experience = GameObject.FindWithTag(Enums.EnumToString<Tags>(Tags.Player)).GetComponent<Experience>();   
+            _experience = GameManager.PlayerGameObject.GetComponent<Experience>();   
         }
 
         private void Update()

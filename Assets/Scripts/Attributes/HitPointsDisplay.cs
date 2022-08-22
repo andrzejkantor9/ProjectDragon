@@ -4,6 +4,8 @@ using UnityEngine;
 
 using TMPro;
 
+using RPG.Core;
+
 namespace RPG.Attributes
 {
     public class HitPointsDisplay : MonoBehaviour
@@ -25,7 +27,7 @@ namespace RPG.Attributes
 
         private void Awake()
         {
-            _hitPoints = GameObject.FindWithTag(Enums.EnumToString<Tags>(Tags.Player)).GetComponent<HitPoints>();   
+            _hitPoints = GameManager.PlayerGameObject.GetComponent<HitPoints>();   
         }
 
         private void Update()

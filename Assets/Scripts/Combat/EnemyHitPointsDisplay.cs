@@ -5,6 +5,7 @@ using UnityEngine;
 using TMPro;
 
 using RPG.Attributes;
+using RPG.Core;
 
 namespace RPG.Combat
 {
@@ -27,7 +28,7 @@ namespace RPG.Combat
         
         private void Awake()
         {
-            _fighter = GameObject.FindWithTag(Enums.EnumToString<Tags>(Tags.Player)).GetComponent<Fighter>();
+            _fighter = GameManager.PlayerGameObject.GetComponent<Fighter>();
         }
 
         private void Update()

@@ -1,6 +1,7 @@
 using System;
 
 using UnityEngine;
+using UnityEngine.Events;
 
 using GameDevTV.Utils;
 
@@ -28,6 +29,12 @@ namespace RPG.Attributes
 
         #region Events
         public event Action OnDeath;
+        [SerializeField]
+        private UnityEvent<float> OnTakeDamage;
+        [SerializeField]
+        private UnityEvent onDeathUnityEvent;
+        // [Serializable]
+        // public class TakeDamageEvent : UnityEvent<float>{}
         #endregion
 
         /////////////////////////////////////////////////////////
@@ -47,7 +54,7 @@ namespace RPG.Attributes
 
         private void Start()
         {
-            HitPointsValue.ForceInit();            
+            HitPointsValue.ForceInit();
         }
 
         private void OnEnable()
@@ -72,9 +79,10 @@ namespace RPG.Attributes
         public void TakeDamage(GameObject instigator, float damage)
         {
             HitPointsValue.value = Mathf.Max(HitPointsValue.value - damage, 0);
-            Logger.Log($"health of {gameObject.name}: {HitPointsValue.ToString()}, taken damage: {damage}", LogFrequency.Regular);
+            Logger.Log($"health of {gameObject.name}: {HitPointsValue.value.ToString()}, taken damage: {damage}", LogFrequency.Regular);
 
             CheckDeath(instigator);
+            OnTakeDamage.Invoke(damage);
         }
 
         public float GetPercentage()
@@ -84,13 +92,20 @@ namespace RPG.Attributes
             return _hitPointsPercentage;
         }
 
+        public void Heal(float hitPointsToRestore)
+        {
+            HitPointsValue.value = Mathf.Min(HitPointsValue.value + hitPointsToRestore, GetMaxHitPoints());
+        }
+
+        public float GetFraction() => _hitPointsPercentage / 100f;
+
         public float GetMaxHitPoints() => GetComponent<BaseStats>().GetStat(Stat.HitPoints);
         #endregion
 
         #region Interfaces
         public object CaptureState()
         {
-            return HitPointsValue;
+            return HitPointsValue.value;
         }
 
         public void RestoreState(object state)
@@ -111,7 +126,8 @@ namespace RPG.Attributes
                     instigator.GetComponent<Experience>().GainExperience(GetComponent<BaseStats>().GetStat(Stat.ExperienceReward));
 
                 GetComponent<ActionScheduler>().CancelCurrentAction();
-                OnDeath?.Invoke();
+                OnDeath();
+                onDeathUnityEvent?.Invoke();
             }
 
             return IsDead;

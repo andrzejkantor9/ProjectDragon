@@ -2,13 +2,20 @@ using System.Collections;
 
 using UnityEngine;
 
+using RPG.Control;
+using RPG.Core;
+using RPG.Attributes;
+using RPG.Movement;
+
 namespace RPG.Combat
 {
-    public class WeaponPickup : MonoBehaviour
+    public class WeaponPickup : MonoBehaviour, IRaycastable
     {
         #region Parameters
         [SerializeField]
-        private Weapon _weapon;
+        private WeaponConfig _weapon;
+        [SerializeField]
+        private float _hitPointsToRestore = 0f;
         [SerializeField]
         private float _respawnTime = 5f;
         #endregion
@@ -20,10 +27,25 @@ namespace RPG.Combat
         {
             if(other.CompareTag(Enums.EnumToString<Tags>(Tags.Player)))
             {
-                other.GetComponent<Fighter>().EquipWeapon(_weapon);
-                // Destroy(gameObject);
-                StartCoroutine(HideForSeconds(_respawnTime));
+                Pickup(other.gameObject);
             }
+        }
+        #endregion
+
+        #region Interfaces
+        public bool HandleRaycast(PlayerController playerController)
+        {
+            if(InputManager.IsPointerPressed())
+            {
+                // Pickup(playerController.gameObject);
+                playerController.GetComponent<Mover>().StartMoveAction(transform.position, 1f);
+            }
+            return true;
+        }
+
+        public CursorType GetCursorType()
+        {
+            return CursorType.Pickup;
         }
         #endregion
 
@@ -44,6 +66,15 @@ namespace RPG.Combat
             {
                 child.gameObject.SetActive(active);
             }
+        }
+
+        private void Pickup(GameObject subject)
+        {
+            if(_weapon != null)
+                subject.GetComponent<Fighter>().EquipWeapon(_weapon);
+            if(_hitPointsToRestore > 0f)
+                subject.GetComponent<HitPoints>().Heal(_hitPointsToRestore);
+            StartCoroutine(HideForSeconds(_respawnTime));
         }
         #endregion
     }

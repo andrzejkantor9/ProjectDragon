@@ -21,5 +21,5 @@ MonoBehaviour:
     type: 3}
   _weaponAnimatorOverride: {fileID: 22100000, guid: 28d8220d15782ca42917f1eaf2328448,
     type: 2}
-  equippedPrefab: {fileID: 389638098184596217, guid: da46ef1e7c682b343b0c1eb75b9af65a,
+  equippedPrefab: {fileID: 5497153161784785497, guid: da46ef1e7c682b343b0c1eb75b9af65a,
     type: 3}

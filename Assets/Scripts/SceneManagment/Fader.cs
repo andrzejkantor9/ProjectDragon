@@ -11,6 +11,10 @@ namespace RPG.SceneManagment
         private CanvasGroup _canvasGroup;
         #endregion
 
+        #region States
+        private Coroutine _currentActiveFade;
+        #endregion
+
         //////////////////////////////////////////////////////////////////
 
         #region EngineMethods
@@ -28,28 +32,30 @@ namespace RPG.SceneManagment
         #endregion
 
         #region Coroutines
-        public IEnumerator FadeOut(float time)
+        public Coroutine FadeOut(float time)
         {
-            _canvasGroup.alpha = 0f;
-            yield return null;
-            
-            //it is clamped to 1
-            while(_canvasGroup.alpha != 1f)
-            {
-                _canvasGroup.alpha += Time.deltaTime / time;
-                yield return null;
-            }
+             return Fade(1f, time);
         }
 
-        public IEnumerator FadeIn(float time)
+        public Coroutine FadeIn(float time)
         {
-            _canvasGroup.alpha = 1f;
-            yield return null;
+            return Fade(0f, time);
+        }
 
-            //it is clamped to 0
-            while(_canvasGroup.alpha != 0f)
+        public Coroutine Fade(float target, float time)
+        {
+            if(_currentActiveFade != null)
+                StopCoroutine(_currentActiveFade);
+
+            _currentActiveFade = StartCoroutine(FadeRoutine(target, time));
+            return _currentActiveFade;
+        }
+
+        private IEnumerator FadeRoutine(float target, float time)
+        {
+            while(!Mathf.Approximately(_canvasGroup.alpha, target))
             {
-                _canvasGroup.alpha -= Time.deltaTime / time;
+                _canvasGroup.alpha = Mathf.MoveTowards(_canvasGroup.alpha, target, Time.deltaTime / time);
                 yield return null;
             }
         }

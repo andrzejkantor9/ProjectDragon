@@ -71,7 +71,7 @@ namespace RPG.Control
 
         private void Awake()
         {
-            UnityEngine.Assertions.Assert.IsNotNull(_patrolPath, "_patrolPath object is null");  
+            // UnityEngine.Assertions.Assert.IsNotNull(_patrolPath, "_patrolPath object is null");  
 
             _playerGameObject = GameManager.PlayerGameObject;
 

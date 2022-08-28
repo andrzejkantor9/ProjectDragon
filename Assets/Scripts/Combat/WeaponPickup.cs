@@ -25,7 +25,7 @@ namespace RPG.Combat
         #region EngineMethods
         private void OnTriggerEnter(Collider other)
         {
-            if(other.CompareTag(Enums.EnumToString<Tags>(Tags.Player)))
+            if(GameManager.HasPlayerTag(other.gameObject))
             {
                 Pickup(other.gameObject);
             }

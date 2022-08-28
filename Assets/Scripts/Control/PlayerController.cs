@@ -39,6 +39,10 @@ namespace RPG.Control
         private CursorMapping[] _cursorMappings;
         #endregion
 
+        #region States
+        private bool _isDraggingUI = false;
+        #endregion
+
         #region Data
         [Serializable]
         struct CursorMapping
@@ -145,11 +149,18 @@ namespace RPG.Control
 
         private bool InteractWithUI()
         {
+            if(!InputManager.IsPointerPressed())
+                _isDraggingUI = false;
+
             bool isOverUI = EventSystem.current.IsPointerOverGameObject();
             if(isOverUI)
+            {
+                if(InputManager.IsPointerPressed())
+                    _isDraggingUI = true;
                 SetCursor(CursorType.UI);
+            }
 
-            return isOverUI;
+            return isOverUI || _isDraggingUI;
         }
 
         private bool InteractWithComponent()

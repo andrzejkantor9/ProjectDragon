@@ -2,8 +2,15 @@ using UnityEngine;
 using UnityEngine.AI;
 
 using RPG.Core;
-using RPG.Saving;
+using GameDevTV.SavingAssetPack;
 using RPG.Attributes;
+
+//fix nullrefs when starting and changing scene
+    //make transitions from levels work properly
+//fix enemies hp bars
+//fix on enemy kill nullrefs
+
+//fix upward rotation when facing enemy on elevation
 
 //MAKE move to clicked area component
 //decouple animations

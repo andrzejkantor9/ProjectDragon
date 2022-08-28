@@ -3,6 +3,7 @@ using System;
 using UnityEngine;
 
 using GameDevTV.Utils;
+using GameDevTV.Inventories;
 
 using RPG.Movement;
 using RPG.Core;
@@ -19,17 +20,14 @@ namespace RPG.Combat
     [RequireComponent(typeof(HitPoints))]
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(CapsuleCollider))]
-    public class Fighter : MonoBehaviour, IAction, ISaveable, IModifierProvider
+    public class Fighter : MonoBehaviour, IAction, ISaveable
     {
         #region Cache
-        [HideInInspector]
         private Mover _mover;
-        [HideInInspector]
         private Animator _animator;
-        [HideInInspector]
         private ActionScheduler _actionScheduler;
-        [HideInInspector]
         private HitPoints _hitPoints;
+        private Equipment _equipment;
 
         [SerializeField]
         private Transform _rightHandTransformWeapon;
@@ -54,16 +52,14 @@ namespace RPG.Combat
         ////////////////////////////////////////////////////////////////////////
 
         #region EngineFunctions
-        private void OnValidate()
+        private void Awake()
         {
             _mover = GetComponent<Mover>();
             _animator = GetComponent<Animator>();            
             _actionScheduler = GetComponent<ActionScheduler>(); 
             _hitPoints = GetComponent<HitPoints>();
-        }
+            _equipment = GetComponent<Equipment>();
 
-        private void Awake()
-        {
             _attackAnimId = Animator.StringToHash("Attack");
             _stopAttackAnimId = Animator.StringToHash("StopAttack");
 
@@ -81,11 +77,15 @@ namespace RPG.Combat
         private void OnEnable()
         {
             _hitPoints.OnDeath += Death;
+            if(_equipment)
+                _equipment.equipmentUpdated += UpdateWeapon;
         }
 
         private void OnDisable()
         {
             _hitPoints.OnDeath -= Death;
+            if(_equipment)
+                _equipment.equipmentUpdated -= UpdateWeapon;
         }
 
         private void Update()
@@ -140,25 +140,12 @@ namespace RPG.Combat
             StopAttack();
             _target = null;
             GetComponent<Mover>().Cancel();
-        }
-
-        public IEnumerable<float> GetAdditiveModifiers(Stat stat)
-        {
-            if(stat == Stat.Damage)
-            {
-                yield return _currentWeaponConfig.WeaponDamage;
-            }
-        }    
-
-        public IEnumerable<float> GetPercentageModifiers(Stat stat)
-        {
-            if(stat == Stat.Damage)
-                yield return _currentWeaponConfig.PercentageModifier;
-        }    
+        }  
 
         public object CaptureState()
         {
-            WeaponNames weaponName = (WeaponNames) Enum.Parse(typeof(WeaponNames), _currentWeaponConfig.name);
+            Logger.Log($"gameObject: {gameObject.name}, weapon config: {_currentWeaponConfig?.name}", LogFrequency.Sporadic);
+            WeaponNames weaponName = (WeaponNames) Enum.Parse(typeof(WeaponNames), _currentWeaponConfig?.name);
             Logger.Log($"saved weapon: {Enums.EnumToString<WeaponNames>(weaponName)}, for character: {gameObject.name}", LogFrequency.Rare);
             return weaponName;
         }
@@ -175,9 +162,18 @@ namespace RPG.Combat
         #endregion
 
         #region PrivateFunctions
+        private void UpdateWeapon()
+        {
+            WeaponConfig weaponConfig = _equipment.GetItemInSlot(EquipLocation.Weapon) as WeaponConfig;   
+            if(weaponConfig == null)
+                EquipWeapon(_defaultWeapon);
+            else
+                EquipWeapon(weaponConfig);
+        }
+
         public void EquipWeapon(WeaponConfig weapon)
         {
-            Logger.Log($"equip weapon: {weapon.name}, for character: {gameObject.name}", LogFrequency.Regular);
+            Logger.Log($"equip weapon: {weapon?.name}, for character: {gameObject.name}", LogFrequency.Regular);
             _currentWeaponConfig = weapon;
 
             _currentWeapon.value = AttachWeapon(weapon);

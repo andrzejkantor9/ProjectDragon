@@ -1,9 +1,8 @@
 using System.Collections;
 
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-using RPG.Saving;
+using GameDevTV.SavingAssetPack;
 
 namespace RPG.SceneManagment
 {    
@@ -12,6 +11,8 @@ namespace RPG.SceneManagment
         #region Parameters
         [SerializeField]
         private float _fadeInTime = 1f;
+        [SerializeField]
+        private SavingInputConfig _savingInputConfig;
         #endregion
 
         #region StaticVariables
@@ -25,15 +26,16 @@ namespace RPG.SceneManagment
         private void Awake()
         {    
             StartCoroutine(LoadLastScene());
+            UnityEngine.Assertions.Assert.IsNotNull(_savingInputConfig, "_savingInputConfig is null");
         }
 
         private void Update()
         {
-            if (Keyboard.current.sKey.wasPressedThisFrame)
+            if(_savingInputConfig.WasSavePressedThisFrame)
                 Save();
-            else if (Keyboard.current.lKey.wasPressedThisFrame)
+            if(_savingInputConfig.WasLoadPressedThisFrame)
                 Load();
-            else if (Keyboard.current.deleteKey.wasPressedThisFrame)
+            if(_savingInputConfig.WasDeleteSavePressedThisFrame)
                 DeleteSave();
         }
         #endregion

@@ -2,8 +2,10 @@
     "name": "Code",
     "rootNamespace": "",
     "references": [
-        "GUID:75469ad4d38634e559750d17036d5f7c",
-        "GUID:6055be8ebefd69e48b49212b09b47b2f"
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:384ddcbe6cc14d44fa83ec87e4a8a05e",
+        "GUID:f936efc4c33d3fb40b529f702cef3139",
+        "GUID:c6d2b0f16fabf7c4fbff19edf4990f66"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

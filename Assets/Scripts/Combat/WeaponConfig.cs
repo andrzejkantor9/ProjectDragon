@@ -1,11 +1,15 @@
 using UnityEngine;
 
 using RPG.Attributes;
+using RPG.Stats;
+
+using GameDevTV.Inventories;
+using System.Collections.Generic;
 
 namespace RPG.Combat
 {
     [CreateAssetMenu(fileName = "Weapon", menuName = "Weapons/MakeNewWeapon", order = 0)]
-    public class WeaponConfig : ScriptableObject
+    public class WeaponConfig : EquipableItem, IModifierProvider
     {
         #region Parameters
         [field: SerializeField]
@@ -65,6 +69,20 @@ namespace RPG.Combat
             }
 
             return weapon;
+        }
+        #endregion
+
+        #region Interfaces
+        public IEnumerable<float> GetAdditiveModifiers(Stat stat)
+        {
+            if(stat == Stat.Damage)
+                yield return WeaponDamage;
+        }
+
+        public IEnumerable<float> GetPercentageModifiers(Stat stat)
+        {
+            if(stat == Stat.Damage)
+                yield return PercentageModifier;
         }
         #endregion
 

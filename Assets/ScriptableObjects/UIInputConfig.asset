@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c64b500b5cd3ae949a218bb827d3aa8e, type: 3}
+  m_Name: UIInputConfig
+  m_EditorClassIdentifier: 
+  <ShowHideUI>k__BackingField:
+    m_Name: Show Hide UI
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 442d04df-caf8-46e8-bd98-b19abd555e92
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 9228412e-9b2a-43ee-8b91-e03ff894bf23
+      m_Path: <Keyboard>/i
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Show Hide UI
+      m_Flags: 0
+    m_Flags: 0

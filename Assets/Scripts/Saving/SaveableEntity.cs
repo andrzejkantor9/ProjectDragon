@@ -8,7 +8,7 @@ using UnityEditor;
 
 using RPG.Core;
 
-namespace RPG.Saving
+namespace GameDevTV.SavingAssetPack
 {
     [ExecuteAlways]
     public class SaveableEntity : MonoBehaviour
@@ -17,7 +17,7 @@ namespace RPG.Saving
         string _uniqueIdentifier = String.Empty;
         static Dictionary<string, SaveableEntity> uuidDictionary = new Dictionary<string, SaveableEntity>();
 
-        public string GetUniqueIndentifier()
+        public string GetUniqueIdentifier()
         {
             return _uniqueIdentifier;
         }
@@ -74,7 +74,7 @@ namespace RPG.Saving
                 uuidDictionary.Remove(identifier);
                 return true;
             }
-            if(uuidDictionary[identifier].GetUniqueIndentifier() != identifier)
+            if(uuidDictionary[identifier].GetUniqueIdentifier() != identifier)
             {
                 uuidDictionary.Remove(identifier);
                 return true;

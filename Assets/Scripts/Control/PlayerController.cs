@@ -9,9 +9,6 @@ using RPG.Combat;
 using RPG.Core;
 using RPG.Attributes;
 
-//TODO my own fps on screen counter
-
-//TODO InteractWithCombat is ugly
 namespace RPG.Control
 {
     [RequireComponent(typeof(Mover))]

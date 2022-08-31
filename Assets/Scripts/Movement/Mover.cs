@@ -10,7 +10,14 @@ using RPG.Attributes;
 //fix enemies hp bars
 //fix on enemy kill nullrefs
 
+//dialogueNode setter czy field?
+//translation files into dialogs editor
 //fix upward rotation when facing enemy on elevation
+//TODO my own fps on screen counter
+//TODO fighter on target death event -=
+//LOCAL METHODS?
+
+//////////////////////////////////////////
 
 //MAKE move to clicked area component
 //decouple animations
@@ -20,6 +27,7 @@ using RPG.Attributes;
 //pass input action instead of doing it here
 //remember it should work out of the box, when adding component - as little extra work as possible
 //make editor functionality to find ALL things referencing script (enum as int placing in middle a new state)
+//TODO add audio bg
 
 //TODO make checker if all levels values are set in progression
 //TODO internal vs public vs etc
@@ -35,9 +43,6 @@ using RPG.Attributes;
 //TODO make everything possible as standalone components (for any unity project)
 //TODO save data in editor without serializefield for objects instantiated in runtime (hide in inspector + on validate does not work)
 //TODO use cinemachine instead of camera
-
-//TODO add audio
-//TODO attacked enemies auto chase
 
 //TODO add list of buffs like in bdo and prep phase
 namespace RPG.Movement

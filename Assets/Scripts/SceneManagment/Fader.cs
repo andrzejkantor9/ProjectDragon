@@ -2,7 +2,6 @@ using System.Collections;
 
 using UnityEngine;
 
-//TODO fix fading when changing scenes before it fades in
 namespace RPG.SceneManagment
 {
     public class Fader : MonoBehaviour

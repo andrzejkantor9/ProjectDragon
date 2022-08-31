@@ -11,7 +11,6 @@ using RPG.Attributes;
 using RPG.Stats;
 using System.Collections.Generic;
 
-//TODO on target death event wycieki możliwe?
 namespace RPG.Combat
 {
     [RequireComponent(typeof(Mover))]

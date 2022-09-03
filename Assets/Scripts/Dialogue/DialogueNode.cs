@@ -17,6 +17,10 @@ namespace RPG.Dialogue
         public List<string> ChildrenID {get; private set;} = new List<string>();
         [field: SerializeField]
         private Rect _nodePosition  = new Rect(0f, 0f, 200f, 100f);
+        [field: SerializeField]
+        public string OnEnterAction {get; private set;} = "";
+        [field: SerializeField]
+        public string OnExitAction {get; private set;} = "";
         #endregion
 
         #region PublicMethods

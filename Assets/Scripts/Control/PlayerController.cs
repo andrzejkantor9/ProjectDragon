@@ -171,7 +171,8 @@ namespace RPG.Control
                 {
                     if(raycastable.HandleRaycast(this))
                     {
-                        SetCursor(raycastable.GetCursorType());
+                        CursorType cursorType = raycastable.GetCursorType();
+                        SetCursor(cursorType);
                         return true;
                     }
                 }

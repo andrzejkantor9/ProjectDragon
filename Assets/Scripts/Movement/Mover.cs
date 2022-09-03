@@ -9,6 +9,7 @@ using RPG.Attributes;
     //make transitions from levels work properly
 //fix enemies hp bars
 //fix on enemy kill nullrefs
+//start move action to npc dialogue
 
 //dialogueNode setter czy field?
 //translation files into dialogs editor
@@ -16,6 +17,17 @@ using RPG.Attributes;
 //TODO my own fps on screen counter
 //TODO fighter on target death event -=
 //LOCAL METHODS?
+//cinematic pauses all actions
+//dialogue
+    //saving state?
+    //dont trigger dialogue from any distance
+    //each dialogue only once
+//dialogue editor
+    //zoom in out
+    //all fields in editor
+    //drag node to scroll
+    //some area that appears as node isnt draggable
+    //flexible scroll width & height
 
 //////////////////////////////////////////
 

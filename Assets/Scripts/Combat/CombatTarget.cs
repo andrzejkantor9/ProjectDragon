@@ -12,6 +12,9 @@ namespace RPG.Combat
         #region Interfaces
         public bool HandleRaycast(PlayerController playerController)
         {
+            if(!enabled)
+                return false;
+                
             if(playerController.GetComponent<Fighter>().CanAttack(gameObject))
             {
                 if (InputManager.IsPointerPressed())

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d7beaab8e2595d4cab7abc6e482e9e2, type: 3}
+  m_Name: MotherHubbardsBunions
+  m_EditorClassIdentifier: 
+  _objectives:
+  - <Reference>k__BackingField: 1
+    <Description>k__BackingField: Go irritate the guard.
+  - <Reference>k__BackingField: 2
+    <Description>k__BackingField: Visit the pharmacy.
+  _rewards:
+  - <Number>k__BackingField: 1
+    <Item>k__BackingField: {fileID: 11400000, guid: bae06240be0156c4b864c60a76a7db92,
+      type: 2}
+  - <Number>k__BackingField: 2
+    <Item>k__BackingField: {fileID: 11400000, guid: 0967d51ac2f720f4488bda5ac31cf709,
+      type: 2}

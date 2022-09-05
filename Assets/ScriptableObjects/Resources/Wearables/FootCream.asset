@@ -9,17 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db07db4b42f663e44afa645eafba2e10, type: 3}
-  m_Name: HealthyHat
+  m_Script: {fileID: 11500000, guid: f20eb1792e8048a46bf5c7c520a3ea3b, type: 3}
+  m_Name: FootCream
   m_EditorClassIdentifier: 
-  itemID: 762575ac-de1a-4e8c-aa31-e12fa400b140
-  displayName: HealthyHat
-  description: It gives hp. It is gut.
-  icon: {fileID: 21300000, guid: c1b61b3a91732a747a8496fc75a13fe2, type: 3}
+  itemID: e932062a-e66a-4db2-bdbc-c3752a6b40d4
+  displayName: FootCream
+  description: 
+  icon: {fileID: 21300000, guid: f1dd815974b2d4240a6bc912d6585497, type: 3}
   pickup: {fileID: 8956743099817969053, guid: e1de9865f93876446a3a9414c32abcb5, type: 3}
   stackable: 0
-  allowedEquipLocation: 0
-  _additiveModifiers:
-  - _stat: 0
-    _value: 20
-  _percentageModifers: []
+  allowedEquipLocation: 4

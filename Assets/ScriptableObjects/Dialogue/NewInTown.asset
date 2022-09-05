@@ -290,4 +290,4 @@ MonoBehaviour:
     width: 200
     height: 100
   <OnEnterAction>k__BackingField: 
-  <OnExitAction>k__BackingField: 
+  <OnExitAction>k__BackingField: TestObjective

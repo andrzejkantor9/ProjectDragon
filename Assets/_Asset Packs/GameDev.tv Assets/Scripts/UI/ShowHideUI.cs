@@ -1,37 +1,43 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace GameDevTV.UI
 {
     public class ShowHideUI : MonoBehaviour
     {
-        // [SerializeField] KeyCode toggleKey = KeyCode.Escape;
-        [SerializeField]
-        private UIInputConfig _uiInputConfig; 
-        [SerializeField] GameObject uiContainer = null;
+        [field: SerializeField]
+        public InputAction ShowHideUIInputAction {get; private set;}
+        // [SerializeField]
+        // private UIInputConfig _uiInputConfig; 
+        [SerializeField] GameObject _uiContainer = null;
 
-        /// <summary>
-        /// Awake is called when the script instance is being loaded.
-        /// </summary>
-        private void Awake()
-        {
-            UnityEngine.Assertions.Assert.IsNotNull(_uiInputConfig, "_uiInputConfig is null");
-        }
+        ///////////////////////////////////////////////////////////////
 
-        // Start is called before the first frame update
         void Start()
         {
-            uiContainer.SetActive(false);
+            _uiContainer.SetActive(false);
         }
 
-        // Update is called once per frame
+        private void OnEnable()
+        {
+            ShowHideUIInputAction.Enable();   
+        }
+        private void OnDisable()
+        {
+            ShowHideUIInputAction.Disable();   
+        }
+
         void Update()
         {
-            if (_uiInputConfig.WasShowHideUIPressedThisFrame)
+            if (ShowHideUIInputAction.WasPressedThisFrame())
             {
-                uiContainer.SetActive(!uiContainer.activeSelf);
+                Toggle();
             }
+        }
+
+        public void Toggle()
+        {
+            _uiContainer.SetActive(!_uiContainer.activeSelf);
         }
     }
 }

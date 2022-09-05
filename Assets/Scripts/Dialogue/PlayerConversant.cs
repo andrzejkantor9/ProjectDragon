@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
+using RPG.Core;
+
 namespace RPG.Dialogue
 {
     public class PlayerConversant : MonoBehaviour
@@ -42,7 +44,7 @@ namespace RPG.Dialogue
 
         public IEnumerable<DialogueNode> GetChoices()
         {
-            return _currentDialogue.GetPlayerChildren(_currentNode);
+            return FilterOnCondition(_currentDialogue.GetPlayerChildren(_currentNode));
         }
 
         public void SelectChoice(DialogueNode chosenNode)
@@ -56,7 +58,7 @@ namespace RPG.Dialogue
 
         public void NextDialogue()
         {
-            int playerResponsesCount = _currentDialogue.GetPlayerChildren(_currentNode).Count();
+            int playerResponsesCount = FilterOnCondition(_currentDialogue.GetPlayerChildren(_currentNode)).Count();
             if(playerResponsesCount > 0)
             {
                 IsChoosing = true;
@@ -65,17 +67,21 @@ namespace RPG.Dialogue
                 return;
             }
 
-            DialogueNode[] childNodes = _currentDialogue.GetAIChildren(_currentNode).ToArray();
-            int randomIndex = UnityEngine.Random.Range(0, childNodes.Length);
             TriggerExitAction();
-            _currentNode = childNodes[randomIndex];
-            TriggerEnterAction();
+            DialogueNode[] childNodes = FilterOnCondition(_currentDialogue.GetAIChildren(_currentNode)).ToArray();
+            if(childNodes.Length > 0)
+            {
+                int randomIndex = UnityEngine.Random.Range(0, childNodes.Length);
+                _currentNode = childNodes[randomIndex];
+                TriggerEnterAction();
+            }
+            
             onConversationUpdated();
         }
 
         public bool HasNext() 
         {
-            return _currentDialogue.GetAllChildren(_currentNode).Count() > 0;
+            return FilterOnCondition(_currentDialogue.GetAllChildren(_currentNode)).Count() > 0;
         }
 
         public void StartDialogue(AIConversant aIConversant, Dialogue newDialogue)
@@ -108,6 +114,20 @@ namespace RPG.Dialogue
         #endregion
 
         #region PrivateMethods
+        private IEnumerable<DialogueNode> FilterOnCondition(IEnumerable<DialogueNode> inputNode)
+        {
+            foreach(DialogueNode node in inputNode)
+            {
+                if(node.CheckCondition(GetEvaluators()))
+                    yield return node;
+            }
+        }
+
+        private IEnumerable<IPredicateEvaluator> GetEvaluators()
+        {
+            return GetComponents<IPredicateEvaluator>();
+        }
+
         private void TriggerEnterAction()
         {
             if(_currentNode)

@@ -1,5 +1,6 @@
+using System;
 using System.Collections.Generic;
-
+using RPG.Core;
 using UnityEditor;
 
 using UnityEngine;
@@ -21,6 +22,8 @@ namespace RPG.Dialogue
         public string OnEnterAction {get; private set;} = "";
         [field: SerializeField]
         public string OnExitAction {get; private set;} = "";
+        [SerializeField]
+        private Condition _condition;
         #endregion
 
         #region PublicMethods
@@ -49,21 +52,26 @@ namespace RPG.Dialogue
             EditorUtility.SetDirty(this);
         }
 
-        internal void RemoveChild(DialogueNode node)
+        public void RemoveChild(DialogueNode node)
         {
             Undo.RecordObject(this, "remove child node");
             ChildrenID.Remove(node.name);
             EditorUtility.SetDirty(this);
         }
 
-        internal void SetIsPlayerSpeaking(bool isPlayerSpeaking)
+        public void SetIsPlayerSpeaking(bool isPlayerSpeaking)
         {
             Undo.RecordObject(this, "set IsPlayerSpeaking");
             IsPlayerSpeaking = isPlayerSpeaking;
             EditorUtility.SetDirty(this);
         }
+
+        public bool CheckCondition(IEnumerable<IPredicateEvaluator> evaluators)
+        {
+            return _condition.Check(evaluators);
+        }
     #endif
-        internal bool HasChild(DialogueNode node) => ChildrenID.Contains(node.name);
+        public bool HasChild(DialogueNode node) => ChildrenID.Contains(node.name);
         #endregion
     }
 }

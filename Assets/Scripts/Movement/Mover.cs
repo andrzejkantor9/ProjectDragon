@@ -5,8 +5,29 @@ using RPG.Core;
 using GameDevTV.SavingAssetPack;
 using RPG.Attributes;
 
-//fix nullrefs when starting and changing scene
-    //make transitions from levels work properly
+//prep empty script template
+//download save asset pack
+//create utils package from destroyobject, customlogger, enums
+    //document them with comments
+
+//jak widze klase to sprawdzam
+    //czy regiony sa dobrze nazwane, ulozone, w dobrej ilosci i gettery na gorze
+    //properties vs expression body vs serialize fields vs getter
+    //make all GetComponents asserted / requireComponent
+    //string builder vs string concatetions
+    //wrzuc assembly definitions
+    //---------------------------
+    //czy klasa odpowiada tylko za logikę / kontrolę
+    //czy nie ma hardcodowanych konkrecji
+
+//object pool & caching
+//solid
+//inne wzorce
+//prep for translations
+
+////////////////////////////////////////////
+
+//make transitions from levels work properly
 //fix enemies hp bars
 //fix on enemy kill nullrefs
 //start move action to npc dialogue
@@ -22,6 +43,10 @@ using RPG.Attributes;
     //saving state?
     //dont trigger dialogue from any distance
     //each dialogue only once
+    //if player response is last dont display it as ai's
+    //non-strings bindings
+        //https://community.gamedev.tv/t/for-those-interested-in-making-enum-predicates/171656
+        //https://community.gamedev.tv/t/another-approach-to-conditions/207975/2
 //dialogue editor
     //zoom in out
     //all fields in editor

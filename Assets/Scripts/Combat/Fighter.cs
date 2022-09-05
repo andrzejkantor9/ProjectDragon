@@ -152,8 +152,11 @@ namespace RPG.Combat
         public void RestoreState(object state)
         {
             WeaponNames weaponName = (WeaponNames)state;
-            WeaponConfig weapon = Resources.Load<WeaponConfig>(Enums.EnumToString<WeaponNames>(weaponName));
-            Logger.Log($"loaded weapon: {Enums.EnumToString<WeaponNames>(weaponName)}, for character: {gameObject.name}", LogFrequency.Rare);
+            Logger.Log($"Loading weapon from enum: {Enums.EnumToString<WeaponNames>(weaponName)}, for character: {gameObject.name}", LogFrequency.Rare);
+            WeaponConfig weapon = Resources.Load<WeaponConfig>(
+                "Weapons" 
+                + System.IO.Path.DirectorySeparatorChar 
+                + Enums.EnumToString<WeaponNames>(weaponName));
 
             _currentWeaponConfig = weapon;
             EquipWeapon(weapon);

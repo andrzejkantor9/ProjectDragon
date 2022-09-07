@@ -1,0 +1,25 @@
+{
+    "name": "RPG.Combat",
+    "rootNamespace": "",
+    "references": [
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:384ddcbe6cc14d44fa83ec87e4a8a05e",
+        "GUID:12529fe542302294fb858624120baa60",
+        "GUID:dc384b52c5c1f274db0c022a1d75ffa1",
+        "GUID:fbfa71b56f4764045b339ec89716340f",
+        "GUID:c6d2b0f16fabf7c4fbff19edf4990f66",
+        "GUID:d36534a8d7580664bb12056e6406b6c6",
+        "GUID:29a941c8276adf344b090d072268b0a1",
+        "GUID:f936efc4c33d3fb40b529f702cef3139",
+        "GUID:eb5e7e7bc2a39f942ace152b5f6fa078"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

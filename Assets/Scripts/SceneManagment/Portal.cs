@@ -6,9 +6,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.AI;
 
-using GameDevTV.SavingAssetPack;
 using RPG.Core;
 using RPG.Control;
+using RPG.Debug;
 
 namespace RPG.SceneManagment
 {
@@ -84,13 +84,13 @@ namespace RPG.SceneManagment
             // _runningCoroutines.Remove(fadeOut);
 
             savingWrapper.Save();
-            Logger.Log("loading scene", LogFrequency.Rare);
+            CustomLogger.Log("loading scene", LogFrequency.Rare);
             yield return LoadSceneByIndexAsync(_sceneToLoad);
 
             PlayerController newPlayerController = GameManager.PlayerGameObject.GetComponent<PlayerController>();
             newPlayerController.enabled = false;
 
-            Logger.Log("scene loaded", LogFrequency.Rare);
+            CustomLogger.Log("scene loaded", LogFrequency.Rare);
             savingWrapper.Load();
 
             Portal otherPortal = GetOtherPortal();
@@ -142,7 +142,7 @@ namespace RPG.SceneManagment
             int nextSceneBuildIndex = SceneManager.sceneCountInBuildSettings == currentSceneBuildIndex + 1 ? 0 : currentSceneBuildIndex + 1;
 
             SceneManager.LoadScene(nextSceneBuildIndex);
-            Logger.Log($"next scene build index: {nextSceneBuildIndex}, current scene build index: {currentSceneBuildIndex}", LogFrequency.Rare);
+            CustomLogger.Log($"next scene build index: {nextSceneBuildIndex}, current scene build index: {currentSceneBuildIndex}", LogFrequency.Rare);
         }
         #endregion
     }

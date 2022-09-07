@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using RPG.Core;
+using RPG.Debug;
 
 namespace RPG.Dialogue
 {
@@ -50,7 +51,7 @@ namespace RPG.Dialogue
         public void SelectChoice(DialogueNode chosenNode)
         {
             _currentNode = chosenNode;
-            Logger.Log($"set current dialogue text to: {chosenNode.Text}", LogFrequency.Rare);
+            CustomLogger.Log($"set current dialogue text to: {chosenNode.Text}", LogFrequency.Rare);
             TriggerEnterAction();
             IsChoosing = false;
             NextDialogue();
@@ -144,7 +145,7 @@ namespace RPG.Dialogue
         {
             if(!String.IsNullOrEmpty(action))
             {
-                Logger.Log($"execute dialogue action: {action}", LogFrequency.Regular);
+                CustomLogger.Log($"execute dialogue action: {action}", LogFrequency.Regular);
 
                 foreach(DialogueTrigger trigger in _currentAIConversant.GetComponents<DialogueTrigger>())
                 {

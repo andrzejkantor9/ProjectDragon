@@ -7,6 +7,7 @@ using GameDevTV.Utils;
 
 using RPG.Core;
 using RPG.Stats;
+using RPG.Debug;
 
 namespace RPG.Attributes
 {
@@ -79,7 +80,7 @@ namespace RPG.Attributes
         public void TakeDamage(GameObject instigator, float damage)
         {
             HitPointsValue.value = Mathf.Max(HitPointsValue.value - damage, 0);
-            Logger.Log($"health of {gameObject.name}: {HitPointsValue.value.ToString()}, taken damage: {damage}", LogFrequency.Regular);
+            CustomLogger.Log($"health of {gameObject.name}: {HitPointsValue.value.ToString()}, taken damage: {damage}", LogFrequency.Regular);
 
             CheckDeath(instigator);
             OnTakeDamage.Invoke(damage);
@@ -87,7 +88,7 @@ namespace RPG.Attributes
 
         public float GetPercentage()
         {
-            Logger.Log($"percentage for {gameObject.name}: {_hitPointsPercentage}", LogFrequency.EveryFrame);
+            CustomLogger.Log($"percentage for {gameObject.name}: {_hitPointsPercentage}", LogFrequency.EveryFrame);
 
             return _hitPointsPercentage;
         }

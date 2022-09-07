@@ -1,6 +1,6 @@
 using UnityEngine;
 
-using RPG.Control;
+using RPG.Interactions;
 using RPG.Core;
 
 namespace RPG.Dialogue
@@ -23,7 +23,7 @@ namespace RPG.Dialogue
             return CursorType.Dialogue;
         }
 
-        public bool HandleRaycast(PlayerController playerController)
+        public bool HandleRaycast(GameObject playerController)
         {
             if(!_dialogue)
                 return false;

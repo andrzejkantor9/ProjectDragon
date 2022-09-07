@@ -768,7 +768,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000076293945}
+  m_AnchoredPosition: {x: 21378.943, y: -10181.579}
   m_SizeDelta: {x: 0.000030518, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1713558205867027687
@@ -823,9 +823,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51502992b61511144b665d35cd3fc363, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tempQuests:
-  - {fileID: 11400000, guid: e879bc670522953498c01ab3d63a259d, type: 2}
-  - {fileID: 11400000, guid: c1016f1504ff45d458be5f9059935893, type: 2}
   _questPrefab: {fileID: 4431224415753973939, guid: 52ea1442c3ee5bd4eabd6a8f2dc07f3f,
     type: 3}
 --- !u!114 &3686622944218364744
@@ -967,8 +964,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7013272995485740693}
   m_HandleRect: {fileID: 2487288334527042963}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 1
+  m_Value: 0
+  m_Size: 0.30276904
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

@@ -2,7 +2,7 @@ using System.Collections;
 
 using UnityEngine;
 
-using RPG.Control;
+using RPG.Interactions;
 using RPG.Core;
 using RPG.Attributes;
 using RPG.Movement;
@@ -33,7 +33,7 @@ namespace RPG.Combat
         #endregion
 
         #region Interfaces
-        public bool HandleRaycast(PlayerController playerController)
+        public bool HandleRaycast(GameObject playerController)
         {
             if(InputManager.IsPointerPressed())
             {

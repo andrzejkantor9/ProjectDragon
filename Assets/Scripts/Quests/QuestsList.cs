@@ -6,6 +6,7 @@ using UnityEngine;
 using GameDevTV.Inventories;
 
 using RPG.Core;
+using RPG.Debug;
 
 namespace RPG.Quests
 {
@@ -92,7 +93,7 @@ namespace RPG.Quests
             List<object> stateList = state as List<object>;
             if(stateList == null)
             {
-                Debug.LogError("state list in save file is null");
+                UnityEngine.Debug.LogError("state list in save file is null");
                 return;
             }
 

@@ -8,6 +8,7 @@ using RPG.Movement;
 using RPG.Combat;
 using RPG.Core;
 using RPG.Attributes;
+using RPG.Interactions;
 
 namespace RPG.Control
 {
@@ -169,7 +170,7 @@ namespace RPG.Control
                 IRaycastable[] raycastables = hit.transform.GetComponents<IRaycastable>();
                 foreach (IRaycastable raycastable in raycastables)
                 {
-                    if(raycastable.HandleRaycast(this))
+                    if(raycastable.HandleRaycast(gameObject))
                     {
                         CursorType cursorType = raycastable.GetCursorType();
                         SetCursor(cursorType);

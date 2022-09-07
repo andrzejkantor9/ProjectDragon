@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 using UnityEngine;
 
@@ -9,7 +10,7 @@ using RPG.Movement;
 using RPG.Core;
 using RPG.Attributes;
 using RPG.Stats;
-using System.Collections.Generic;
+using RPG.Debug;
 
 namespace RPG.Combat
 {
@@ -143,16 +144,16 @@ namespace RPG.Combat
 
         public object CaptureState()
         {
-            Logger.Log($"gameObject: {gameObject.name}, weapon config: {_currentWeaponConfig?.name}", LogFrequency.Sporadic);
+            CustomLogger.Log($"gameObject: {gameObject.name}, weapon config: {_currentWeaponConfig?.name}", LogFrequency.Sporadic);
             WeaponNames weaponName = (WeaponNames) Enum.Parse(typeof(WeaponNames), _currentWeaponConfig?.name);
-            Logger.Log($"saved weapon: {Enums.EnumToString<WeaponNames>(weaponName)}, for character: {gameObject.name}", LogFrequency.Rare);
+            CustomLogger.Log($"saved weapon: {Enums.EnumToString<WeaponNames>(weaponName)}, for character: {gameObject.name}", LogFrequency.Rare);
             return weaponName;
         }
 
         public void RestoreState(object state)
         {
             WeaponNames weaponName = (WeaponNames)state;
-            Logger.Log($"Loading weapon from enum: {Enums.EnumToString<WeaponNames>(weaponName)}, for character: {gameObject.name}", LogFrequency.Rare);
+            CustomLogger.Log($"Loading weapon from enum: {Enums.EnumToString<WeaponNames>(weaponName)}, for character: {gameObject.name}", LogFrequency.Rare);
             WeaponConfig weapon = Resources.Load<WeaponConfig>(
                 "Weapons" 
                 + System.IO.Path.DirectorySeparatorChar 
@@ -175,7 +176,7 @@ namespace RPG.Combat
 
         public void EquipWeapon(WeaponConfig weapon)
         {
-            Logger.Log($"equip weapon: {weapon?.name}, for character: {gameObject.name}", LogFrequency.Regular);
+            CustomLogger.Log($"equip weapon: {weapon?.name}, for character: {gameObject.name}", LogFrequency.Regular);
             _currentWeaponConfig = weapon;
 
             _currentWeapon.value = AttachWeapon(weapon);
@@ -255,7 +256,7 @@ namespace RPG.Combat
 
                 if(_targetHealth.IsDead)
                 {
-                    Logger.Log($"{gameObject.name} stop attacking - target is dead", LogFrequency.Regular);
+                    CustomLogger.Log($"{gameObject.name} stop attacking - target is dead", LogFrequency.Regular);
                     Cancel();
                 }
             }

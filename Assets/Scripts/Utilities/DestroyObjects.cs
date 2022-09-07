@@ -1,7 +1,17 @@
 using UnityEngine;
 
+/// <summary>
+/// Use the item at the given slot. If the item is consumable one
+/// instance will be destroyed until the item is removed completely.
+/// </summary>
+/// <param name="user">The character that wants to use this action.</param>
+/// <returns>False if the action could not be executed.</returns>
 namespace Utilities
 {
+    /// <summary>
+    /// Provides simple interface to destroy specified objects with specified parameters that can be attached
+    /// in inspector.
+    /// </summary>
     public class DestroyObjects : MonoBehaviour 
     {
         #region Config
@@ -20,7 +30,7 @@ namespace Utilities
         private float _destroyDelay = 0f;
         #endregion
 
-        //////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////
 
         #region EngineMethods
         private void Awake() 

@@ -4,6 +4,8 @@ using UnityEngine;
 
 using GameDevTV.Utils;
 
+using RPG.Debug;
+
 namespace RPG.Stats
 {
     public class BaseStats : MonoBehaviour
@@ -64,7 +66,7 @@ namespace RPG.Stats
         public float GetStat(Stat stat)
         {
             float statValue = _progression.GetStat(stat, _characterClass, GetLevel()) + GetAdditiveModifier(stat);
-            Logger.Log($"Stat {Enums.EnumToString<Stat>(stat)} value: {statValue}", LogFrequency.EveryFrame);
+            CustomLogger.Log($"Stat {Enums.EnumToString<Stat>(stat)} value: {statValue}", LogFrequency.EveryFrame);
 
             //all percentage modifiers in below function
             return statValue * GetMultiplicativeModifier(stat);
@@ -83,7 +85,7 @@ namespace RPG.Stats
             if(newLevel > _currentLevel.value)
             {
                 _currentLevel.value = newLevel;
-                Logger.Log("Leveled up", LogFrequency.Regular);
+                CustomLogger.Log("Leveled up", LogFrequency.Regular);
                 LevelUpEffect();
                 OnLevelUp();
             }

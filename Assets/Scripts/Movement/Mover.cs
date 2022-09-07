@@ -5,25 +5,30 @@ using RPG.Core;
 using GameDevTV.SavingAssetPack;
 using RPG.Attributes;
 
-//prep empty script template
-//download save asset pack
-//create utils package from destroyobject, customlogger, enums
+//create utils package from destroyobject, customlogger, enums, lazy value, log worls position
     //document them with comments
+    //shooter project
 
 //jak widze klase to sprawdzam
-    //czy regiony sa dobrze nazwane, ulozone, w dobrej ilosci i gettery na gorze
+    //czy klasa odpowiada tylko za logikę / kontrolę
+    //czy nie ma hardcodowanych konkrecji
+    //---------------------------
+    //czy regiony sa dobrze nazwane, ulozone, w dobrej ilosci i gettery na gorze, namespacey w dobrej kolejnosci
     //properties vs expression body vs serialize fields vs getter
     //make all GetComponents asserted / requireComponent
     //string builder vs string concatetions
     //wrzuc assembly definitions
-    //---------------------------
-    //czy klasa odpowiada tylko za logikę / kontrolę
-    //czy nie ma hardcodowanych konkrecji
+    //check for reasons for any null coalescing
+    //any unnecesarry object creations / updates / foreach's?
 
 //object pool & caching
 //solid
 //inne wzorce
 //prep for translations
+//script template
+    //scriptable object template
+    //adjust lenght of slashes / max width of code
+    //static methods vs functions?
 
 ////////////////////////////////////////////
 
@@ -65,6 +70,10 @@ using RPG.Attributes;
 //remember it should work out of the box, when adding component - as little extra work as possible
 //make editor functionality to find ALL things referencing script (enum as int placing in middle a new state)
 //TODO add audio bg
+//split ui to multiple canvas
+//in editor script to make everything caps lock
+//self scrolling text ui
+//translate text component
 
 //TODO make checker if all levels values are set in progression
 //TODO internal vs public vs etc

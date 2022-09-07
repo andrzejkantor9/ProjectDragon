@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
+using RPG.Debug;
+
 namespace RPG.Stats
 {
     [CreateAssetMenu(fileName = "Progression", menuName = "Stats/NewProgression")]
@@ -49,7 +51,7 @@ namespace RPG.Stats
         public float GetStat(Stat stat, CharacterClass characterClass, int level)
         {
             CheckBuildLookup();
-            Logger.Log($"look for stat {Enums.EnumToString<Stat>(stat)}, of class {characterClass.ToString()}, at level {level}", LogFrequency.EveryFrame);
+            CustomLogger.Log($"look for stat {Enums.EnumToString<Stat>(stat)}, of class {characterClass.ToString()}, at level {level}", LogFrequency.EveryFrame);
 
             if(_statByLevel.ContainsKey(characterClass) && _statByLevel[characterClass].ContainsKey(stat))
             {
@@ -60,7 +62,7 @@ namespace RPG.Stats
                     
             }
 
-            Debug.LogError("could not get stat with given parameters");
+            UnityEngine.Debug.LogError("could not get stat with given parameters");
             return 0f;
         }
 

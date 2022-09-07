@@ -285,6 +285,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _experiencePoints: 0
+--- !u!114 &2980828981491479721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4655133506245642587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf98f5be8f2d5754a846c07a6bfe1831, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5988759243354727536
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -309,16 +321,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 304e82f07e0d32044862c80a38f0cac3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _statuses:
-  - <QuestInQuestion>k__BackingField: {fileID: 11400000, guid: e879bc670522953498c01ab3d63a259d,
-      type: 2}
-    _completedObjectives:
-    - ask around
-    - identify sock
-  - <QuestInQuestion>k__BackingField: {fileID: 11400000, guid: c1016f1504ff45d458be5f9059935893,
-      type: 2}
-    _completedObjectives:
-    - bait bunions
 --- !u!114 &7263374745732480895
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -401,6 +403,10 @@ MonoBehaviour:
     <Hotspot>k__BackingField: {x: 0, y: 0}
   - <Type>k__BackingField: 6
     <Texture>k__BackingField: {fileID: 2800000, guid: 96d4bfdb0d6d8c042bf8fccf6524d239,
+      type: 3}
+    <Hotspot>k__BackingField: {x: 0, y: 0}
+  - <Type>k__BackingField: 7
+    <Texture>k__BackingField: {fileID: 2800000, guid: e4fac5245b727db42ba0ca0258851b83,
       type: 3}
     <Hotspot>k__BackingField: {x: 0, y: 0}
 --- !u!1001 &5938334602560443092

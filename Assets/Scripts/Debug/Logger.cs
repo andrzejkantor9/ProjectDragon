@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-namespace RPG
+namespace RPG.Debug
 {
     public enum LogFrequency
     {
@@ -13,7 +13,7 @@ namespace RPG
         Sporadic
     }
 
-    public static class Logger
+    public static class CustomLogger
     {
         private static Dictionary<LogFrequency, bool> _LogFrequencySettings = new Dictionary<LogFrequency, bool>()
         {
@@ -28,7 +28,7 @@ namespace RPG
         public static void Log(string message, LogFrequency logFrequency)
         {
             if(_LogFrequencySettings[logFrequency])
-                Debug.Log(message);
+                UnityEngine.Debug.Log(message);
         }
 #endif
     }

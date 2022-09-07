@@ -1,0 +1,20 @@
+{
+    "name": "RPG.Quests",
+    "rootNamespace": "",
+    "references": [
+        "GUID:12529fe542302294fb858624120baa60",
+        "GUID:c6d2b0f16fabf7c4fbff19edf4990f66",
+        "GUID:f936efc4c33d3fb40b529f702cef3139",
+        "GUID:50902aa35bd18c64e975a8e441a923ff",
+        "GUID:384ddcbe6cc14d44fa83ec87e4a8a05e"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

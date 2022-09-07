@@ -1,7 +1,7 @@
 using UnityEngine;
 
 using RPG.Attributes;
-using RPG.Control;
+using RPG.Interactions;
 using RPG.Core;
 
 namespace RPG.Combat
@@ -10,15 +10,15 @@ namespace RPG.Combat
     public class CombatTarget : MonoBehaviour, IRaycastable
     {
         #region Interfaces
-        public bool HandleRaycast(PlayerController playerController)
+        public bool HandleRaycast(GameObject player)
         {
             if(!enabled)
                 return false;
                 
-            if(playerController.GetComponent<Fighter>().CanAttack(gameObject))
+            if(player.GetComponent<Fighter>().CanAttack(gameObject))
             {
                 if (InputManager.IsPointerPressed())
-                    playerController.GetComponent<Fighter>().Attack(gameObject);
+                    player.GetComponent<Fighter>().Attack(gameObject);
 
                 return true;                        
             }

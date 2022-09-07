@@ -1,8 +1,9 @@
 using UnityEngine;
 
-using RPG.Core;
-
 using GameDevTV.Inventories;
+
+using RPG.Interactions;
+using RPG.Core;
 
 namespace RPG.Control
 {
@@ -20,7 +21,7 @@ namespace RPG.Control
         #endregion
 
         #region Interfaces
-        public bool HandleRaycast(PlayerController playerController)
+        public bool HandleRaycast(GameObject playerController)
         {
             if(InputManager.WasPointerPressedThisFrame())
                 _pickup.PickupItem();

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 using RPG.Core;
+using RPG.Debug;
 
 namespace RPG.Quests
 {
@@ -21,7 +22,7 @@ namespace RPG.Quests
         {
             QuestsList questsList = GameManager.PlayerGameObject.GetComponent<QuestsList>();
             questsList.CompleteObjective(_quest, _objective);
-            Logger.Log($"complete objective: {_objective}", LogFrequency.Rare);
+            CustomLogger.Log($"complete objective: {_objective}", LogFrequency.Rare);
         }
         #endregion
 

@@ -1,0 +1,19 @@
+{
+    "name": "RPG.Movement",
+    "rootNamespace": "",
+    "references": [
+        "GUID:c6d2b0f16fabf7c4fbff19edf4990f66",
+        "GUID:384ddcbe6cc14d44fa83ec87e4a8a05e",
+        "GUID:fbfa71b56f4764045b339ec89716340f",
+        "GUID:f936efc4c33d3fb40b529f702cef3139"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

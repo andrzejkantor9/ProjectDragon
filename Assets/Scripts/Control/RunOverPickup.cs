@@ -1,9 +1,10 @@
 using UnityEngine;
 
-using RPG.Core;
-
 using GameDevTV.Inventories;
+
 using RPG.Movement;
+using RPG.Core;
+using RPG.Interactions;
 
 namespace RPG.Control
 {
@@ -28,7 +29,7 @@ namespace RPG.Control
         #endregion
 
         #region PublicMethods
-        public bool HandleRaycast(PlayerController playerController)
+        public bool HandleRaycast(GameObject playerController)
         {
             if(InputManager.IsPointerPressed())
             {

@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalFit: 0
+  m_HorizontalFit: 2
   m_VerticalFit: 2
 --- !u!114 &7410544227131793304
 MonoBehaviour:
@@ -704,6 +704,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2334325002274347506, guid: ff2023c5846855e48bd453f8606b7e15,
         type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2334325002274347506, guid: ff2023c5846855e48bd453f8606b7e15,
+        type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
@@ -760,6 +765,11 @@ PrefabInstance:
     - target: {fileID: 2590207695416398103, guid: ff2023c5846855e48bd453f8606b7e15,
         type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3775092581804766700, guid: ff2023c5846855e48bd453f8606b7e15,
+        type: 3}
+      propertyPath: m_Pivot.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3775092581804766700, guid: ff2023c5846855e48bd453f8606b7e15,
@@ -955,6 +965,11 @@ PrefabInstance:
     - target: {fileID: 8730191119051320969, guid: ff2023c5846855e48bd453f8606b7e15,
         type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8840753558169445996, guid: ff2023c5846855e48bd453f8606b7e15,
+        type: 3}
+      propertyPath: m_Pivot.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8840753558169445996, guid: ff2023c5846855e48bd453f8606b7e15,

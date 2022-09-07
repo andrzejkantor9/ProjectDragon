@@ -1,15 +1,16 @@
 {
-    "name": "Saving",
+    "name": "RPG.Inventories",
     "rootNamespace": "",
     "references": [
-        "GUID:c6d2b0f16fabf7c4fbff19edf4990f66"
+        "GUID:29a941c8276adf344b090d072268b0a1",
+        "GUID:384ddcbe6cc14d44fa83ec87e4a8a05e"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
-    "autoReferenced": true,
+    "autoReferenced": false,
     "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false

@@ -3,6 +3,7 @@ using UnityEngine.Playables;
 
 using RPG.Core;
 using RPG.Control;
+using RPG.Debug;
 
 namespace RPG.Cinematics
 {
@@ -36,14 +37,14 @@ namespace RPG.Cinematics
         #region PrivateMethods
         private void EnableControl(PlayableDirector playableDirector)
         {
-            Logger.Log("enable control by cinematic", LogFrequency.Rare);
+            CustomLogger.Log("enable control by cinematic", LogFrequency.Rare);
 
             _playerGameObject.GetComponent<PlayerController>().enabled = true;
         }
 
         private void DisableControl(PlayableDirector playableDirector)
         {
-            Logger.Log("disable control by cinematic", LogFrequency.Rare);
+            CustomLogger.Log("disable control by cinematic", LogFrequency.Rare);
 
             _playerGameObject.GetComponent<ActionScheduler>().CancelCurrentAction();
             _playerGameObject.GetComponent<PlayerController>().enabled = false;

@@ -1,4 +1,4 @@
-namespace RPG.Control
+namespace RPG.Interactions
 {
     public enum CursorType
     {
@@ -8,6 +8,7 @@ namespace RPG.Control
         UI,
         Pickup,
         FullPickup,
-        Dialogue
+        Dialogue,
+        Shop
     }
 }

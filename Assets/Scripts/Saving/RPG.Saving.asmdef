@@ -1,0 +1,16 @@
+{
+    "name": "RPG.Saving",
+    "rootNamespace": "",
+    "references": [
+        "GUID:c6d2b0f16fabf7c4fbff19edf4990f66"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

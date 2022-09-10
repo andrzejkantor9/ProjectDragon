@@ -1,11 +1,12 @@
 {
-    "name": "UI",
-    "rootNamespace": "",
+    "name": "RPG.UI",
+    "rootNamespace": "RPG.UI",
     "references": [
-        "GUID:6055be8ebefd69e48b49212b09b47b2f",
-        "GUID:2a7a0b43c8a1ac74d8a7fddd086e321a",
+        "GUID:12529fe542302294fb858624120baa60",
         "GUID:c6d2b0f16fabf7c4fbff19edf4990f66",
-        "GUID:aee0183732166f14995109910041f69b"
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:aee0183732166f14995109910041f69b",
+        "GUID:50902aa35bd18c64e975a8e441a923ff"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

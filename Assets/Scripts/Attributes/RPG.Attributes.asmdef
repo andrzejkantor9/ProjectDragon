@@ -2,12 +2,12 @@
     "name": "RPG.Attributes",
     "rootNamespace": "",
     "references": [
-        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:12529fe542302294fb858624120baa60",
         "GUID:c6d2b0f16fabf7c4fbff19edf4990f66",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
         "GUID:dc384b52c5c1f274db0c022a1d75ffa1",
         "GUID:29a941c8276adf344b090d072268b0a1",
-        "GUID:f936efc4c33d3fb40b529f702cef3139",
-        "GUID:12529fe542302294fb858624120baa60"
+        "GUID:f936efc4c33d3fb40b529f702cef3139"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -18,6 +18,8 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: aba0f700d91d4fc4fa8c724899ab04ab, type: 3}
   pickup: {fileID: 124658880090531740, guid: c1eb184989f94f44ab897de2051b51dd, type: 3}
   stackable: 0
+  _price: 0
+  _category: 2
   allowedEquipLocation: 5
   <WeaponRange>k__BackingField: 10
   <TimeBetweenAttacks>k__BackingField: 2.5

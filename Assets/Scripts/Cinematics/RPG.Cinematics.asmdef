@@ -2,9 +2,9 @@
     "name": "RPG.Cinematics",
     "rootNamespace": "",
     "references": [
-        "GUID:c835635b72c473a449d7ca57cfb21ece",
+        "GUID:12529fe542302294fb858624120baa60",
         "GUID:c6d2b0f16fabf7c4fbff19edf4990f66",
-        "GUID:12529fe542302294fb858624120baa60"
+        "GUID:c835635b72c473a449d7ca57cfb21ece"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -2,12 +2,13 @@ using UnityEngine;
 using UnityEngine.AI;
 
 using RPG.Core;
-using GameDevTV.SavingAssetPack;
+using RPG.Saving;
 using RPG.Attributes;
 
 //create utils package from destroyobject, customlogger, enums, lazy value, log worls position
     //document them with comments
     //shooter project
+    //add GetPathInHierachy static helper somewhere
 
 //jak widze klase to sprawdzam
     //czy klasa odpowiada tylko za logikę / kontrolę
@@ -61,6 +62,8 @@ using RPG.Attributes;
 
 //////////////////////////////////////////
 
+//controller and mobile input devices
+
 //MAKE move to clicked area component
 //decouple animations
 //inject navmesh & make it a pure c# class
@@ -74,6 +77,8 @@ using RPG.Attributes;
 //in editor script to make everything caps lock
 //self scrolling text ui
 //translate text component
+//draggable in game ui
+//3rd person instead of isometric
 
 //TODO make checker if all levels values are set in progression
 //TODO internal vs public vs etc

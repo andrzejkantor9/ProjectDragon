@@ -2,7 +2,9 @@ using System;
 
 using UnityEngine;
 
-using GameDevTV.SavingAssetPack;
+using RPG.Saving;
+
+using RPG.Core;
 
 namespace RPG.Stats
 {
@@ -18,6 +20,16 @@ namespace RPG.Stats
         #endregion
 
         ///////////////////////////////////////
+
+        #region EngineMethods
+        private void Update()
+        {
+            if(InputManager.IsDebugAddExperiencePressed())
+            {
+                GainExperience(Time.deltaTime * 1000f);
+            }
+        }
+        #endregion
 
         #region PublicMethods
         public void GainExperience(float experience)

@@ -2,6 +2,7 @@
     "name": "RPG.Dialogue.Editor",
     "rootNamespace": "",
     "references": [
+        "GUID:12529fe542302294fb858624120baa60",
         "GUID:c6d2b0f16fabf7c4fbff19edf4990f66",
         "GUID:aee0183732166f14995109910041f69b"
     ],

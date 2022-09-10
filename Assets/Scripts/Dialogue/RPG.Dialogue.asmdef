@@ -2,9 +2,9 @@
     "name": "RPG.Dialogue",
     "rootNamespace": "",
     "references": [
-        "GUID:c835635b72c473a449d7ca57cfb21ece",
-        "GUID:c6d2b0f16fabf7c4fbff19edf4990f66",
         "GUID:12529fe542302294fb858624120baa60",
+        "GUID:c6d2b0f16fabf7c4fbff19edf4990f66",
+        "GUID:c835635b72c473a449d7ca57cfb21ece",
         "GUID:eb5e7e7bc2a39f942ace152b5f6fa078"
     ],
     "includePlatforms": [],

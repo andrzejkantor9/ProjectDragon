@@ -16,9 +16,15 @@ namespace RPG.Core
             return Mouse.current.leftButton.isPressed;
         }
 
-        public static Vector2 GetPointerPosition()
+        public static Vector2 GetPointerPosition() => Mouse.current.position.ReadValue();
+        
+        public static bool IsDebugAddExperiencePressed()
         {
-            return Mouse.current.position.ReadValue();
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
+            return Keyboard.current.eKey.isPressed;
+#else
+            return false;
+#endif
         }
     }
 }

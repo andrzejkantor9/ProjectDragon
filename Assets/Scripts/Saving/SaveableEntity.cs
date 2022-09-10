@@ -8,7 +8,7 @@ using UnityEditor;
 
 using RPG.Core;
 
-namespace GameDevTV.SavingAssetPack
+namespace RPG.Saving
 {
     [ExecuteAlways]
     public class SaveableEntity : MonoBehaviour

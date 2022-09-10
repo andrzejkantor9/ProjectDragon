@@ -109,7 +109,7 @@ namespace RPG.UI
             bool isSet = _playerConversant != null;
             if(!isSet)
             {
-                Debug.LogWarning("missing player player converstant script");
+                UnityEngine.Debug.LogWarning("missing player player converstant script");
             }
 
             return _playerConversant;

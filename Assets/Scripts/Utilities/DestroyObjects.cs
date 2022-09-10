@@ -1,4 +1,8 @@
+using System.Collections.Generic;
+
 using UnityEngine;
+
+using RPG.Debug;
 
 /// <summary>
 /// Use the item at the given slot. If the item is consumable one
@@ -21,13 +25,15 @@ namespace Utilities
         [SerializeField]
         private bool _destroyAtStart;
         [SerializeField]
+        private bool _destroyAtOnEnable;
+        [SerializeField]
         private bool _destroySelf = true;
         [SerializeField]
         private bool _destroyChildren;
         [SerializeField]
-        private GameObject[] _extraObjectsToDestroy;
-        [SerializeField]
         private float _destroyDelay = 0f;
+        [SerializeField]
+        private List<GameObject> _extraObjectsToDestroy = new List<GameObject>();
         #endregion
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -48,12 +54,26 @@ namespace Utilities
                 DestroyWithSpecifiedParameters();
             }
         }
+
+        private void OnEnable() 
+        {
+            if(_destroyAtOnEnable)
+            {
+                DestroyWithSpecifiedParameters();
+            }
+        }
         #endregion
 
         #region PublicMethods
+        public void AddToObjectsToDestroy(GameObject gameObjectToDestroy) 
+            => _extraObjectsToDestroy.Add(gameObjectToDestroy);
+        public void AddToObjectsToDestroy(List<GameObject> gameObjectsToDestroy) 
+            => _extraObjectsToDestroy.AddRange(gameObjectsToDestroy);
+
         public void DestroyWithSpecifiedParameters()
         {
-            if(_extraObjectsToDestroy.Length > 0)
+            CustomLogger.Log($"destroy with specified Parameters called on: {gameObject.name}", LogFrequency.Sporadic);
+            if(_extraObjectsToDestroy.Count > 0)
             {
                 foreach(GameObject objectToDestroy in _extraObjectsToDestroy)
                 {

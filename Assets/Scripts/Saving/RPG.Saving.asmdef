@@ -2,6 +2,7 @@
     "name": "RPG.Saving",
     "rootNamespace": "",
     "references": [
+        "GUID:12529fe542302294fb858624120baa60",
         "GUID:c6d2b0f16fabf7c4fbff19edf4990f66"
     ],
     "includePlatforms": [],

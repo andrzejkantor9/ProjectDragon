@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[CreateAssetMenu(fileName = "SavingInputConfig", menuName = "Input/SavingConfig", order = 0)]
+[CreateAssetMenu(fileName = "SavingInputConfig", menuName = "Input/SavingConfig")]
 public class SavingInputConfig : ScriptableObject
 {
     #region Config

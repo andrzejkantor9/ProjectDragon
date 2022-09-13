@@ -4,6 +4,10 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
 
+using UnityEngine.InputSystem;
+
+using GameDevTV.Inventories;
+
 using RPG.Movement;
 using RPG.Combat;
 using RPG.Core;
@@ -16,16 +20,20 @@ namespace RPG.Control
     [RequireComponent(typeof(Fighter))]
     public class PlayerController : MonoBehaviour
     {
-        #region Parameters
-        [Header("Parameters")]
+        #region Config
+        [Header("CONFIG")]
         [SerializeField]
         private float _navMeshProjectionDistance = 1f;
         [SerializeField]
         private float _raycastRadius = 1f;
+        [SerializeField]
+        private int _numberOfAbilities = 6;
+        [SerializeField][Tooltip("above number of abilities get ignores")]
+        private InputAction[] _abilitiesInputs;
         #endregion
 
         #region Cache
-        [Space(8)][Header("Cache")]
+        [Space(8)][Header("CACHE")]
         [HideInInspector]
         private Mover _mover;
         [HideInInspector]
@@ -35,6 +43,8 @@ namespace RPG.Control
 
         [SerializeField]
         private CursorMapping[] _cursorMappings;
+
+        private ActionStore _actionStore;
         #endregion
 
         #region States
@@ -65,6 +75,11 @@ namespace RPG.Control
             _hitPoints = GetComponent<HitPoints>();
         }
 
+        private void Awake()
+        {
+            _actionStore = GetComponent<ActionStore>();
+        }
+
         private void Start()
         {
             AudioListener.volume = .25f;
@@ -73,11 +88,19 @@ namespace RPG.Control
         private void OnEnable()
         {
             _hitPoints.OnDeath += Death;
+            foreach(InputAction input in _abilitiesInputs)
+            {
+                input.Enable();
+            }
         }
 
         private void OnDisable()
         {
             _hitPoints.OnDeath -= Death;
+            foreach(InputAction input in _abilitiesInputs)
+            {
+                input.Disable();
+            }
         }
 
         void Update()
@@ -90,6 +113,8 @@ namespace RPG.Control
                 return;
             }
 
+            UseAbilities();
+
             if(InteractWithComponent())
                 return;
             if(InteractWithMovement())
@@ -99,10 +124,28 @@ namespace RPG.Control
         }
         #endregion
 
+        #region StaticMethods
+        public static Ray GetPointerRay()
+        {
+            return Camera.main.ScreenPointToRay(InputManager.GetPointerPosition());
+        }
+        #endregion
+
         #region PrivateMethods
         private void Death()
         {
             enabled = false;
+        }
+
+        private void UseAbilities()
+        {
+            for(int i=0; i< _numberOfAbilities; ++i)
+            {
+                if(_abilitiesInputs[i].WasPerformedThisFrame())
+                {
+                    _actionStore.Use(i, gameObject);
+                }
+            }
         }
 
         private bool InteractWithMovement()
@@ -195,11 +238,6 @@ namespace RPG.Control
             Array.Sort(distances, hits);
 
             return hits;
-        }
-
-        private static Ray GetPointerRay()
-        {
-            return Camera.main.ScreenPointToRay(InputManager.GetPointerPosition());
         }
 
         private void SetCursor(CursorType cursorType)

@@ -132,6 +132,14 @@ namespace RPG.Combat
             return targetHitpoints && !targetHitpoints.IsDead;
         }
 
+        public Transform GetHandTransform(bool isRightHand)
+        {
+            if(isRightHand)
+                return _rightHandTransformWeapon;
+            else
+                return _leftHandTransformWeapon;
+        }
+
         public HitPoints GetTargetHitPoints() => _targetHealth;
         #endregion
 

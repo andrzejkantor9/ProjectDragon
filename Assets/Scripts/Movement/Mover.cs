@@ -9,6 +9,7 @@ using RPG.Attributes;
     //document them with comments
     //shooter project
     //add GetPathInHierachy static helper somewhere
+//can quest be completed and rewards received?
 
 //jak widze klase to sprawdzam
     //czy klasa odpowiada tylko za logikę / kontrolę
@@ -29,7 +30,6 @@ using RPG.Attributes;
 //script template
     //scriptable object template
     //adjust lenght of slashes / max width of code
-    //static methods vs functions?
 
 ////////////////////////////////////////////
 
@@ -37,6 +37,9 @@ using RPG.Attributes;
 //fix enemies hp bars
 //fix on enemy kill nullrefs
 //start move action to npc dialogue
+//bug: guards dont patrol anymore after getting in agro range when in peaceful mode
+//bug: guards can be damaged with abilities in peaceful mode
+//bug: npcs can be damaged with abilities
 
 //dialogueNode setter czy field?
 //translation files into dialogs editor
@@ -59,6 +62,8 @@ using RPG.Attributes;
     //drag node to scroll
     //some area that appears as node isnt draggable
     //flexible scroll width & height
+//health bars not displaying fix
+//possibility to damage enemies without aggroing them with abilities fix
 
 //////////////////////////////////////////
 

@@ -1,0 +1,18 @@
+{
+    "name": "RPG.Abilities.Filters",
+    "rootNamespace": "RPG.Abilities.Filters",
+    "references": [
+        "GUID:12529fe542302294fb858624120baa60",
+        "GUID:c6d2b0f16fabf7c4fbff19edf4990f66",
+        "GUID:1388a2378c27d2c49bffeb2ba2a7dd01"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

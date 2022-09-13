@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 using RPG.Attributes;
+using RPG.Debug;
 
 namespace RPG.Combat
 {
@@ -9,80 +10,87 @@ namespace RPG.Combat
     {
         #region Parameters
         [SerializeField]
-        private float _speed = 10f;
+        float _speed = 10f;
         [SerializeField]
-        private bool _homing = true;
+        bool _homing = true;
         [SerializeField]
-        private GameObject _hitEffect;
+        GameObject _hitEffect;
         [SerializeField]
-        private float _maxLifeTime = 10f;
+        float _maxLifeTime = 10f;
         [SerializeField]
-        private float _lifeAfterImpact = .5f;
+        float _lifeAfterImpact = .5f;
         [SerializeField]
-        private GameObject[] _destroyOnHit;
+        GameObject[] _destroyOnHit;
 
         private float _damage = 0;
         #endregion
 
         #region States
-        private HitPoints _targetHealth;
-        private GameObject _instigator;
+        HitPoints _targetHitPoints;
+        GameObject _instigator;
+        Vector3 _targetPoint;
         #endregion
 
         #region Events
         [SerializeField]
-        private UnityEvent OnProjectileHit;
+        UnityEvent OnProjectileHit;
         #endregion
 
         ///////////////////////////////////////////////////////////////////////////
 
         #region EngineMethods
-        private void Start()
+        void Start()
         {
             transform.LookAt(GetAimLocation());
         }
 
-        private void Update()
+        void Update()
         {
-            if(_targetHealth)
-            {   
-                if(_homing && !_targetHealth.IsDead)
-                    transform.LookAt(GetAimLocation());
-
-                transform.Translate(Vector3.forward * _speed * Time.deltaTime);
+            if(_homing && _targetHitPoints && !_targetHitPoints.IsDead)
+            {
+                transform.LookAt(GetAimLocation());
             }
+
+            transform.Translate(Vector3.forward * _speed * Time.deltaTime);
         }
 
-        private void OnTriggerEnter(Collider other)
+        void OnTriggerEnter(Collider other)
         {
-            HitPoints colliderHealth = other.GetComponent<HitPoints>();
-            if(colliderHealth && colliderHealth.IsDead)
-            {
+            HitPoints colliderHitPoints = other.GetComponent<HitPoints>();
+            if(!colliderHitPoints || colliderHitPoints.IsDead || other.gameObject == _instigator)
                 return;
-            }
-            else if(colliderHealth && colliderHealth == _targetHealth)
+
+            CustomLogger.Log($"_homing: {_homing}, colliderHealth: {colliderHitPoints?.gameObject.name}" +
+                $", target health: {_targetHitPoints?.gameObject.name}", LogFrequency.Regular);
+            if(_homing && colliderHitPoints == _targetHitPoints)
             {
-                colliderHealth.TakeDamage(_instigator, _damage);
-                _speed = 0f;
-
-                if(_hitEffect)
-                    Instantiate(_hitEffect, GetAimLocation(), transform.rotation);
-
-                foreach (GameObject objectToDestory in _destroyOnHit)
-                {
-                    Destroy(objectToDestory);
-                }
-                
-                OnProjectileHit?.Invoke();
-                Destroy(gameObject, _lifeAfterImpact);
+                ProjectileHit(colliderHitPoints);
+            }
+            else if(!_homing)
+            {
+                ProjectileHit(colliderHitPoints);
             }
         }
         #endregion
 
         #region PublicMethods
-        public void SetTarget(HitPoints target, GameObject instigator, float damage)
+        public void SetTarget(HitPoints target, GameObject instigator, float damage, bool homing = true)
         {
-            _targetHealth = target;
+            SetTarget(instigator, damage, target, homing: homing);
+        }
+
+        public void SetTarget(Vector3 targetPoint, GameObject instigator, float damage, bool homing = true)
+        {
+            SetTarget(instigator, damage, targetPoint: targetPoint, homing: homing);
+        }
+
+        public void SetTarget(
+            GameObject instigator, float damage, HitPoints target = null,
+            Vector3 targetPoint = default, bool homing = true)
+        {
+            _homing = homing;
+            _targetHitPoints = target;
+            _targetPoint = targetPoint;
             _damage = damage;
             _instigator = instigator;
 
@@ -91,12 +99,35 @@ namespace RPG.Combat
         #endregion
 
         #region PrivateMethods
-        private Vector3 GetAimLocation()
-        {
-            CapsuleCollider targetCapsule = _targetHealth.GetComponent<CapsuleCollider>();
+        Vector3 GetAimLocation()
+        {   
+            if(!_targetHitPoints)
+                return _targetPoint;
+
+            CapsuleCollider targetCapsule = _targetHitPoints.GetComponent<CapsuleCollider>();
             
-            if(!targetCapsule) return _targetHealth.transform.position;
-            return _targetHealth.transform.position + Vector3.up * targetCapsule.height / 2;
+            if(!targetCapsule) 
+                return _targetHitPoints.transform.position;
+
+            return _targetHitPoints.transform.position + Vector3.up * targetCapsule.height / 2;
+        }
+
+        void ProjectileHit(HitPoints colliderHealth)
+        {
+            CustomLogger.Log($"projectile hit: {colliderHealth.gameObject.name}", LogFrequency.Regular);
+            colliderHealth.TakeDamage(_instigator, _damage);
+            _speed = 0f;
+
+            if (_hitEffect)
+                Instantiate(_hitEffect, transform.position, transform.rotation);
+
+            foreach (GameObject objectToDestory in _destroyOnHit)
+            {
+                Destroy(objectToDestory);
+            }
+
+            OnProjectileHit?.Invoke();
+            Destroy(gameObject, _lifeAfterImpact);
         }
         #endregion
     }

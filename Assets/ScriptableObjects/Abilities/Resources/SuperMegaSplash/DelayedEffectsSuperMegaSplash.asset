@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0ee720508c551941b94582dc21cfd16, type: 3}
+  m_Name: DelayedEffectsSuperMegaSplash
+  m_EditorClassIdentifier: 
+  _delay: 0.5
+  _delayedEffects:
+  - {fileID: 11400000, guid: 40dba0a79c48adc45ae9d7b8c160e461, type: 2}
+  - {fileID: 11400000, guid: 0418fe93ade385442be7545d25e31ba5, type: 2}

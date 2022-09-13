@@ -4,6 +4,11 @@ using GameDevTV.Core.UI.Dragging;
 using GameDevTV.Inventories;
 using UnityEngine;
 
+using UnityEngine.UI;
+
+using RPG.Abilities;
+using RPG.Core;
+
 namespace GameDevTV.UI.Inventories
 {
     /// <summary>
@@ -14,15 +19,26 @@ namespace GameDevTV.UI.Inventories
         // CONFIG DATA
         [SerializeField] InventoryItemIcon icon = null;
         [SerializeField] int index = 0;
+        [SerializeField]
+        private Image _cooldownImage;
 
         // CACHE
         ActionStore store;
+        private CooldownStore _cooldownStore;
 
         // LIFECYCLE METHODS
         private void Awake()
         {
             store = GameObject.FindGameObjectWithTag("Player").GetComponent<ActionStore>();
             store.storeUpdated += UpdateIcon;
+
+            _cooldownStore = GameManager.PlayerGameObject.GetComponent<CooldownStore>();
+        }
+
+        private void Update()
+        {
+            
+            _cooldownImage.fillAmount = _cooldownStore.GetFractionRemaining(GetItem());
         }
 
         // PUBLIC

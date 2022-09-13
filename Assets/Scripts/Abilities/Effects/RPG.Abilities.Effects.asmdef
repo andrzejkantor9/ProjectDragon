@@ -1,0 +1,20 @@
+{
+    "name": "RPG.Abilities.Effects",
+    "rootNamespace": "RPG.Abilities.Effects",
+    "references": [
+        "GUID:12529fe542302294fb858624120baa60",
+        "GUID:c6d2b0f16fabf7c4fbff19edf4990f66",
+        "GUID:1388a2378c27d2c49bffeb2ba2a7dd01",
+        "GUID:fbfa71b56f4764045b339ec89716340f",
+        "GUID:5ddb91fca9fafc74bb7a342e1e830c7b"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

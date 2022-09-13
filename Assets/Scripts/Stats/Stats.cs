@@ -5,6 +5,8 @@ namespace RPG.Stats
         HitPoints,
         ExperienceReward,
         ExperienceToLevelUp,
-        Damage
+        Damage,
+        Mana,
+        ManaRegen
     }
 }

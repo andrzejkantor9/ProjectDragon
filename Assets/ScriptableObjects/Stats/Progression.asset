@@ -75,6 +75,46 @@ MonoBehaviour:
       - 85
       - 90
       - 95
+    - <Stat>k__BackingField: 4
+      <Levels>k__BackingField:
+      - 300
+      - 350
+      - 400
+      - 450
+      - 500
+      - 550
+      - 600
+      - 650
+      - 700
+      - 750
+      - 800
+      - 850
+      - 900
+      - 950
+      - 1000
+      - 1050
+      - 1100
+      - 1150
+    - <Stat>k__BackingField: 5
+      <Levels>k__BackingField:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      - 8
+      - 9
+      - 10
+      - 11
+      - 12
+      - 13
+      - 14
+      - 15
+      - 16
+      - 17
+      - 18
   - <CharacterClass>k__BackingField: 1
     <Stats>k__BackingField:
     - <Stat>k__BackingField: 0

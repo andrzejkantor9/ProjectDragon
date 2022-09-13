@@ -10,7 +10,8 @@ namespace RPG
         EditorOnly,
         MainCamera,
         Player,
-        GameController
+        GameController,
+        Enemy
     }
 
     public enum WeaponNames

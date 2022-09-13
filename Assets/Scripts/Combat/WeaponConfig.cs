@@ -1,10 +1,11 @@
+using System.Collections.Generic;
+
 using UnityEngine;
+
+using GameDevTV.Inventories;
 
 using RPG.Attributes;
 using RPG.Stats;
-
-using GameDevTV.Inventories;
-using System.Collections.Generic;
 
 namespace RPG.Combat
 {

@@ -20,38 +20,41 @@ namespace RPG.Shops
         #region Config
         [Header("CONFIG")]
         [SerializeField]
-        private string _shopName;
+        string _shopName;
         [SerializeField]
-        private StockItemConfig[] _stockConfig;
+        StockItemConfig[] _stockConfig;
         [Tooltip("more = lower price")]
         [SerializeField][Range(-1000f, 1000f)]
-        private float _sellingPercentage = 50f;
+        float _sellingPercentage = 50f;
+        [SerializeField][Range(0f, 100f)]
+        float _maxBarterDiscountPercentage = 80f;
         #endregion
 
         #region Cache
         // [Header("CACHE")]
         // [Space(8f)]
-        private Shopper _currentShopper;
+        Shopper _currentShopper;
         #endregion
 
         #region States
-        private Dictionary<InventoryItem, int> _transaction = new Dictionary<InventoryItem, int>();
-        private Dictionary<InventoryItem, int> _stockSold = new Dictionary<InventoryItem, int>();
+        Dictionary<InventoryItem, int> _transaction = new Dictionary<InventoryItem, int>();
+        Dictionary<InventoryItem, int> _stockSold = new Dictionary<InventoryItem, int>();
 
-        private bool _isBuyingMode = true;
+        bool _isBuyingMode = true;
         ItemCategory _filter = ItemCategory.None;
         #endregion
 
         #region Events
         // [Header("EVENTS")][Space(8f)]
         public event Action onChange;
+        public static event Action<Shop> onOpenShop;
         #endregion
 
         #region Statics
         #endregion
 
         #region Data
-        //make variables private if class becomes public
+        //make variables if class becomes public
         [System.Serializable]
         class StockItemConfig
         {
@@ -66,7 +69,7 @@ namespace RPG.Shops
         ////////////////////////////////////////////////////////////////////////////////////////////////
 
         #region EngineMethods
-        private void Awake()
+        void Awake()
         {
             AssertSerializedFields();
         }
@@ -254,6 +257,9 @@ namespace RPG.Shops
             {
                 CustomLogger.Log($"pointer clicked on shopper: {gameObject.name}", LogFrequency.Rare);
                 playerController.GetComponent<Shopper>().SetActiveShop(this);
+
+                if(onOpenShop != null)
+                    onOpenShop(this);
                 if(onChange != null)
                     onChange();
             }
@@ -291,17 +297,17 @@ namespace RPG.Shops
         #endregion
 
         #region PrivateMethods
-        private void AssertSerializedFields()
+        void AssertSerializedFields()
         {
             Assert.IsTrue(!String.IsNullOrWhiteSpace(_shopName), $"_shopName in {gameObject.name} is empty");
         }
 
-        private bool IsTransactionEmpty()
+        bool IsTransactionEmpty()
         {
             return _transaction.Count == 0;
         }
 
-        private int CountItemsInInventory(InventoryItem item)
+        int CountItemsInInventory(InventoryItem item)
         {
             Inventory inventory = _currentShopper.GetComponent<Inventory>();
             if(inventory == null)
@@ -319,7 +325,7 @@ namespace RPG.Shops
             return total;
         }
 
-        private void BuyItem(Inventory shopperInventory, Purse shopperPurse, InventoryItem item, float price)
+        void BuyItem(Inventory shopperInventory, Purse shopperPurse, InventoryItem item, float price)
         {
             if(shopperPurse.Balance < price)
                 return;
@@ -338,7 +344,7 @@ namespace RPG.Shops
             }
         }
 
-        private void SellItem(Inventory shopperInventory, Purse shopperPurse, InventoryItem item, float price)
+        void SellItem(Inventory shopperInventory, Purse shopperPurse, InventoryItem item, float price)
         {
             int slot = FindFirstItemSlot(shopperInventory, item);
             if(slot == -1)
@@ -355,7 +361,7 @@ namespace RPG.Shops
             shopperPurse.UpdateBalance(price);
         }
 
-        private int FindFirstItemSlot(Inventory shopperInventory, InventoryItem item)
+        int FindFirstItemSlot(Inventory shopperInventory, InventoryItem item)
         {
             for (int i = 0; i < shopperInventory.GetSize(); i++)
             {
@@ -366,7 +372,7 @@ namespace RPG.Shops
             return -1;
         }
 
-        private int GetShopperLevel()
+        int GetShopperLevel()
         {
             var stats = _currentShopper.GetComponent<BaseStats>();
             if(!stats)
@@ -375,7 +381,7 @@ namespace RPG.Shops
             return stats.GetLevel();
         }
 
-        private Dictionary<InventoryItem, int> GetAvailabilities()
+        Dictionary<InventoryItem, int> GetAvailabilities()
         {
             var availabilities = new Dictionary<InventoryItem, int>();
 
@@ -400,7 +406,7 @@ namespace RPG.Shops
             return availabilities;
         }
 
-        private Dictionary<InventoryItem, float> GetPrices()
+        Dictionary<InventoryItem, float> GetPrices()
         {
             var prices = new Dictionary<InventoryItem, float>();
 
@@ -410,7 +416,7 @@ namespace RPG.Shops
                 {
                     if(!prices.ContainsKey(config.Item))
                     {
-                        prices[config.Item] = config.Item.Price;
+                        prices[config.Item] = config.Item.Price * GetBarterDiscount();
                     }
                     prices[config.Item] *= (1- config.BuyingDiscountPercentage / 100);
                 }
@@ -423,7 +429,15 @@ namespace RPG.Shops
             return prices;
         }
 
-        private IEnumerable<StockItemConfig> GetAvailableConfigs()
+        float GetBarterDiscount()
+        {
+            BaseStats baseStats = _currentShopper.GetComponent<BaseStats>();
+            float discountPercentage = baseStats.GetStat(Stat.BuyingDiscountPercentage);
+
+            return (1 - Mathf.Min(discountPercentage, _maxBarterDiscountPercentage) / 100);
+        }
+
+        IEnumerable<StockItemConfig> GetAvailableConfigs()
         {
             int shopperLevel = GetShopperLevel();
             foreach(StockItemConfig config in _stockConfig)

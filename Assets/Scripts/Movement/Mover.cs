@@ -9,7 +9,6 @@ using RPG.Attributes;
     //document them with comments
     //shooter project
     //add GetPathInHierachy static helper somewhere
-//can quest be completed and rewards received?
 
 //jak widze klase to sprawdzam
     //czy klasa odpowiada tylko za logikę / kontrolę
@@ -30,6 +29,7 @@ using RPG.Attributes;
 //script template
     //scriptable object template
     //adjust lenght of slashes / max width of code
+//child object with no config mono behaviours?
 
 ////////////////////////////////////////////
 

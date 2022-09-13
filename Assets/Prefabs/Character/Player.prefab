@@ -296,7 +296,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 013b047d288840c4983d07e22aa88a68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <MaxManaPoints>k__BackingField: 300
 --- !u!114 &2818270998031520727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -545,6 +544,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startingBalance: 400
+--- !u!114 &8864260149107028806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4655133506245642587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8892a8ee5ad1d534dbd21cad58c7f6a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bonusConfig:
+  - TraitType: 0
+    StatType: 0
+    AdditiveBonusPerPoint: 0
+    PercentageBonusPerPoint: 5
+  - TraitType: 2
+    StatType: 0
+    AdditiveBonusPerPoint: 0
+    PercentageBonusPerPoint: 5
+  - TraitType: 3
+    StatType: 4
+    AdditiveBonusPerPoint: 0
+    PercentageBonusPerPoint: 5
+  - TraitType: 3
+    StatType: 5
+    AdditiveBonusPerPoint: 0
+    PercentageBonusPerPoint: 5
+  - TraitType: 4
+    StatType: 7
+    AdditiveBonusPerPoint: 5
+    PercentageBonusPerPoint: 0
 --- !u!1001 &5938334602560443092
 PrefabInstance:
   m_ObjectHideFlags: 0

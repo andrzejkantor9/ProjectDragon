@@ -64,7 +64,8 @@ namespace RPG.Dialogue
             {
                 IsChoosing = true;
                 TriggerExitAction();
-                onConversationUpdated();
+                if(onConversationUpdated != null)
+                    onConversationUpdated();
                 return;
             }
 
@@ -77,7 +78,8 @@ namespace RPG.Dialogue
                 TriggerEnterAction();
             }
             
-            onConversationUpdated();
+            if(onConversationUpdated != null)
+                onConversationUpdated();
         }
 
         public bool HasNext() 
@@ -91,7 +93,8 @@ namespace RPG.Dialogue
             _currentDialogue = newDialogue;
             _currentNode = _currentDialogue.GetRootNode();
             TriggerEnterAction();
-            onConversationUpdated();
+            if(onConversationUpdated != null)
+                onConversationUpdated();
         }
 
         public void QuitDialogue()
@@ -101,7 +104,8 @@ namespace RPG.Dialogue
             _currentAIConversant = null;
             _currentNode = null;
             IsChoosing = false;
-            onConversationUpdated();
+            if(onConversationUpdated != null)
+                onConversationUpdated();
         }
         public bool IsActive() => _currentDialogue != null;
 

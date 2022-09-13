@@ -59,10 +59,12 @@ namespace RPG.Stats
 
                 if(levels.Length >= level)
                     return levels[level-1];
-                    
+                else if(levels.Length == 0)
+                    return 0f;
+                else
+                    return levels[levels.Length-1];
             }
 
-            UnityEngine.Debug.LogError("could not get stat with given parameters");
             return 0f;
         }
 

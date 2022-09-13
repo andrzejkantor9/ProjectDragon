@@ -17,40 +17,40 @@ namespace RPG.UI.Shops
         #region Config
         [Header("CONFIG")]
         [SerializeField]
-        private Color _notPossibleToBuyColor = Color.red;
+        Color _notPossibleToBuyColor = Color.red;
         [SerializeField]
-        private string _switchToSellText = "Switch to selling";
+        string _switchToSellText = "Switch to selling";
         [SerializeField]
-        private string _switchToBuyText = "Switch to buying";
+        string _switchToBuyText = "Switch to buying";
 
         [SerializeField]
-        private string _buyButtonText = "Buy";
+        string _buyButtonText = "Buy";
         [SerializeField]
-        private string _sellButtonText = "Sell";
+        string _sellButtonText = "Sell";
         #endregion
 
         #region Cache
         [Header("CACHE")]
         [Space(8f)]
         [SerializeField]
-        private TextMeshProUGUI _shopName;
+        TextMeshProUGUI _shopName;
         [SerializeField]
-        private Transform _listRoot;
+        Transform _listRoot;
         [SerializeField]
-        private RowUI _rowPrefab;
+        RowUI _rowPrefab;
         [SerializeField]
-        private TextMeshProUGUI _totalMoneyField;
+        TextMeshProUGUI _totalMoneyField;
         [SerializeField]
-        private Button _confirmButton;
+        Button _confirmButton;
         [SerializeField]
-        private Button _switchButton;
+        Button _switchButton;
 
-        private Color _originalTotalMoneyColor;
+        Color _originalTotalMoneyColor;
         #endregion
 
         #region States
-        private Shopper _shopper;
-        private Shop _currentShop;
+        Shopper _shopper;
+        Shop _currentShop;
         #endregion
 
         #region Events
@@ -67,14 +67,16 @@ namespace RPG.UI.Shops
         ////////////////////////////////////////////////////////////////////////////////////////////////
 
         #region EngineMethods
-        private void Awake()
+        void Awake()
         {
             AssertSerializedFields();
 
             _originalTotalMoneyColor = _totalMoneyField.color;
             _shopper = GameManager.PlayerGameObject.GetComponent<Shopper>();
+
             if(_shopper)
                 _shopper.onActiveShopChange += ShopChanged;
+            // Shop.onOpenShop += Activate;
 
             _confirmButton.onClick.AddListener(ConfirmTransaction);
             _switchButton.onClick.AddListener(SwitchMode);
@@ -82,25 +84,33 @@ namespace RPG.UI.Shops
             ShopChanged();
         }
 
-        private void OnEnable()
+        void OnEnable()
         {
             if(_currentShop)
                 _currentShop.onChange += RefreshUI;
         }
 
-        private void OnDisable()
+        void OnDisable()
         {
             if(_currentShop)
                 _currentShop.onChange -= RefreshUI;
         }
         
-        private void OnDestroy()
+        void OnDestroy()
         {
             if(_shopper)
                 _shopper.onActiveShopChange -= ShopChanged;
+            // Shop.onOpenShop -= Activate;
+            
             _confirmButton.onClick.RemoveListener(ConfirmTransaction);
             _switchButton.onClick.RemoveListener(SwitchMode);
         }
+
+        // void Activate(Shop shop)
+        // {
+        //     _currentShop = shop;
+        //     gameObject.SetActive(true);
+        // }
         #endregion
 
         #region PublicMethods
@@ -128,7 +138,7 @@ namespace RPG.UI.Shops
         #endregion
 
         #region Events
-        private void ShopChanged()
+        void ShopChanged()
         {
             _currentShop = _shopper.ActiveShop;
             gameObject.SetActive(_currentShop != null);
@@ -147,7 +157,7 @@ namespace RPG.UI.Shops
         #endregion
 
         #region PrivateMethods
-        private void RefreshUI()
+        void RefreshUI()
         {
             _listRoot.GetComponent<DestroyObjects>().DestroyWithSpecifiedParameters();
 
@@ -180,7 +190,7 @@ namespace RPG.UI.Shops
             }
         }
 
-        private void AssertSerializedFields()
+        void AssertSerializedFields()
         {
             Assert.IsNotNull(_shopName, $"_shopName in {gameObject.name} is null");
             Assert.IsNotNull(_listRoot, $"_listRoot in {gameObject.name} is null");

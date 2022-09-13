@@ -32,7 +32,7 @@ namespace RPG.Stats
         #endregion
 
         #region Events
-        public event Action OnLevelUp;
+        public event Action onLevelUp;
         #endregion
 
         /////////////////////////////////////////////////////////////////
@@ -87,7 +87,7 @@ namespace RPG.Stats
                 _currentLevel.value = newLevel;
                 CustomLogger.Log("Leveled up", LogFrequency.Regular);
                 LevelUpEffect();
-                OnLevelUp();
+                onLevelUp();
             }
             // if(gameObject.CompareTag(Enums.EnumToString<Tags>(Tags.Player)))
             //     Logger.Log(GetLevel().ToString(), LogFrequency.EveryFrame);

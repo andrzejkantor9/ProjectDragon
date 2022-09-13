@@ -62,13 +62,13 @@ namespace RPG.Attributes
         private void OnEnable()
         {
             if(CompareTag(Enums.EnumToString<Tags>(Tags.Player)))
-                GetComponent<BaseStats>().OnLevelUp += LevelUp;
+                GetComponent<BaseStats>().onLevelUp += LevelUp;
         }
 
         private void OnDisable()
         {   
             if(CompareTag(Enums.EnumToString<Tags>(Tags.Player)))
-                GetComponent<BaseStats>().OnLevelUp -= LevelUp;
+                GetComponent<BaseStats>().onLevelUp -= LevelUp;
         }
 
         private void Update()

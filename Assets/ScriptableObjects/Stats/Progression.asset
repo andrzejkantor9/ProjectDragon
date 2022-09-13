@@ -115,6 +115,26 @@ MonoBehaviour:
       - 16
       - 17
       - 18
+    - <Stat>k__BackingField: 6
+      <Levels>k__BackingField:
+      - 3
+      - 6
+      - 9
+      - 12
+      - 15
+      - 18
+      - 21
+      - 24
+      - 27
+      - 30
+      - 33
+      - 36
+      - 39
+      - 42
+      - 45
+      - 48
+      - 51
+      - 54
   - <CharacterClass>k__BackingField: 1
     <Stats>k__BackingField:
     - <Stat>k__BackingField: 0

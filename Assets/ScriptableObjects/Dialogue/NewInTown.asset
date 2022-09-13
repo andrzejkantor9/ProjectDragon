@@ -24,6 +24,8 @@ MonoBehaviour:
     height: 100
   <OnEnterAction>k__BackingField: 
   <OnExitAction>k__BackingField: 
+  _condition:
+    and: []
 --- !u!114 &-3795202148359178770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42,12 +44,14 @@ MonoBehaviour:
   - 5dc16059-06dc-4e20-80d6-67b0b173de77
   _nodePosition:
     serializedVersion: 2
-    x: 253
+    x: 254
     y: 16
     width: 200
     height: 100
   <OnEnterAction>k__BackingField: EnterAction
-  <OnExitAction>k__BackingField: ExintAction
+  <OnExitAction>k__BackingField: ExitAction
+  _condition:
+    and: []
 --- !u!114 &-2898990371119137804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,6 +77,8 @@ MonoBehaviour:
     height: 100
   <OnEnterAction>k__BackingField: 
   <OnExitAction>k__BackingField: ExitAction
+  _condition:
+    and: []
 --- !u!114 &-1350071274417788119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,12 +97,14 @@ MonoBehaviour:
   - 26772fb1-e6a7-4179-9f8a-53a834511bb6
   _nodePosition:
     serializedVersion: 2
-    x: 1158
-    y: 199
+    x: 1160
+    y: 197
     width: 200
     height: 100
   <OnEnterAction>k__BackingField: 
   <OnExitAction>k__BackingField: 
+  _condition:
+    and: []
 --- !u!114 &-1117309159043182316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,12 +123,14 @@ MonoBehaviour:
   - 19536e8a-bfb3-4daa-8fd2-f5b1c92bf05d
   _nodePosition:
     serializedVersion: 2
-    x: 197
-    y: 175
+    x: 196
+    y: 176
     width: 200
     height: 100
   <OnEnterAction>k__BackingField: 
   <OnExitAction>k__BackingField: 
+  _condition:
+    and: []
 --- !u!114 &-792457937958448108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,6 +154,8 @@ MonoBehaviour:
     height: 100
   <OnEnterAction>k__BackingField: 
   <OnExitAction>k__BackingField: Attack
+  _condition:
+    and: []
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,6 +205,8 @@ MonoBehaviour:
     height: 100
   <OnEnterAction>k__BackingField: 
   <OnExitAction>k__BackingField: 
+  _condition:
+    and: []
 --- !u!114 &2621279014744201524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -212,12 +226,14 @@ MonoBehaviour:
   - 02e10298-3e8c-438e-b730-9356e50cc829
   _nodePosition:
     serializedVersion: 2
-    x: 427
+    x: 430
     y: 220
     width: 200
     height: 100
   <OnEnterAction>k__BackingField: 
   <OnExitAction>k__BackingField: 
+  _condition:
+    and: []
 --- !u!114 &2688788191658185093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,12 +252,14 @@ MonoBehaviour:
   - 26772fb1-e6a7-4179-9f8a-53a834511bb6
   _nodePosition:
     serializedVersion: 2
-    x: 673
-    y: 379
+    x: 685
+    y: 338
     width: 200
     height: 100
   <OnEnterAction>k__BackingField: 
   <OnExitAction>k__BackingField: 
+  _condition:
+    and: []
 --- !u!114 &5239632192325986687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -261,12 +279,14 @@ MonoBehaviour:
   - 2ac9bd50-ebfe-4e57-aa58-406e55dcfe9f
   _nodePosition:
     serializedVersion: 2
-    x: 4
+    x: 5
     y: 4
     width: 200
     height: 100
   <OnEnterAction>k__BackingField: EnterAction
   <OnExitAction>k__BackingField: 
+  _condition:
+    and: []
 --- !u!114 &6317588703346770400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,8 +306,10 @@ MonoBehaviour:
   _nodePosition:
     serializedVersion: 2
     x: 1435
-    y: 250
+    y: 241
     width: 200
     height: 100
   <OnEnterAction>k__BackingField: 
-  <OnExitAction>k__BackingField: TestObjective
+  <OnExitAction>k__BackingField: CompleteBunions1
+  _condition:
+    and: []

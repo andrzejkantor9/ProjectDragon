@@ -2,6 +2,7 @@ using UnityEngine;
 
 using RPG.Interactions;
 using RPG.Core;
+using RPG.Attributes;
 
 namespace RPG.Dialogue
 {
@@ -25,7 +26,7 @@ namespace RPG.Dialogue
 
         public bool HandleRaycast(GameObject playerController)
         {
-            if(!_dialogue)
+            if(!_dialogue || GetComponent<HitPoints>().IsDead)
                 return false;
 
             if(InputManager.IsPointerPressed())

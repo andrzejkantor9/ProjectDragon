@@ -31,6 +31,7 @@ namespace RPG.Attributes
 
         #region Events
         public event Action OnDeath;
+        public event Action onRespawn;
         [SerializeField]
         private UnityEvent<float> OnTakeDamage;
         [SerializeField]
@@ -97,6 +98,14 @@ namespace RPG.Attributes
         public void Heal(float hitPointsToRestore)
         {
             HitPointsValue.value = Mathf.Min(HitPointsValue.value + hitPointsToRestore, GetMaxHitPoints());
+            CheckDeath(null);
+        }
+
+        public void Respawn()
+        {
+            Debug.CustomLogger.Log($"respawn subscribers: {onRespawn.GetInvocationList().Length}", LogFrequency.Regular);
+            if(onRespawn != null)
+                onRespawn();
         }
 
         public float GetFraction() => _hitPointsPercentage / 100f;
@@ -128,8 +137,16 @@ namespace RPG.Attributes
                     instigator.GetComponent<Experience>().GainExperience(GetComponent<BaseStats>().GetStat(Stat.ExperienceReward));
 
                 GetComponent<ActionScheduler>().CancelCurrentAction();
-                OnDeath();
-                onDeathUnityEvent?.Invoke();
+                if(OnDeath != null)
+                    OnDeath();
+                if(onDeathUnityEvent != null)
+                    onDeathUnityEvent?.Invoke();
+            }
+            else if(IsDead && HitPointsValue.value > 0)
+            {
+                _animator.Rebind();
+                Respawn();
+                IsDead = false;
             }
 
             return IsDead;

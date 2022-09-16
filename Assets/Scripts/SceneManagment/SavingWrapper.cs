@@ -1,8 +1,11 @@
 using System.Collections;
+using System.Collections.Generic;
 
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 using RPG.Saving;
+using System;
 
 namespace RPG.SceneManagment
 {    
@@ -10,26 +13,25 @@ namespace RPG.SceneManagment
     {      
         #region Parameters
         [SerializeField]
-        private float _fadeInTime = 1f;
+        float _fadeInTime = 1f;
         [SerializeField]
-        private SavingInputConfig _savingInputConfig;
+        float _fadeOutTime = 1f;
+        [SerializeField]
+        SavingInputConfig _savingInputConfig;
+        [SerializeField]
+        int _newGameSceneIndex = 1;
+        [SerializeField]
+        int _mainMenuSceneIndex = 0;
         #endregion
 
-        #region StaticVariables
-        private const string DEFAULT_SAVE_FILE = "save";
+        #region Statics
+        const string CURRENT_SAVE_KEY = "CurrentSaveName";
         #endregion
 
         ///////////////////////////////////////////////////////////////////////////
 
         #region EngineMethods
-        
-        private void Awake()
-        {    
-            StartCoroutine(LoadLastScene());
-            UnityEngine.Assertions.Assert.IsNotNull(_savingInputConfig, "_savingInputConfig is null");
-        }
-
-        private void Update()
+        void Update()
         {
             if(_savingInputConfig.WasSavePressedThisFrame)
                 Save();
@@ -41,32 +43,82 @@ namespace RPG.SceneManagment
         #endregion
 
         #region PublicFunctions
+        public void ContinueGame()
+        {    
+            if(!PlayerPrefs.HasKey(CURRENT_SAVE_KEY)
+                || !GetComponent<SavingSystem>().SaveFileExists(GetCurrentSave()))
+                return;
+
+            StartCoroutine(LoadLastScene());
+            UnityEngine.Assertions.Assert.IsNotNull(_savingInputConfig, "_savingInputConfig is null");
+        }
+
+        public void NewGame(string saveFile)
+        {
+            if(string.IsNullOrWhiteSpace(saveFile))
+                return;
+
+            SetCurrentSave(saveFile);
+            StartCoroutine(LoadScene(_newGameSceneIndex));
+        }
+
+        public void LoadMainMenu()
+        {
+            StartCoroutine(LoadScene(_mainMenuSceneIndex));
+        }
+
+        public void LoadGame(string saveFile)
+        {
+            SetCurrentSave(saveFile);
+            ContinueGame();
+        }
+
         public void Load()
         {
-            GetComponent<SavingSystem>().Load(DEFAULT_SAVE_FILE);
+            GetComponent<SavingSystem>().Load(GetCurrentSave());
         }
 
         public void Save()
         {
-            GetComponent<SavingSystem>().Save(DEFAULT_SAVE_FILE);
+            GetComponent<SavingSystem>().Save(GetCurrentSave());
         }
 
         public void DeleteSave()
         {
-            GetComponent<SavingSystem>().Delete(DEFAULT_SAVE_FILE);
+            GetComponent<SavingSystem>().Delete(GetCurrentSave());
         }
 
-        #region Coroutines
-        private IEnumerator LoadLastScene()
-        {
-            yield return GetComponent<SavingSystem>().LoadLastScene(DEFAULT_SAVE_FILE);
-            
-            Fader fader = FindObjectOfType<Fader>();
-            fader.FadeOutImmediate();
+        public IEnumerable<string> ListSaves() => GetComponent<SavingSystem>().ListSaves();
+        #endregion
 
+        #region PrivateMethods
+        IEnumerator LoadLastScene()
+        {
+            Fader fader = FindObjectOfType<Fader>();
+            yield return fader.FadeOut(_fadeOutTime);
+
+            yield return GetComponent<SavingSystem>().LoadLastScene(GetCurrentSave());
             yield return fader.FadeIn(_fadeInTime);
         }
-        #endregion
+        
+        IEnumerator LoadScene(int buildIndex)
+        {
+            Fader fader = FindObjectOfType<Fader>();
+            yield return fader.FadeOut(_fadeOutTime);
+
+            yield return SceneManager.LoadSceneAsync(buildIndex);
+            yield return fader.FadeIn(_fadeInTime);
+        }
+
+        void SetCurrentSave(string saveFile)
+        {
+            PlayerPrefs.SetString(CURRENT_SAVE_KEY, saveFile);
+        }
+
+        string GetCurrentSave()
+        {
+            return PlayerPrefs.GetString(CURRENT_SAVE_KEY);
+        }
         #endregion
     }
 }

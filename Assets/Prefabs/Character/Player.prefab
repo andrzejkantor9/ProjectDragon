@@ -502,35 +502,52 @@ MonoBehaviour:
   - <Type>k__BackingField: 0
     <Texture>k__BackingField: {fileID: 2800000, guid: 21628736160fcc9488493401da3ef621,
       type: 3}
-    <Hotspot>k__BackingField: {x: 0, y: 0}
+    <Hotspot>k__BackingField: {x: 6, y: 3}
   - <Type>k__BackingField: 1
     <Texture>k__BackingField: {fileID: 2800000, guid: 8859fce41c5d0a148ad0b7eebfca7fe9,
       type: 3}
-    <Hotspot>k__BackingField: {x: 0, y: 0}
+    <Hotspot>k__BackingField: {x: 6, y: 3}
   - <Type>k__BackingField: 2
     <Texture>k__BackingField: {fileID: 2800000, guid: 2d18e23e3ce249b4489b8bcdd02d3f48,
       type: 3}
-    <Hotspot>k__BackingField: {x: 0, y: 0}
+    <Hotspot>k__BackingField: {x: 6, y: 3}
   - <Type>k__BackingField: 3
     <Texture>k__BackingField: {fileID: 2800000, guid: 2e71a8202d3b4a3448ec85ced5a40265,
       type: 3}
-    <Hotspot>k__BackingField: {x: 0, y: 0}
+    <Hotspot>k__BackingField: {x: 6, y: 3}
   - <Type>k__BackingField: 4
     <Texture>k__BackingField: {fileID: 2800000, guid: f8c873f1e53e83f4aabf342d6be1dfc3,
       type: 3}
-    <Hotspot>k__BackingField: {x: 0, y: 0}
+    <Hotspot>k__BackingField: {x: 6, y: 3}
   - <Type>k__BackingField: 5
     <Texture>k__BackingField: {fileID: 2800000, guid: cecad95c851b97f40b105b30b0bfede3,
       type: 3}
-    <Hotspot>k__BackingField: {x: 0, y: 0}
+    <Hotspot>k__BackingField: {x: 6, y: 3}
   - <Type>k__BackingField: 6
     <Texture>k__BackingField: {fileID: 2800000, guid: 96d4bfdb0d6d8c042bf8fccf6524d239,
       type: 3}
-    <Hotspot>k__BackingField: {x: 0, y: 0}
+    <Hotspot>k__BackingField: {x: 6, y: 3}
   - <Type>k__BackingField: 7
     <Texture>k__BackingField: {fileID: 2800000, guid: e4fac5245b727db42ba0ca0258851b83,
       type: 3}
-    <Hotspot>k__BackingField: {x: 0, y: 0}
+    <Hotspot>k__BackingField: {x: 6, y: 3}
+--- !u!114 &8037367685074070639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4655133506245642587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1aa6eb05ec61754aa243740d6c7c0b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _respawnLocation: {fileID: 0}
+  _respawnDelay: 3
+  _fadeTime: 0.5
+  _hitPointsRegenPercentage: 20
+  _enemyHitPointsRegenPercentage: 20
 --- !u!114 &8504423283350850111
 MonoBehaviour:
   m_ObjectHideFlags: 0

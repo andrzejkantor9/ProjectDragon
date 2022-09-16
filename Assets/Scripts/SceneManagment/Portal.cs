@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.AI;
 
 using RPG.Core;
-using RPG.Control;
+
 using RPG.Debug;
 
 namespace RPG.SceneManagment
@@ -77,8 +77,9 @@ namespace RPG.SceneManagment
             DontDestroyOnLoad(gameObject);
             Fader fader = FindObjectOfType<Fader>();
             SavingWrapper savingWrapper = FindObjectOfType<SavingWrapper>();
-            PlayerController playerController = GameManager.PlayerGameObject.GetComponent<PlayerController>();
-            playerController.enabled = false;
+            // PlayerController playerController = GameManager.PlayerGameObject.GetComponent<PlayerController>();
+            // playerController.enabled = false;
+            GameManager.PlayerGameObject.SetActive(false);
             
             yield return fader.FadeOut(_fadeOutDuration);
             // _runningCoroutines.Remove(fadeOut);
@@ -87,8 +88,9 @@ namespace RPG.SceneManagment
             CustomLogger.Log("loading scene", LogFrequency.Rare);
             yield return LoadSceneByIndexAsync(_sceneToLoad);
 
-            PlayerController newPlayerController = GameManager.PlayerGameObject.GetComponent<PlayerController>();
-            newPlayerController.enabled = false;
+            // PlayerController newPlayerController = GameManager.PlayerGameObject.GetComponent<PlayerController>();
+            // newPlayerController.enabled = false;
+            GameManager.PlayerGameObject.SetActive(false);
 
             CustomLogger.Log("scene loaded", LogFrequency.Rare);
             savingWrapper.Load();
@@ -101,7 +103,8 @@ namespace RPG.SceneManagment
             fader.FadeIn(_fadeInDuration);
             // _runningCoroutines.Remove(fadeIn);
     
-            newPlayerController.enabled = true;
+            // newPlayerController.enabled = true;
+            GameManager.PlayerGameObject.SetActive(true);
             Destroy(gameObject);
         }
 

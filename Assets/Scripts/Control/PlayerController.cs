@@ -78,6 +78,7 @@ namespace RPG.Control
         private void Awake()
         {
             _actionStore = GetComponent<ActionStore>();
+            _hitPoints.onRespawn += Respawn;
         }
 
         private void Start()
@@ -101,6 +102,11 @@ namespace RPG.Control
             {
                 input.Disable();
             }
+        }
+
+        private void OnDestroy() 
+        {
+            _hitPoints.onRespawn -= Respawn;
         }
 
         void Update()
@@ -135,6 +141,11 @@ namespace RPG.Control
         private void Death()
         {
             enabled = false;
+        }
+
+        private void Respawn()
+        {
+            enabled = true;
         }
 
         private void UseAbilities()

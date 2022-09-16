@@ -50,6 +50,10 @@ namespace RPG.Combat
             {
                 transform.LookAt(GetAimLocation());
             }
+            else
+            {
+                _targetHitPoints = null;
+            }
 
             transform.Translate(Vector3.forward * _speed * Time.deltaTime);
         }

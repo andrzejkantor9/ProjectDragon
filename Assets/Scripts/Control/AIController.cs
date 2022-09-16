@@ -1,6 +1,7 @@
 using System;
 
 using UnityEngine;
+using UnityEngine.AI;
 
 using GameDevTV.Utils;
 
@@ -76,11 +77,9 @@ namespace RPG.Control
             _playerGameObject = GameManager.PlayerGameObject;
 
             _guardLocation = new LazyValue<Vector3>(GetGuardPosition);
-        }
 
-        private void Start()
-        {
             _guardLocation.ForceInit();
+            _health.onRespawn += Respawn;
         }
 
         private void OnEnable()
@@ -91,6 +90,11 @@ namespace RPG.Control
         private void OnDisable()
         {
             _health.OnDeath -= Death;
+        }
+
+        private void OnDestroy() 
+        {
+            _health.onRespawn -= Respawn;
         }
 
         private void Update()
@@ -130,12 +134,28 @@ namespace RPG.Control
         {
             _timeSinceAggrevated = 0f;
         }
+        
+        public void Reset()
+        {
+            var navMeshAgent = GetComponent<NavMeshAgent>();
+            navMeshAgent.Warp(_guardLocation.value);
+
+            _waypointIndex =0;
+            _timeSinceLastSawPlayer = Mathf.Infinity;
+            _timeSinceReachedWaypoint = Mathf.Infinity;
+            _timeSinceAggrevated = Mathf.Infinity;
+        }
         #endregion
 
         #region PrivateMethodsVoid
         private void Death()
         {
             enabled = false;
+        }
+
+        private void Respawn()
+        {
+            enabled = true;
         }
 
         private void PatrolBehaviour()

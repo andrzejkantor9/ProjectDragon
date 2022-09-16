@@ -68,6 +68,8 @@ namespace RPG.Combat
 
             _currentWeaponConfig = _defaultWeapon;
             _currentWeapon = new LazyValue<Weapon>(SetupDefaultWeapon);
+
+            _hitPoints.onRespawn += Respawn;
         }
 
         private void Start()
@@ -87,6 +89,11 @@ namespace RPG.Combat
             _hitPoints.OnDeath -= Death;
             if(_equipment)
                 _equipment.equipmentUpdated -= UpdateWeapon;
+        }
+
+        private void OnDestroy() 
+        {
+            _hitPoints.onRespawn -= Respawn;
         }
 
         private void Update()
@@ -215,9 +222,19 @@ namespace RPG.Combat
 
         private void Death()
         {
-            GetComponent<Rigidbody>().isKinematic = true;
-            GetComponent<CapsuleCollider>().enabled = false;
-            enabled = false;
+            SetDead(true);
+        }
+
+        private void SetDead(bool isDead)
+        {
+            GetComponent<Rigidbody>().isKinematic = isDead;
+            GetComponent<CapsuleCollider>().enabled = !isDead;
+            enabled = !isDead;
+        }
+
+        private void Respawn()
+        {
+            SetDead(false);
         }
 
         private bool GetIsInRange(Transform targetTransform)

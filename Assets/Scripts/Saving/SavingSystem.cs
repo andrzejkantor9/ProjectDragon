@@ -4,8 +4,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
+using RPG.Debug;
 
 namespace RPG.Saving
 {
@@ -56,6 +59,28 @@ namespace RPG.Saving
         public void Load(string saveFile)
         {
             RestoreState(LoadFile(saveFile));
+        }
+
+        public bool SaveFileExists(string saveFile)
+        {
+            string path = GetPathFromSaveFile(saveFile);
+            return File.Exists(path);
+        }
+
+        public IEnumerable<string> ListSaves()
+        {
+            StringBuilder s = new StringBuilder("Saves found: ");
+            foreach(string path in Directory.EnumerateFiles(Application.persistentDataPath))
+            {
+                if(Path.GetExtension(path) == ".sav")
+                {
+                    string fileName = Path.GetFileNameWithoutExtension(path);
+                    s.Append($"{fileName}, ");
+                    yield return fileName;
+                }
+            }
+
+            CustomLogger.Log($"{s}", LogFrequency.Rare);
         }
 
         // PRIVATE

@@ -5,10 +5,20 @@ using RPG.Core;
 using RPG.Saving;
 using RPG.Attributes;
 
-//create utils package from destroyobject, customlogger, enums, lazy value, log worls position
+//shops - impossible to add items
+//utils - assert all given objects
+//continue only works within 1 session?
+//triggered dialogues are not loaded
+//continue game without a save should not do anything
+//on level change issues loading - cause of getting rid of rpg.control dependency in portal and trying to use game object instead of playercontroller
+
+//destroyobjects
+    //add GetPathInHierachy static helper somewhere
+    //*documentation comments
+
+//create utils package from customlogger, enums, lazy value, log worls position, fps counter
     //document them with comments
     //shooter project
-    //add GetPathInHierachy static helper somewhere
 
 //jak widze klase to sprawdzam
     //czy klasa odpowiada tylko za logikę / kontrolę
@@ -30,24 +40,42 @@ using RPG.Attributes;
     //scriptable object template
     //adjust lenght of slashes / max width of code
 //child object with no config mono behaviours?
+//custom inspector with searching with names
+//find ALL references to script / object in editor
+//component to turn everything to caps or non-caps
 
 ////////////////////////////////////////////
 
-//make transitions from levels work properly
-//fix enemies hp bars
-//fix on enemy kill nullrefs
-//start move action to npc dialogue
+//change: start move action to npc dialogue instead of insta trigger
+//change: dropping items should not triiger ontriggerenter pickup
+//add: basic audio to most places
+//add: make full prod build
+//add: interesting blog features
+//bug: enemies hp bars not visible
+//bug: cannot add items in shop
+//bug: on enemy kill nullrefs
+//bug: save creates "save.sav" file?
 //bug: guards dont patrol anymore after getting in agro range when in peaceful mode
 //bug: guards can be damaged with abilities in peaceful mode
 //bug: npcs can be damaged with abilities
+//learn: if [hide in inspector] + onvalidate works in prod build
+    //save data in editor without serializefield for objects instantiated in runtime (hide in inspector + on validate does not work)
 
-//dialogueNode setter czy field?
-//translation files into dialogs editor
-//fix upward rotation when facing enemy on elevation
-//TODO my own fps on screen counter
-//TODO fighter on target death event -=
-//LOCAL METHODS?
-//cinematic pauses all actions
+//learn: test performance of auto layout (current version) vs pure hand layoutui
+//learn: dialogueNode setter or field?
+//bug: upward rotation when facing enemy on elevation
+//bug: cinematic should pauses all actions
+//refactor: TODO fighter on target death event -=
+//refactor: assert / require GetComponents
+//add: self scrolling text ui horizontaly
+//learn: can shop.cs be split?
+//refactor: ui relying on being set active pre awake (in editor)
+//refactor: make component that can group components in inspector
+
+//learn :local methods usage overall (not this project)
+//change: move quest & dialogue setup from string bindings
+//add: translation setup to project, translation asset pack
+//add: spoken dialogues
 //dialogue
     //saving state?
     //dont trigger dialogue from any distance
@@ -62,45 +90,32 @@ using RPG.Attributes;
     //drag node to scroll
     //some area that appears as node isnt draggable
     //flexible scroll width & height
-//health bars not displaying fix
-//possibility to damage enemies without aggroing them with abilities fix
 
 //////////////////////////////////////////
 
 //controller and mobile input devices
+//make any point input work
+//pass input action instead of doing it here
+    //what about component independency / plug & play
 
-//MAKE move to clicked area component
+//move to clicked area component
 //decouple animations
 //inject navmesh & make it a pure c# class
 //inject action on which it should decide if click to move should apply
-//make any point input work
-//pass input action instead of doing it here
 //remember it should work out of the box, when adding component - as little extra work as possible
-//make editor functionality to find ALL things referencing script (enum as int placing in middle a new state)
-//TODO add audio bg
-//split ui to multiple canvas
-//in editor script to make everything caps lock
-//self scrolling text ui
-//translate text component
-//draggable in game ui
-//3rd person instead of isometric
 
-//TODO make checker if all levels values are set in progression
-//TODO internal vs public vs etc
-//TODO use addressables instead of resources
-//TODO fix fading bug if switching scenes fast
-//TODO use custom ienumerator with yield return
+//split ui to multiple canvas
+//draggable in game ui
+//use addressables instead of resources
+//debug script calling functions on object's components
+//everything possible as standalone components (for any unity project)
+//add list of buffs like in bdo and prep phase
+//possible use of custom ienumerator with yield return
     //get one card from deck? (or queue / stack? - lazily produce value?)
     //wait for certain conditions (boss hp, player position)
     //chain quests, story state
     //book pages
-//TODO should i initialize variables or not needed
-//TODO debug script calling functions on object's components
-//TODO make everything possible as standalone components (for any unity project)
-//TODO save data in editor without serializefield for objects instantiated in runtime (hide in inspector + on validate does not work)
-//TODO use cinemachine instead of camera
 
-//TODO add list of buffs like in bdo and prep phase
 namespace RPG.Movement
 {
     [RequireComponent(typeof(NavMeshAgent))]
@@ -143,6 +158,8 @@ namespace RPG.Movement
         private void Awake()
         {
             _ForwardSpeedAnimId = Animator.StringToHash("ForwardSpeed");
+
+            _health.onRespawn += Respawn;
         }
 
         private void OnEnable()
@@ -153,6 +170,11 @@ namespace RPG.Movement
         private void OnDisable()
         {
             _health.OnDeath -= Death;
+        }
+
+        private void OnDestroy() 
+        {
+            _health.onRespawn -= Respawn;
         }
 
         private void Update() 
@@ -214,8 +236,18 @@ namespace RPG.Movement
 
         private void Death()
         {
-            _navMeshAgent.enabled = false;
-            enabled = false;
+            SetDead(true);
+        }
+
+        private void Respawn()
+        {
+            SetDead(false);
+        }
+
+        private void SetDead(bool isDead)
+        {
+            _navMeshAgent.enabled = !isDead;
+            enabled = !isDead;
         }
         #endregion
 

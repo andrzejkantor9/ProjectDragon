@@ -87,12 +87,41 @@ namespace Utilities
             }
             else if(_destroyChildren)
             {
-                foreach(Transform child in GetComponentsInChildren<Transform>())
+                DestroyChildren(this.gameObject, _destroyDelay);
+            }
+        }
+        #endregion
+
+        #region Events & Statics
+        public static void DestroyWithSpecifiedParameters(
+            GameObject objectToDestroy,
+            bool destroySelf,
+            bool destroyChildren,
+            float destroyDelay = 0f)
+        {
+            if(!objectToDestroy)
+                return;
+
+            CustomLogger.Log($"destroy with specified Parameters called on: {objectToDestroy.name}", LogFrequency.Sporadic);
+            if(destroySelf)
+            {
+                Destroy(objectToDestroy, destroyDelay);
+            }
+            else if(destroyChildren)
+            {
+                DestroyChildren(objectToDestroy, destroyDelay);
+            }
+        }
+        #endregion
+
+        #region PrivateMethods
+        static void DestroyChildren(GameObject inObject, float destroyDelay)
+        {
+            foreach (Transform child in inObject.GetComponentsInChildren<Transform>())
+            {
+                if (!Object.ReferenceEquals(child.gameObject, inObject))
                 {
-                    if(!Object.ReferenceEquals(child.gameObject, this.gameObject))
-                    {
-                        Destroy(child.gameObject, _destroyDelay);
-                    }
+                    Destroy(child.gameObject, destroyDelay);
                 }
             }
         }

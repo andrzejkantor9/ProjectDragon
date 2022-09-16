@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 
 using UnityEngine;
@@ -54,9 +55,14 @@ namespace RPG.SceneManagment
         {
             while(!Mathf.Approximately(_canvasGroup.alpha, target))
             {
-                _canvasGroup.alpha = Mathf.MoveTowards(_canvasGroup.alpha, target, Time.deltaTime / time);
+                _canvasGroup.alpha = Mathf.MoveTowards(_canvasGroup.alpha, target, Time.unscaledDeltaTime / time);
                 yield return null;
             }
+        }
+
+        internal object FadeOut(object fadeOutTime)
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }

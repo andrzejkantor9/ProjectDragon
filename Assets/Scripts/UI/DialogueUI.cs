@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 using TMPro;
 
+using RPG.Debug;
 using RPG.Dialogue;
 using RPG.Core;
 
@@ -76,6 +77,7 @@ namespace RPG.UI
             {
                 _AIText.text = _playerConversant.GetText();
                 _nextButton.gameObject.SetActive(_playerConversant.HasNext());
+                CustomLogger.Log($"ai text: {_AIText.text}", LogFrequency.Regular);
             }
         }
 
@@ -102,9 +104,9 @@ namespace RPG.UI
 
         private bool CheckAndSetConversant()
         {
-            if(!_playerConversant && GameManager.PlayerGameObject)
+            if(!_playerConversant && GameManager.PlayerGameObject())
             {
-                _playerConversant = GameManager.PlayerGameObject.GetComponent<PlayerConversant>();
+                _playerConversant = GameManager.PlayerGameObject().GetComponent<PlayerConversant>();
             }
             bool isSet = _playerConversant != null;
             if(!isSet)

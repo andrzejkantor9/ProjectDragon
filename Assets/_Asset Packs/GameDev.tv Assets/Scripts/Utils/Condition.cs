@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-namespace RPG.Core
+namespace GameDevTV.Utils
 {
     [System.Serializable]
     public class Condition
@@ -12,6 +12,9 @@ namespace RPG.Core
 
         public bool Check(IEnumerable<IPredicateEvaluator> evaluators)
         {
+            if(and == null || and.Length == 0)
+                return true;
+
             foreach(Disjunction disjunction in and)
             {
                 if(!disjunction.Check(evaluators))

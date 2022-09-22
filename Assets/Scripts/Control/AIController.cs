@@ -74,7 +74,7 @@ namespace RPG.Control
         {
             // UnityEngine.Assertions.Assert.IsNotNull(_patrolPath, "_patrolPath object is null");  
 
-            _playerGameObject = GameManager.PlayerGameObject;
+            _playerGameObject = GameManager.PlayerGameObject();
 
             _guardLocation = new LazyValue<Vector3>(GetGuardPosition);
 

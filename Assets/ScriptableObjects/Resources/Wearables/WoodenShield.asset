@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db07db4b42f663e44afa645eafba2e10, type: 3}
+  m_Name: WoodenShield
+  m_EditorClassIdentifier: 
+  itemID: 8dea561a-a9b3-4f0c-a718-cc2371553929
+  displayName: Wooden Shield
+  description: stops some damage
+  icon: {fileID: 21300000, guid: 886ffb608498aa04c9c0913d5ac3c394, type: 3}
+  pickup: {fileID: 8956743099817969053, guid: e1de9865f93876446a3a9414c32abcb5, type: 3}
+  stackable: 0
+  _price: 360
+  _category: 1
+  allowedEquipLocation: 6
+  _additiveModifiers:
+  - _stat: 8
+    _value: 5
+  _percentageModifers: []

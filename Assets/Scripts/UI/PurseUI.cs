@@ -41,7 +41,7 @@ namespace RPG.UI
         #region EngineMethods
         private void Start()
         {
-            _playerPurse = GameManager.PlayerGameObject.GetComponent<Purse>();
+            _playerPurse = GameManager.PlayerGameObject().GetComponent<Purse>();
             RefreshUI();
 
             if(_playerPurse)            

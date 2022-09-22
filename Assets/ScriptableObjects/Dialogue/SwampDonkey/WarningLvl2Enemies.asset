@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-6369294795106254457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 793ad3de877a5304abb96cfd760f10ac, type: 3}
+  m_Name: 39bec70a-ee43-4f35-b9d0-cc929b1a84dd
+  m_EditorClassIdentifier: 
+  <IsPlayerSpeaking>k__BackingField: 0
+  <Text>k__BackingField: The guards at the castle are very dangerous!
+  <ChildrenID>k__BackingField:
+  - 0ea4df47-1d40-4e26-a74a-e4c743b8e73b
+  _nodePosition:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 200
+    height: 100
+  <OnEnterAction>k__BackingField: 
+  <OnExitAction>k__BackingField: 
+  _condition:
+    and: []
+--- !u!114 &-4352857477625031051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 793ad3de877a5304abb96cfd760f10ac, type: 3}
+  m_Name: 0ea4df47-1d40-4e26-a74a-e4c743b8e73b
+  m_EditorClassIdentifier: 
+  <IsPlayerSpeaking>k__BackingField: 0
+  <Text>k__BackingField: But rich!
+  <ChildrenID>k__BackingField: []
+  _nodePosition:
+    serializedVersion: 2
+    x: 250
+    y: 0
+    width: 200
+    height: 100
+  <OnEnterAction>k__BackingField: 
+  <OnExitAction>k__BackingField: 
+  _condition:
+    and: []
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eb23c4add2927d4ebd4a0d60be25149, type: 3}
+  m_Name: WarningLvl2Enemies
+  m_EditorClassIdentifier: 
+  _newNodeOffset: {x: 250, y: 0}
+  _nodes:
+  - {fileID: -6369294795106254457}
+  - {fileID: -4352857477625031051}

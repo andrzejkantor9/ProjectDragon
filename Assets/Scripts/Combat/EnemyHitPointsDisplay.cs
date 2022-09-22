@@ -28,7 +28,7 @@ namespace RPG.Combat
         
         private void Awake()
         {
-            _fighter = GameManager.PlayerGameObject.GetComponent<Fighter>();
+            _fighter = GameManager.PlayerGameObject().GetComponent<Fighter>();
         }
 
         private void Update()

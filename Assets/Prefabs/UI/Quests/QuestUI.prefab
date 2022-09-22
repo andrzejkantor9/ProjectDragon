@@ -768,8 +768,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 21378.943, y: -10181.579}
-  m_SizeDelta: {x: 0.000030518, y: 0}
+  m_AnchoredPosition: {x: 21378.943, y: -0.000007033348}
+  m_SizeDelta: {x: 0.000030518, y: 323.44}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1713558205867027687
 MonoBehaviour:
@@ -839,10 +839,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _destroyAtAwake: 1
   _destroyAtStart: 0
+  _destroyAtOnEnable: 0
   _destroySelf: 0
   _destroyChildren: 1
-  _extraObjectsToDestroy: []
   _destroyDelay: 0
+  _extraObjectsToDestroy: []
 --- !u!1 &7320853801206804727
 GameObject:
   m_ObjectHideFlags: 0

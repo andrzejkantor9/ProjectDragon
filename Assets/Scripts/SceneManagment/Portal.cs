@@ -79,7 +79,7 @@ namespace RPG.SceneManagment
             SavingWrapper savingWrapper = FindObjectOfType<SavingWrapper>();
             // PlayerController playerController = GameManager.PlayerGameObject.GetComponent<PlayerController>();
             // playerController.enabled = false;
-            GameManager.PlayerGameObject.SetActive(false);
+            GameManager.PlayerGameObject().SetActive(false);
             
             yield return fader.FadeOut(_fadeOutDuration);
             // _runningCoroutines.Remove(fadeOut);
@@ -90,7 +90,7 @@ namespace RPG.SceneManagment
 
             // PlayerController newPlayerController = GameManager.PlayerGameObject.GetComponent<PlayerController>();
             // newPlayerController.enabled = false;
-            GameManager.PlayerGameObject.SetActive(false);
+            GameManager.PlayerGameObject().SetActive(false);
 
             CustomLogger.Log("scene loaded", LogFrequency.Rare);
             savingWrapper.Load();
@@ -104,13 +104,14 @@ namespace RPG.SceneManagment
             // _runningCoroutines.Remove(fadeIn);
     
             // newPlayerController.enabled = true;
-            GameManager.PlayerGameObject.SetActive(true);
+            GameManager.PlayerGameObject().SetActive(true);
             Destroy(gameObject);
         }
 
         private void UpdatePlayer(Portal otherPortal)
         {
-            GameObject playerGameObject = GameManager.PlayerGameObject;
+            // return;
+            GameObject playerGameObject = GameManager.PlayerGameObject();
 
             playerGameObject.GetComponent<NavMeshAgent>().Warp(otherPortal.SpawnPoint.position);
             playerGameObject.transform.rotation = otherPortal.SpawnPoint.rotation;

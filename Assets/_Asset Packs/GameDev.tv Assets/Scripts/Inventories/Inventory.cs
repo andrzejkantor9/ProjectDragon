@@ -5,7 +5,7 @@ using UnityEngine;
 
 using RPG.Saving;
 
-using RPG.Core;
+using GameDevTV.Utils;
 
 namespace GameDevTV.Inventories
 {
@@ -106,6 +106,13 @@ namespace GameDevTV.Inventories
         /// <returns>Whether or not the item could be added.</returns>
         public bool AddToFirstEmptySlot(InventoryItem item, int number)
         {
+            foreach (var store in GetComponents<IItemStore>())
+            {
+                number -= store.AddItems(item, number);
+            }
+            if(number <= 0)
+                return true;
+
             int i = FindSlot(item);
 
             if (i < 0)

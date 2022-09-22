@@ -19,7 +19,7 @@ namespace RPG.UI.Quests
         #region EngineMethods
         private void Start()
         {
-            _questList = GameManager.PlayerGameObject.GetComponent<QuestsList>();
+            _questList = GameManager.PlayerGameObject().GetComponent<QuestsList>();
             if (!_questList)
                 UnityEngine.Assertions.Assert.IsNotNull(_questList, "questList is null");
 

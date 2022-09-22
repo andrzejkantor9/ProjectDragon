@@ -5,8 +5,9 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-using RPG.Core;
 using RPG.Debug;
+
+using GameDevTV.Utils;
 
 namespace RPG.Dialogue
 {

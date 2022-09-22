@@ -18,7 +18,7 @@ namespace RPG.Cinematics
         #region EngineMethods
         private void Awake()
         {
-            _playerGameObject = GameManager.PlayerGameObject;        
+            _playerGameObject = GameManager.PlayerGameObject();        
         }
 
         private void OnEnable()

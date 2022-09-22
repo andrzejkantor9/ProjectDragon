@@ -9,6 +9,7 @@ namespace RPG.Stats
         Mana,
         ManaRegen,
         TotaTraitPoints,
-        BuyingDiscountPercentage
+        BuyingDiscountPercentage,
+        Defence
     }
 }

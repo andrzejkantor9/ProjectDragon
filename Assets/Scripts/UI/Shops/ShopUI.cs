@@ -72,7 +72,7 @@ namespace RPG.UI.Shops
             AssertSerializedFields();
 
             _originalTotalMoneyColor = _totalMoneyField.color;
-            _shopper = GameManager.PlayerGameObject.GetComponent<Shopper>();
+            _shopper = GameManager.PlayerGameObject().GetComponent<Shopper>();
 
             if(_shopper)
                 _shopper.onActiveShopChange += ShopChanged;

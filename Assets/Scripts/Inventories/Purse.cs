@@ -2,12 +2,14 @@ using System;
 
 using UnityEngine;
 
+using GameDevTV.Inventories;
+
 using RPG.Debug;
 using RPG.Saving;
 
 namespace RPG.Inventories
 {
-    public class Purse : MonoBehaviour, ISaveable
+    public class Purse : MonoBehaviour, ISaveable, IItemStore
     {
         #region Config
         [Header("CONFIG")]
@@ -68,6 +70,16 @@ namespace RPG.Inventories
         public void RestoreState(object state)
         {
             _balance = (float) state;
+        }
+
+        public int AddItems(InventoryItem item, int number)
+        {
+            if(item is CurrencyItem)
+            {
+                UpdateBalance(item.Price * number);
+                return number;
+            }
+            return 0;
         }
         #endregion
 

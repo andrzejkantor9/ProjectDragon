@@ -40,8 +40,8 @@ namespace RPG.UI
         #region EngineMethods & Contructors
         private void Start() 
         {
-            _playerTraitStore = GameManager.PlayerGameObject.GetComponent<TraitStore>();
-            _playerBaseStats = GameManager.PlayerGameObject.GetComponent<BaseStats>();
+            _playerTraitStore = GameManager.PlayerGameObject().GetComponent<TraitStore>();
+            _playerBaseStats = GameManager.PlayerGameObject().GetComponent<BaseStats>();
 
             _finalizeButton.onClick.AddListener(_playerTraitStore.FinalizeAssigment);
             _playerTraitStore.onUpdateUI += UpdateUI;

@@ -21,39 +21,44 @@ namespace RPG.Combat
     [RequireComponent(typeof(HitPoints))]
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(CapsuleCollider))]
-    public class Fighter : MonoBehaviour, IAction, ISaveable
+    public class Fighter : MonoBehaviour, IAction
     {
+        #region Config
+        [SerializeField]
+        float _autoAttackRange = 4f;
+        #endregion
+
         #region Cache
-        private Mover _mover;
-        private Animator _animator;
-        private ActionScheduler _actionScheduler;
-        private HitPoints _hitPoints;
-        private Equipment _equipment;
+        Mover _mover;
+        Animator _animator;
+        ActionScheduler _actionScheduler;
+        HitPoints _hitPoints;
+        Equipment _equipment;
 
         [SerializeField]
-        private Transform _rightHandTransformWeapon;
+        Transform _rightHandTransformWeapon;
         [SerializeField]
-        private Transform _leftHandTransformWeapon;
+        Transform _leftHandTransformWeapon;
         [SerializeField]
-        private WeaponConfig _defaultWeapon;
+        WeaponConfig _defaultWeapon;
 
-        private Transform _target;
-        private int _attackAnimId;
-        private int _stopAttackAnimId;
+        Transform _target;
+        int _attackAnimId;
+        int _stopAttackAnimId;
         #endregion
 
         #region States
-        private float _timeSinceLastAttack = Mathf.Infinity;
-        private WeaponConfig _currentWeaponConfig;
-        private LazyValue<Weapon> _currentWeapon;
+        float _timeSinceLastAttack = Mathf.Infinity;
+        WeaponConfig _currentWeaponConfig;
+        LazyValue<Weapon> _currentWeapon;
 
-        private HitPoints _targetHealth;
+        HitPoints _targetHitPoints;
         #endregion
 
         ////////////////////////////////////////////////////////////////////////
 
         #region EngineFunctions
-        private void Awake()
+        void Awake()
         {
             _mover = GetComponent<Mover>();
             _animator = GetComponent<Animator>();            
@@ -72,35 +77,44 @@ namespace RPG.Combat
             _hitPoints.onRespawn += Respawn;
         }
 
-        private void Start()
+        void Start()
         {
             _currentWeapon.ForceInit();
         }
 
-        private void OnEnable()
+        void OnEnable()
         {
             _hitPoints.OnDeath += Death;
             if(_equipment)
                 _equipment.equipmentUpdated += UpdateWeapon;
         }
 
-        private void OnDisable()
+        void OnDisable()
         {
             _hitPoints.OnDeath -= Death;
             if(_equipment)
                 _equipment.equipmentUpdated -= UpdateWeapon;
         }
 
-        private void OnDestroy() 
+        void OnDestroy() 
         {
             _hitPoints.onRespawn -= Respawn;
         }
 
-        private void Update()
+        void Update()
         {
             _timeSinceLastAttack += Time.deltaTime;
-            if(_target == null)
-                return;
+
+            if(!_target && GetComponent<Mover>().IsStopped())
+            {
+                _target = FindNewTargetInRange();
+                if(_target)
+                {
+                    _targetHitPoints = _target.GetComponent<HitPoints>();
+                }
+            }
+            if(!_target)
+                    return;
 
             _actionScheduler.StartAction(this);
 
@@ -120,12 +134,13 @@ namespace RPG.Combat
         #region PublicMethods
         public void Attack(GameObject combatTarget)
         {
+            CustomLogger.Log($"Attack: {combatTarget.name}, by: {gameObject.name}", LogFrequency.MostFrames);
             _animator.ResetTrigger(_stopAttackAnimId);
             _actionScheduler.StartAction(this);
 
             _target = combatTarget.transform;
-            _targetHealth = _target.GetComponent<HitPoints>();
-            _targetHealth.OnDeath += OnTargetDeath;
+            _targetHitPoints = _target.GetComponent<HitPoints>();
+            _targetHitPoints.OnDeath += OnTargetDeath;
         }
         
         public bool CanAttack(GameObject combatTarget)
@@ -147,7 +162,7 @@ namespace RPG.Combat
                 return _leftHandTransformWeapon;
         }
 
-        public HitPoints GetTargetHitPoints() => _targetHealth;
+        public HitPoints GetTargetHitPoints() => _targetHitPoints;
         #endregion
 
         #region Interfaces
@@ -156,32 +171,11 @@ namespace RPG.Combat
             StopAttack();
             _target = null;
             GetComponent<Mover>().Cancel();
-        }  
-
-        public object CaptureState()
-        {
-            CustomLogger.Log($"gameObject: {gameObject.name}, weapon config: {_currentWeaponConfig?.name}", LogFrequency.Sporadic);
-            WeaponNames weaponName = (WeaponNames) Enum.Parse(typeof(WeaponNames), _currentWeaponConfig?.name);
-            CustomLogger.Log($"saved weapon: {Enums.EnumToString<WeaponNames>(weaponName)}, for character: {gameObject.name}", LogFrequency.Rare);
-            return weaponName;
-        }
-
-        public void RestoreState(object state)
-        {
-            WeaponNames weaponName = (WeaponNames)state;
-            CustomLogger.Log($"Loading weapon from enum: {Enums.EnumToString<WeaponNames>(weaponName)}, for character: {gameObject.name}", LogFrequency.Rare);
-            WeaponConfig weapon = Resources.Load<WeaponConfig>(
-                "Weapons" 
-                + System.IO.Path.DirectorySeparatorChar 
-                + Enums.EnumToString<WeaponNames>(weaponName));
-
-            _currentWeaponConfig = weapon;
-            EquipWeapon(weapon);
         }
         #endregion
 
         #region PrivateFunctions
-        private void UpdateWeapon()
+        void UpdateWeapon()
         {
             WeaponConfig weaponConfig = _equipment.GetItemInSlot(EquipLocation.Weapon) as WeaponConfig;   
             if(weaponConfig == null)
@@ -198,18 +192,18 @@ namespace RPG.Combat
             _currentWeapon.value = AttachWeapon(weapon);
         }
 
-        private Weapon AttachWeapon(WeaponConfig weapon)
+        Weapon AttachWeapon(WeaponConfig weapon)
         {
             Animator animator = GetComponent<Animator>();
             return weapon.Spawn(_rightHandTransformWeapon, _leftHandTransformWeapon, animator);
         }
 
-        private Weapon SetupDefaultWeapon()
+        Weapon SetupDefaultWeapon()
         {
             return AttachWeapon(_defaultWeapon);
         }
 
-        private void AttackBehaviour()
+        void AttackBehaviour()
         {
             transform.LookAt(_target);  
             
@@ -220,32 +214,32 @@ namespace RPG.Combat
             }            
         }
 
-        private void Death()
+        void Death()
         {
             SetDead(true);
         }
 
-        private void SetDead(bool isDead)
+        void SetDead(bool isDead)
         {
             GetComponent<Rigidbody>().isKinematic = isDead;
             GetComponent<CapsuleCollider>().enabled = !isDead;
             enabled = !isDead;
         }
 
-        private void Respawn()
+        void Respawn()
         {
             SetDead(false);
         }
 
-        private bool GetIsInRange(Transform targetTransform)
+        bool GetIsInRange(Transform targetTransform)
         {
             return Vector3.Distance(transform.position, targetTransform.position) <= _currentWeaponConfig.WeaponRange;
         }
 
-        private void StopAttack()
+        void StopAttack()
         {
-            if(_targetHealth)
-                _targetHealth.OnDeath -= OnTargetDeath;
+            if(_targetHitPoints)
+                _targetHitPoints.OnDeath -= OnTargetDeath;
 
             _animator.ResetTrigger(_attackAnimId);
             _animator.SetTrigger(_stopAttackAnimId);
@@ -253,34 +247,40 @@ namespace RPG.Combat
         #endregion
 
         #region Events
-        private void OnTargetDeath()
+        void OnTargetDeath()
         {
             Cancel();
         }
         #endregion
 
         #region Animation Events
-        private void Hit()
+        void Hit()
         {
-            if(_target == null) 
+            if(_targetHitPoints == null) 
                 return;
 
             float damage = GetComponent<BaseStats>().GetStat(Stat.Damage);
+            var targetBaseStats = _targetHitPoints.GetComponent<BaseStats>();
+            if(targetBaseStats)
+            {
+                float defence = targetBaseStats.GetStat(Stat.Defence);
+                damage /= 1f+ defence / damage;
+            }
 
             if(_currentWeapon.value)
                 _currentWeapon.value.Hit();
 
             if(_currentWeaponConfig.HasProjectile)
             {
-                if(!_targetHealth.IsDead)
+                if(!_targetHitPoints.IsDead)
                     _currentWeaponConfig.LaunchProjectile(_rightHandTransformWeapon, _leftHandTransformWeapon, _target.GetComponent<HitPoints>(), gameObject, damage);  
             }
             else
             {
                 // _targetHealth.TakeDamage(gameObject, _currentWeapon.WeaponDamage);
-                _targetHealth.TakeDamage(gameObject, damage);
+                _targetHitPoints.TakeDamage(gameObject, damage);
 
-                if(_targetHealth.IsDead)
+                if(_targetHitPoints.IsDead)
                 {
                     CustomLogger.Log($"{gameObject.name} stop attacking - target is dead", LogFrequency.Regular);
                     Cancel();
@@ -288,9 +288,50 @@ namespace RPG.Combat
             }
         }
 
-        private void Shoot()
+        void Shoot()
         {
             Hit();
+        }
+        #endregion
+
+        #region PrivateMethods
+        Transform FindNewTargetInRange()
+        {
+            Transform bestTarget = null;
+            float bestDistance = Mathf.Infinity;
+            
+            foreach(Transform candidate in FindAllTargetsInRange())
+            {
+                float candidateDistance = Vector3.Distance(transform.position, candidate.transform.position);
+                if(candidateDistance < bestDistance)
+                {
+                    bestTarget = candidate;
+                    bestDistance = candidateDistance;
+                }
+            }
+
+            Debug.CustomLogger.Log($"character: {gameObject.name}, best target: {bestTarget?.name}",
+                Debug.LogFrequency.EveryFrame);
+            return bestTarget;
+        }
+
+        private IEnumerable<Transform> FindAllTargetsInRange()
+        {
+            if(!gameObject.CompareTag(Enums.EnumToString<Tags>(Tags.Player)))
+                yield break;
+
+            RaycastHit[] raycastHits = 
+                Physics.SphereCastAll(transform.position, _autoAttackRange, Vector3.up);
+
+            foreach(RaycastHit hit in raycastHits)
+            {
+                var hitPoints = hit.transform.GetComponent<HitPoints>();
+                var combatTarget = hit.transform.GetComponent<CombatTarget>();
+                if(hitPoints == null || hitPoints.IsDead || hitPoints.gameObject == gameObject
+                    || !combatTarget || !combatTarget.enabled)
+                    continue;
+                yield return hit.transform;
+            }
         }
         #endregion
     }

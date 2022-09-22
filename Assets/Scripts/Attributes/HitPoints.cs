@@ -82,7 +82,8 @@ namespace RPG.Attributes
         public void TakeDamage(GameObject instigator, float damage)
         {
             HitPointsValue.value = Mathf.Max(HitPointsValue.value - damage, 0);
-            CustomLogger.Log($"health of {gameObject.name}: {HitPointsValue.value.ToString()}, taken damage: {damage}", LogFrequency.Regular);
+            CustomLogger.Log($"hit points of {gameObject.name}: {HitPointsValue.value.ToString()}"
+            + $", taken damage: {damage}, dealt by: {instigator.name}", LogFrequency.MostFrames);
 
             CheckDeath(instigator);
             OnTakeDamage.Invoke(damage);

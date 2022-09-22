@@ -35,7 +35,7 @@ namespace RPG.UI
         #region EngineMethods & Contructors
         void Awake() 
         {
-            _playerController = GameManager.PlayerGameObject.GetComponent<PlayerController>();
+            _playerController = GameManager.PlayerGameObject().GetComponent<PlayerController>();
         }
 
         void OnEnable() 
@@ -47,7 +47,7 @@ namespace RPG.UI
 
         void OnDisable() 
         {
-            Time.timeScale = 1f;
+            Time.timeScale = 5f;
             if(_playerController)
                 _playerController.enabled = true;
         }

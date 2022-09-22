@@ -32,7 +32,7 @@ namespace GameDevTV.UI.Inventories
             store = GameObject.FindGameObjectWithTag("Player").GetComponent<ActionStore>();
             store.storeUpdated += UpdateIcon;
 
-            _cooldownStore = GameManager.PlayerGameObject.GetComponent<CooldownStore>();
+            _cooldownStore = GameManager.PlayerGameObject().GetComponent<CooldownStore>();
         }
 
         private void Update()

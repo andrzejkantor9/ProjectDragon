@@ -26,7 +26,8 @@ namespace RPG.Dialogue
 
         public bool HandleRaycast(GameObject playerController)
         {
-            if(!_dialogue || GetComponent<HitPoints>().IsDead)
+            HitPoints hitPoints = GetComponent<HitPoints>();
+            if (!_dialogue || (hitPoints && hitPoints.IsDead))
                 return false;
 
             if(InputManager.IsPointerPressed())

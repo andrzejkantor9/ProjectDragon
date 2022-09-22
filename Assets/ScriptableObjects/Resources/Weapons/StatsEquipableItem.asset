@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db07db4b42f663e44afa645eafba2e10, type: 3}
+  m_Name: StatsEquipableItem
+  m_EditorClassIdentifier: 
+  itemID: 06470254-a630-4c23-94b0-8df6b1f165c0
+  displayName: 
+  description: 
+  icon: {fileID: 0}
+  pickup: {fileID: 0}
+  stackable: 0
+  _price: 0
+  _category: 0
+  allowedEquipLocation: 5
+  _additiveModifiers: []
+  _percentageModifers: []

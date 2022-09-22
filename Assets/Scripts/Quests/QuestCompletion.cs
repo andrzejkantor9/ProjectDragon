@@ -20,7 +20,7 @@ namespace RPG.Quests
         #region PublicMethods
         public void CompleteObjective()
         {
-            QuestsList questsList = GameManager.PlayerGameObject.GetComponent<QuestsList>();
+            QuestsList questsList = GameManager.PlayerGameObject().GetComponent<QuestsList>();
             questsList.CompleteObjective(_quest, _objective);
             CustomLogger.Log($"complete objective: {_objective}", LogFrequency.Rare);
         }

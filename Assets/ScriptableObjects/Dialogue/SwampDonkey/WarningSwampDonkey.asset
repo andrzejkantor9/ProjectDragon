@@ -1,0 +1,139 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5459459655455114168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 793ad3de877a5304abb96cfd760f10ac, type: 3}
+  m_Name: c841c51c-e9ff-452c-90fb-4b61a8a9b636
+  m_EditorClassIdentifier: 
+  <IsPlayerSpeaking>k__BackingField: 0
+  <Text>k__BackingField: You seem too weak to tackle it.
+  <ChildrenID>k__BackingField: []
+  _nodePosition:
+    serializedVersion: 2
+    x: 254
+    y: 0
+    width: 200
+    height: 100
+  <OnEnterAction>k__BackingField: 
+  <OnExitAction>k__BackingField: 
+  _condition:
+    and:
+    - or:
+      - _predicate: MinimumTrait
+        _parameters:
+        - Strength
+        - 4
+        _negate: 1
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eb23c4add2927d4ebd4a0d60be25149, type: 3}
+  m_Name: WarningSwampDonkey
+  m_EditorClassIdentifier: 
+  _newNodeOffset: {x: 250, y: 0}
+  _nodes:
+  - {fileID: 4457706734929164298}
+  - {fileID: 1524205021229204928}
+  - {fileID: 7383910741912903560}
+  - {fileID: -5459459655455114168}
+--- !u!114 &1524205021229204928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 793ad3de877a5304abb96cfd760f10ac, type: 3}
+  m_Name: fd306504-5f72-4e1f-9959-d93e9757546f
+  m_EditorClassIdentifier: 
+  <IsPlayerSpeaking>k__BackingField: 0
+  <Text>k__BackingField: I think a sword might help.
+  <ChildrenID>k__BackingField: []
+  _nodePosition:
+    serializedVersion: 2
+    x: 248
+    y: 123
+    width: 200
+    height: 100
+  <OnEnterAction>k__BackingField: 
+  <OnExitAction>k__BackingField: 
+  _condition:
+    and:
+    - or:
+      - _predicate: HasItemEquiped
+        _parameters:
+        - 99a4d5b5-6735-40bc-b6ed-812f38ca73f1
+        _negate: 1
+--- !u!114 &4457706734929164298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 793ad3de877a5304abb96cfd760f10ac, type: 3}
+  m_Name: 1971be88-7b6f-4b5c-bfe5-230edb9a06da
+  m_EditorClassIdentifier: 
+  <IsPlayerSpeaking>k__BackingField: 0
+  <Text>k__BackingField: Watch out! The swamp donkey is ahead!
+  <ChildrenID>k__BackingField:
+  - fd306504-5f72-4e1f-9959-d93e9757546f
+  - 14532457-d3d4-4726-8f81-e2ba01dedb11
+  - c841c51c-e9ff-452c-90fb-4b61a8a9b636
+  _nodePosition:
+    serializedVersion: 2
+    x: 1
+    y: 0
+    width: 200
+    height: 100
+  <OnEnterAction>k__BackingField: 
+  <OnExitAction>k__BackingField: 
+  _condition:
+    and: []
+--- !u!114 &7383910741912903560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 793ad3de877a5304abb96cfd760f10ac, type: 3}
+  m_Name: 14532457-d3d4-4726-8f81-e2ba01dedb11
+  m_EditorClassIdentifier: 
+  <IsPlayerSpeaking>k__BackingField: 0
+  <Text>k__BackingField: This sword might do the trick.
+  <ChildrenID>k__BackingField: []
+  _nodePosition:
+    serializedVersion: 2
+    x: 251
+    y: 265
+    width: 200
+    height: 100
+  <OnEnterAction>k__BackingField: 
+  <OnExitAction>k__BackingField: 
+  _condition:
+    and:
+    - or:
+      - _predicate: HasItemEquiped
+        _parameters:
+        - 99a4d5b5-6735-40bc-b6ed-812f38ca73f1
+        _negate: 0

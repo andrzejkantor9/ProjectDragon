@@ -27,7 +27,7 @@ namespace RPG.Stats
 
         private void Awake()
         {
-            _experience = GameManager.PlayerGameObject.GetComponent<Experience>();   
+            _experience = GameManager.PlayerGameObject().GetComponent<Experience>();   
         }
 
         private void Update()

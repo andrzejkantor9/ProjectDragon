@@ -17,7 +17,7 @@ namespace RPG.Quests
         #region PublicMethods
         public void GiveQuest()
         {
-            QuestsList questsList = GameManager.PlayerGameObject.GetComponent<QuestsList>();
+            QuestsList questsList = GameManager.PlayerGameObject().GetComponent<QuestsList>();
             questsList.AddQuest(_quest);
         }
         #endregion

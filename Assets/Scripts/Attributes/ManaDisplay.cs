@@ -27,7 +27,7 @@ namespace RPG.Attributes
 
         private void Awake()
         {
-            _manaPoints = GameManager.PlayerGameObject.GetComponent<Mana>();   
+            _manaPoints = GameManager.PlayerGameObject().GetComponent<Mana>();   
         }
 
         private void Update()

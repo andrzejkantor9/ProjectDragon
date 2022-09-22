@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d7beaab8e2595d4cab7abc6e482e9e2, type: 3}
+  m_Name: SwampDonkey
+  m_EditorClassIdentifier: 
+  _objectives:
+  - <Reference>k__BackingField: train
+    <Description>k__BackingField: Train up
+    <CompleteCondition>k__BackingField:
+      and:
+      - or:
+        - _predicate: MinimumTrait
+          _parameters:
+          - Strength
+          - 4
+          _negate: 0
+    <UsesCondition>k__BackingField: 1
+  - <Reference>k__BackingField: equip
+    <Description>k__BackingField: Get equipped
+    <CompleteCondition>k__BackingField:
+      and:
+      - or:
+        - _predicate: HasItemEquiped
+          _parameters:
+          - 99a4d5b5-6735-40bc-b6ed-812f38ca73f1
+          _negate: 0
+    <UsesCondition>k__BackingField: 1
+  - <Reference>k__BackingField: kill
+    <Description>k__BackingField: Kill it
+    <CompleteCondition>k__BackingField:
+      and: []
+    <UsesCondition>k__BackingField: 0
+  _rewards:
+  - <Number>k__BackingField: 1000
+    <Item>k__BackingField: {fileID: 11400000, guid: 0abd5a0f0757fe34fae33f67c5dd5b31,
+      type: 2}

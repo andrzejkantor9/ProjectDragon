@@ -46,7 +46,7 @@ namespace RPG.UI
         #region EngineMethods & Contructors
         private void Start()
         {
-            _playerTraitStore = GameManager.PlayerGameObject.GetComponent<TraitStore>();
+            _playerTraitStore = GameManager.PlayerGameObject().GetComponent<TraitStore>();
 
             _minusButton.onClick.AddListener(() => Allocate(-1));
             _plusButton.onClick.AddListener(() => Allocate(+1));

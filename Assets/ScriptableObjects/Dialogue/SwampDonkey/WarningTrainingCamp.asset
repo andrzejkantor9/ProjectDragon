@@ -1,0 +1,116 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9022171543259268573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 793ad3de877a5304abb96cfd760f10ac, type: 3}
+  m_Name: 23630540-ac41-4d61-b1b6-a0ae092f75b2
+  m_EditorClassIdentifier: 
+  <IsPlayerSpeaking>k__BackingField: 0
+  <Text>k__BackingField: There is a guards training behind me. They are dangerous.
+  <ChildrenID>k__BackingField:
+  - c6a221b0-9eae-47b0-a39a-1c36a2e6ad7f
+  - b537c7fa-abc3-4519-b947-c255bfa92fbf
+  _nodePosition:
+    serializedVersion: 2
+    x: 3
+    y: -1.0000038
+    width: 200
+    height: 100
+  <OnEnterAction>k__BackingField: 
+  <OnExitAction>k__BackingField: 
+  _condition:
+    and: []
+--- !u!114 &-5674098952212405225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 793ad3de877a5304abb96cfd760f10ac, type: 3}
+  m_Name: c6a221b0-9eae-47b0-a39a-1c36a2e6ad7f
+  m_EditorClassIdentifier: 
+  <IsPlayerSpeaking>k__BackingField: 0
+  <Text>k__BackingField: You will need better equipment to deal with them.
+  <ChildrenID>k__BackingField: []
+  _nodePosition:
+    serializedVersion: 2
+    x: 251
+    y: 0
+    width: 200
+    height: 100
+  <OnEnterAction>k__BackingField: 
+  <OnExitAction>k__BackingField: 
+  _condition:
+    and:
+    - or:
+      - _predicate: HasItemEquiped
+        _parameters:
+        - 5690c818-f66e-4614-90da-0e41146465d9
+        _negate: 1
+    - or:
+      - _predicate: HasItemEquiped
+        _parameters:
+        - 8dea561a-a9b3-4f0c-a718-cc2371553929
+        _negate: 1
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eb23c4add2927d4ebd4a0d60be25149, type: 3}
+  m_Name: WarningTrainingCamp
+  m_EditorClassIdentifier: 
+  _newNodeOffset: {x: 250, y: 0}
+  _nodes:
+  - {fileID: -9022171543259268573}
+  - {fileID: -5674098952212405225}
+  - {fileID: 2721105941231279103}
+--- !u!114 &2721105941231279103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 793ad3de877a5304abb96cfd760f10ac, type: 3}
+  m_Name: b537c7fa-abc3-4519-b947-c255bfa92fbf
+  m_EditorClassIdentifier: 
+  <IsPlayerSpeaking>k__BackingField: 0
+  <Text>k__BackingField: Go  beat them up for me!
+  <ChildrenID>k__BackingField: []
+  _nodePosition:
+    serializedVersion: 2
+    x: 252
+    y: 117
+    width: 200
+    height: 100
+  <OnEnterAction>k__BackingField: 
+  <OnExitAction>k__BackingField: 
+  _condition:
+    and:
+    - or:
+      - _predicate: HasItemEquiped
+        _parameters:
+        - 5690c818-f66e-4614-90da-0e41146465d9
+        _negate: 0
+    - or:
+      - _predicate: HasItemEquiped
+        _parameters:
+        - 8dea561a-a9b3-4f0c-a718-cc2371553929
+        _negate: 0

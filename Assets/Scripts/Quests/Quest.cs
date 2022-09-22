@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using GameDevTV.Inventories;
+using GameDevTV.Utils;
 
 namespace RPG.Quests
 {
@@ -34,6 +35,11 @@ namespace RPG.Quests
             public string Reference {get; private set;}
             [field: SerializeField]
             public string Description {get; private set;}
+
+            [field: SerializeField]
+            public Condition CompleteCondition {get; private set;}
+            [field: SerializeField]
+            public bool UsesCondition {get; private set;} = false;
         }
         #endregion
 

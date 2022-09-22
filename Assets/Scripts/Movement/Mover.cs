@@ -5,16 +5,22 @@ using RPG.Core;
 using RPG.Saving;
 using RPG.Attributes;
 
-//shops - impossible to add items
-//utils - assert all given objects
-//continue only works within 1 session?
-//triggered dialogues are not loaded
-//continue game without a save should not do anything
-//on level change issues loading - cause of getting rid of rpg.control dependency in portal and trying to use game object instead of playercontroller
-
-//destroyobjects
+//bug: continue only works within 1 session?
+//bug: after death / few deaths player moves by himself and camera shakes a lot
+    //may be issue with navmeshagent
+//bug: triggered dialogues are not loaded
+//bug: continue game without a save should not do anything
+//bug: make prod build and fix all bugs
+//change: place portals in gameobject in hierarchy and move them properly to dont destroy
+    //unpack to root utility
+//add: utils - assert all given objects
+//bug: fireball starts auto attacking after killing last in range enemy (check bow)
+//add: destroyobjects
     //add GetPathInHierachy static helper somewhere
     //*documentation comments
+//bug: dialogue skipping all non-last-pre-player-choice dialogue
+//bug: respawning on 2nd level
+//bug: player stats not saving between scenes
 
 //create utils package from customlogger, enums, lazy value, log worls position, fps counter
     //document them with comments
@@ -46,41 +52,66 @@ using RPG.Attributes;
 
 ////////////////////////////////////////////
 
-//change: start move action to npc dialogue instead of insta trigger
-//change: dropping items should not triiger ontriggerenter pickup
-//add: basic audio to most places
-//add: make full prod build
-//add: interesting blog features
+//refactor: overlook everything
+    //asserts & requireComponents
+    //updates & foreaches
+    //single responsibility
+    //shop.cs, fighter.cs - single responsibility
+    //getComponents
+    //resources structure SO/<type>/resources
+    //dialogue conditions as non-stringa
 //bug: enemies hp bars not visible
+//bug: floating characters
 //bug: cannot add items in shop
-//bug: on enemy kill nullrefs
+//bug: on enemy / player kill nullrefs
+    //archers
 //bug: save creates "save.sav" file?
 //bug: guards dont patrol anymore after getting in agro range when in peaceful mode
 //bug: guards can be damaged with abilities in peaceful mode
 //bug: npcs can be damaged with abilities
+//bug: if player response is last dont display it as ai's
+//change: start move action to npc dialogue instead of insta trigger
+//change: dropping items should not triiger ontriggerenter pickup
+//change: make abilities do "auto attacks" like attacks - unify "damage action" code
+//change: tune encounter values
+//change: swap equipment slots so they make sense
+//add: make esc work on all menus
+//add: basic audio to most places
+//add: make current hud non-debug
+//bug: if item is in action slot and stackable and then added it is added to inventory instead of action bar
+//add: interesting blog features
 //learn: if [hide in inspector] + onvalidate works in prod build
     //save data in editor without serializefield for objects instantiated in runtime (hide in inspector + on validate does not work)
 
+//refactor:
+    //base stats containing level up particle and should use modifiers?
 //learn: test performance of auto layout (current version) vs pure hand layoutui
 //learn: dialogueNode setter or field?
 //bug: upward rotation when facing enemy on elevation
 //bug: cinematic should pauses all actions
 //refactor: TODO fighter on target death event -=
 //refactor: assert / require GetComponents
+//change: do not allow saves with the same names
 //add: self scrolling text ui horizontaly
 //learn: can shop.cs be split?
+//change: default shop configs SOs
+//add: grey out quantity shop buttons approprietely
 //refactor: ui relying on being set active pre awake (in editor)
 //refactor: make component that can group components in inspector
+//change: make all ui into click icons in the corner (like quest ui)
+//add: controller and mobile input devices
+//bug: duplicating dialogue does not change its id
 
 //learn :local methods usage overall (not this project)
 //change: move quest & dialogue setup from string bindings
 //add: translation setup to project, translation asset pack
 //add: spoken dialogues
+//add: save deletion
 //dialogue
     //saving state?
     //dont trigger dialogue from any distance
     //each dialogue only once
-    //if player response is last dont display it as ai's
+    //scriptable objects instead of strings or enum?
     //non-strings bindings
         //https://community.gamedev.tv/t/for-those-interested-in-making-enum-predicates/171656
         //https://community.gamedev.tv/t/another-approach-to-conditions/207975/2
@@ -93,7 +124,6 @@ using RPG.Attributes;
 
 //////////////////////////////////////////
 
-//controller and mobile input devices
 //make any point input work
 //pass input action instead of doing it here
     //what about component independency / plug & play
@@ -103,9 +133,15 @@ using RPG.Attributes;
 //inject navmesh & make it a pure c# class
 //inject action on which it should decide if click to move should apply
 //remember it should work out of the box, when adding component - as little extra work as possible
+//*compass / map
+//non-manual travel options
+//day night
 
 //split ui to multiple canvas
 //draggable in game ui
+//ui scale options
+    //ui move option
+//ui clicked on is on top
 //use addressables instead of resources
 //debug script calling functions on object's components
 //everything possible as standalone components (for any unity project)
@@ -184,6 +220,11 @@ namespace RPG.Movement
         #endregion
 
         #region PublicMethods
+        public bool IsStopped()
+        {
+            return Mathf.Approximately(Vector3.Distance(_navMeshAgent.velocity, Vector3.zero), 0f) || _navMeshAgent.isStopped;
+        } 
+
         public void StartMoveAction(Vector3 destination, float speedFraction)
         {
             _actionScheduler.StartAction(this);

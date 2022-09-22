@@ -27,7 +27,7 @@ namespace RPG.Attributes
 
         private void Awake()
         {
-            _hitPoints = GameManager.PlayerGameObject.GetComponent<HitPoints>();   
+            _hitPoints = GameManager.PlayerGameObject().GetComponent<HitPoints>();   
         }
 
         private void Update()

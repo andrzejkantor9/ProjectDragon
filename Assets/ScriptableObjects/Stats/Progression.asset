@@ -17,8 +17,8 @@ MonoBehaviour:
     <Stats>k__BackingField:
     - <Stat>k__BackingField: 0
       <Levels>k__BackingField:
-      - 400
-      - 600
+      - 200
+      - 300
     - <Stat>k__BackingField: 2
       <Levels>k__BackingField:
       - 2000
@@ -43,8 +43,8 @@ MonoBehaviour:
     <Stats>k__BackingField:
     - <Stat>k__BackingField: 0
       <Levels>k__BackingField:
-      - 80
-      - 90
+      - 40
+      - 45
     - <Stat>k__BackingField: 1
       <Levels>k__BackingField:
       - 120
@@ -119,8 +119,8 @@ MonoBehaviour:
     <Stats>k__BackingField:
     - <Stat>k__BackingField: 0
       <Levels>k__BackingField:
-      - 42
-      - 63
+      - 21
+      - 32
     - <Stat>k__BackingField: 1
       <Levels>k__BackingField:
       - 115

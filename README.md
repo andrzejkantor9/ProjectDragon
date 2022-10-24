@@ -17,7 +17,7 @@ Q | quest menu
 Esc | pause menu
 
 
-###Features
+### Features
 + Dialogues node editor (using scriptable objects)
 	+ Possibility of adding complex conditions using AND and OR statements (although reliant on string references)
 + Inventory & Equipment
@@ -57,7 +57,7 @@ Esc | pause menu
 + No background audio
 + Menus are always displayed in the same order
 
-###Courses links
+### Courses links
 - [Core RPG](https://www.gamedev.tv/p/unity-rpg/?coupon_code=AUTUMN)
 - [Inventories](https://www.gamedev.tv/p/inventory)
 - [Dialogs and Quests](https://www.gamedev.tv/p/rpg-dialogue-quests-intermediate-c-game-coding-course/?coupon_code=AUTUMN)

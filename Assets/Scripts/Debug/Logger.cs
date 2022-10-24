@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 
 using UnityEngine;
 
@@ -24,12 +25,13 @@ namespace RPG.Debug
             {LogFrequency.Sporadic, true},
         };
 
-#if UNITY_DEVELOPMENT || UNITY_EDITOR
+        [Conditional("UNITY_DEVELOPMENT"), Conditional("UNITY_EDITOR")]
         public static void Log(string message, LogFrequency logFrequency)
         {
+#if UNITY_DEVELOPMENT || UNITY_EDITOR
             if(_LogFrequencySettings[logFrequency])
                 UnityEngine.Debug.Log(message);
-        }
 #endif
+        }
     }
 }

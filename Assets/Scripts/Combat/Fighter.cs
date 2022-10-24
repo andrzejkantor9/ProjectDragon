@@ -221,7 +221,7 @@ namespace RPG.Combat
 
         void SetDead(bool isDead)
         {
-            GetComponent<Rigidbody>().isKinematic = isDead;
+            // GetComponent<Rigidbody>().isKinematic = isDead;
             GetComponent<CapsuleCollider>().enabled = !isDead;
             enabled = !isDead;
         }

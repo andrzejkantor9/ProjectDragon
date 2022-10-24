@@ -34,11 +34,8 @@ namespace RPG.Control
 
         #region Cache
         [Space(8)][Header("CACHE")]
-        [HideInInspector]
         private Mover _mover;
-        [HideInInspector]
         private Fighter _fighter;
-        [HideInInspector]
         private HitPoints _hitPoints;
 
         [SerializeField]
@@ -68,15 +65,12 @@ namespace RPG.Control
         ///////////////////////////////////////////////////
 
         #region EngineMethods
-        private void OnValidate()
+        private void Awake()
         {
             _mover = GetComponent<Mover>();
             _fighter = GetComponent<Fighter>();
             _hitPoints = GetComponent<HitPoints>();
-        }
 
-        private void Awake()
-        {
             _actionStore = GetComponent<ActionStore>();
             _hitPoints.onRespawn += Respawn;
         }

@@ -13,20 +13,15 @@ namespace RPG.Attributes
         #region Cache
         [HideInInspector]
         private HitPoints _hitPoints;
-        [HideInInspector]
         private TMP_Text _text;
         #endregion
 
         ///////////////////////////////////////////////////////////////
 
         #region EngineMethods
-        private void OnValidate()
-        {
-            _text = GetComponent<TMP_Text>();
-        }
-
         private void Awake()
         {
+            _text = GetComponent<TMP_Text>();
             _hitPoints = GameManager.PlayerGameObject().GetComponent<HitPoints>();   
         }
 

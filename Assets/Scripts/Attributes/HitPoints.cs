@@ -17,7 +17,6 @@ namespace RPG.Attributes
     public class HitPoints : MonoBehaviour, ISaveable
     {
         #region Cache
-        [HideInInspector]
         private Animator _animator;
 
         private int _deathAnimId;
@@ -43,13 +42,10 @@ namespace RPG.Attributes
         /////////////////////////////////////////////////////////
 
         #region EngineMethods
-        private void OnValidate()
-        {
-            _animator = GetComponent<Animator>();    
-        }
-
         private void Awake()
         {
+            _animator = GetComponent<Animator>();
+
             _deathAnimId = Animator.StringToHash("Death");
 
             HitPointsValue = new LazyValue<float>(GetInitialHitPoints);

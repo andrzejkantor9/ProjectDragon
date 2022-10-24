@@ -14,20 +14,15 @@ namespace RPG.Combat
         #region Cache
         [HideInInspector]
         private Fighter _fighter;
-        [HideInInspector]
         private TMP_Text _text;
         #endregion
 
         ///////////////////////////////////////////////////////////////
 
         #region EngineMethods
-        private void OnValidate()
-        {
-            _text = GetComponent<TMP_Text>();
-        }
-        
         private void Awake()
         {
+            _text = GetComponent<TMP_Text>();
             _fighter = GameManager.PlayerGameObject().GetComponent<Fighter>();
         }
 

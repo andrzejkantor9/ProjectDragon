@@ -21,9 +21,12 @@ namespace RPG.Dialogue
         #endregion
 
         #region EngineMethods
+        
         private void OnValidate()
         {
+#if UNITY_EDITOR
             CalculateNodesLookup();
+#endif
         }
         #endregion
 
@@ -71,6 +74,7 @@ namespace RPG.Dialogue
             }
         }
 
+#if UNITY_EDITOR
         public void CreateChildNode(DialogueNode parent)
         {
             DialogueNode childNode = CreateNewNode(!parent.IsPlayerSpeaking);
@@ -78,7 +82,6 @@ namespace RPG.Dialogue
             parent.AddChild(childNode);
         }
 
-#if UNITY_EDITOR
         public void DeleteNode(DialogueNode nodeToDelete)
         {
             Undo.RecordObject(this, "deleted dialog node");
@@ -127,7 +130,7 @@ namespace RPG.Dialogue
             AddNode(newNode);
             return newNode;
         }
-#endif
+
         private void CalculateNodesLookup()
         {
             _nodesLookup.Clear();
@@ -159,6 +162,7 @@ namespace RPG.Dialogue
                 node.RemoveChild(nodeToDelete);
             }
         }
+#endif
         #endregion
     }
 }

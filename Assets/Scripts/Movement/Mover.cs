@@ -168,13 +168,9 @@ namespace RPG.Movement
         #endregion
 
         #region Cache
-        [HideInInspector]
         private NavMeshAgent _navMeshAgent;
-        [HideInInspector]
         private Animator _animator;
-        [HideInInspector]
         private ActionScheduler _actionScheduler;
-        [HideInInspector]
         private HitPoints _health;
 
         private int _ForwardSpeedAnimId;
@@ -183,16 +179,14 @@ namespace RPG.Movement
         ///////////////////////////////////////////////////////
 
         #region EngineFunctionality
-        private void OnValidate() 
-        {        
+
+        private void Awake()
+        {
             _navMeshAgent = GetComponent<NavMeshAgent>();
             _animator = GetComponent<Animator>();
             _actionScheduler = GetComponent<ActionScheduler>();
             _health = GetComponent<HitPoints>();
-        }
 
-        private void Awake()
-        {
             _ForwardSpeedAnimId = Animator.StringToHash("ForwardSpeed");
 
             _health.onRespawn += Respawn;
@@ -222,7 +216,9 @@ namespace RPG.Movement
         #region PublicMethods
         public bool IsStopped()
         {
-            return Mathf.Approximately(Vector3.Distance(_navMeshAgent.velocity, Vector3.zero), 0f) || _navMeshAgent.isStopped;
+            bool isStopped = Mathf.Approximately(Vector3.Distance(_navMeshAgent.velocity, Vector3.zero), 0f) || _navMeshAgent.isStopped;
+            UnityEngine.Debug.LogWarning($"current navmesh velocity: {_navMeshAgent.velocity}, is stopped: {isStopped}");
+            return isStopped;
         } 
 
         public void StartMoveAction(Vector3 destination, float speedFraction)
@@ -287,6 +283,11 @@ namespace RPG.Movement
 
         private void SetDead(bool isDead)
         {
+            // _navMeshAgent.velocity = Vector3.zero;
+            _navMeshAgent.enabled = true;
+            _navMeshAgent.isStopped = isDead;
+            _navMeshAgent.ResetPath();
+
             _navMeshAgent.enabled = !isDead;
             enabled = !isDead;
         }

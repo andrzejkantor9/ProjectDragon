@@ -65,12 +65,12 @@ namespace RPG.Dialogue
             IsPlayerSpeaking = isPlayerSpeaking;
             EditorUtility.SetDirty(this);
         }
+#endif
 
         public bool CheckCondition(IEnumerable<IPredicateEvaluator> evaluators)
         {
             return _condition.Check(evaluators);
         }
-    #endif
         public bool HasChild(DialogueNode node) => ChildrenID.Contains(node.name);
         #endregion
     }

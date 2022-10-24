@@ -34,13 +34,9 @@ namespace RPG.Control
         #endregion
 
         #region Cache
-        [HideInInspector]
         private Fighter _fighter;
-        [HideInInspector]
         private HitPoints _health;
-        [HideInInspector]
         private Mover _mover;
-        [HideInInspector]
         private ActionScheduler _actionScheduler;
 
         [SerializeField]
@@ -62,16 +58,12 @@ namespace RPG.Control
         ////////////////////////////////////////////////////////////////////////////////
 
         #region EngineFunctions
-        private void OnValidate()
+        private void Awake()
         {
             _fighter = GetComponent<Fighter>();
             _health = GetComponent<HitPoints>();
             _mover = GetComponent<Mover>();
             _actionScheduler = GetComponent<ActionScheduler>();
-        }
-
-        private void Awake()
-        {
             // UnityEngine.Assertions.Assert.IsNotNull(_patrolPath, "_patrolPath object is null");  
 
             _playerGameObject = GameManager.PlayerGameObject();

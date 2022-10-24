@@ -1,5 +1,7 @@
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.Callbacks;
+#endif
 
 using UnityEngine;
 
@@ -8,6 +10,7 @@ using System;
 
 namespace RPG.Dialogue.Editor
 {
+#if UNITY_EDITOR
     public class DialogueEditor : EditorWindow
     {
         #region Statics
@@ -262,4 +265,5 @@ namespace RPG.Dialogue.Editor
         }
         #endregion
     }
+#endif
 }

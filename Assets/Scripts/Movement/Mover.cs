@@ -217,7 +217,6 @@ namespace RPG.Movement
         public bool IsStopped()
         {
             bool isStopped = Mathf.Approximately(Vector3.Distance(_navMeshAgent.velocity, Vector3.zero), 0f) || _navMeshAgent.isStopped;
-            UnityEngine.Debug.LogWarning($"current navmesh velocity: {_navMeshAgent.velocity}, is stopped: {isStopped}");
             return isStopped;
         } 
 

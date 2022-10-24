@@ -9435,6 +9435,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PortalB
       objectReference: {fileID: 0}
+    - target: {fileID: 8052775338072451185, guid: 6b2eb9a0dffbbb840a40ccadf6c43306,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b2eb9a0dffbbb840a40ccadf6c43306, type: 3}
 --- !u!1001 &1053160834
@@ -17337,6 +17342,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PortalA
       objectReference: {fileID: 0}
+    - target: {fileID: 8052775338072451185, guid: 6b2eb9a0dffbbb840a40ccadf6c43306,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b2eb9a0dffbbb840a40ccadf6c43306, type: 3}
 --- !u!4 &3699164105412058977
@@ -23160,7 +23170,7 @@ PrefabInstance:
     - target: {fileID: 8401534478495601008, guid: cb67725d3e2894d42bbcdec62bda7615,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -570.74963
+      value: -570.7499
       objectReference: {fileID: 0}
     - target: {fileID: 8401859830686566448, guid: cb67725d3e2894d42bbcdec62bda7615,
         type: 3}

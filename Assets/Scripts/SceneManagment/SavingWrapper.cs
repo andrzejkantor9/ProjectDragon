@@ -33,12 +33,14 @@ namespace RPG.SceneManagment
         #region EngineMethods
         void Update()
         {
+#if UNITY_DEVELOPMENT || UNITY_EDITOR
             if(_savingInputConfig.WasSavePressedThisFrame)
                 Save();
             if(_savingInputConfig.WasLoadPressedThisFrame)
                 Load();
             if(_savingInputConfig.WasDeleteSavePressedThisFrame)
                 DeleteSave();
+#endif
         }
         #endregion
 

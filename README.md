@@ -4,7 +4,7 @@ It is using mouse-to-move controls. Project was done with usage of namespaces, a
 It has custom dialog node editor. 
 As of now some functionalities contain bugs.
 - [Project image album](https://imgur.com/a/JIdUpyz)
-- [Production build as zip](https://drive.google.com/file/d/1pnZZAJTm8gMF09cJHGFi9TkXLNdkZ5vV/view?usp=sharing)
+- [Executable build](https://drive.google.com/file/d/1v_7MoZy_kdr87CNpV00Q6GHw_JxiG1hG/view?usp=sharing)
 
 ### Input Information
 Input | Action
@@ -34,6 +34,7 @@ Esc | pause menu
 + Basic combat animations
 + Changing cursor icon depending on context
 + Mouse targeting movement and combat
++ second scene, keeping state of scenes and player
 + Respawn with minimal health instead of reloading scene 
 	+  Restore some of enemies health on player death
 + Main menu, Pause menu
@@ -48,7 +49,6 @@ Esc | pause menu
 + Heavy reliance on mouse input
 + No information about input in game, no ui to toggle menus
 + No way to delete saves from production build
-+ Various sorts of bugs when going to 2nd scene (currently disabled)
 + Some dialogue lines are skipped
 + Quest and dialogue system reliance on string references
 + Ability to interact with npcs from unlimited distance

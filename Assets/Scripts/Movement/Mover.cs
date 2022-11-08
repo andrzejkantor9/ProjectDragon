@@ -4,47 +4,48 @@ using UnityEngine.AI;
 using RPG.Core;
 using RPG.Saving;
 using RPG.Attributes;
+using RPG.Debug;
 
 //bug: continue only works within 1 session?
 //bug: after death / few deaths player moves by himself and camera shakes a lot
-    //may be issue with navmeshagent
+//may be issue with navmeshagent
 //bug: triggered dialogues are not loaded
 //bug: continue game without a save should not do anything
 //bug: make prod build and fix all bugs
 //change: place portals in gameobject in hierarchy and move them properly to dont destroy
-    //unpack to root utility
+//unpack to root utility
 //add: utils - assert all given objects
 //bug: fireball starts auto attacking after killing last in range enemy (check bow)
 //add: destroyobjects
-    //add GetPathInHierachy static helper somewhere
-    //*documentation comments
+//add GetPathInHierachy static helper somewhere
+//*documentation comments
 //bug: dialogue skipping all non-last-pre-player-choice dialogue
 //bug: respawning on 2nd level
 //bug: player stats not saving between scenes
 
 //create utils package from customlogger, enums, lazy value, log worls position, fps counter
-    //document them with comments
-    //shooter project
+//document them with comments
+//shooter project
 
 //jak widze klase to sprawdzam
-    //czy klasa odpowiada tylko za logikę / kontrolę
-    //czy nie ma hardcodowanych konkrecji
-    //---------------------------
-    //czy regiony sa dobrze nazwane, ulozone, w dobrej ilosci i gettery na gorze, namespacey w dobrej kolejnosci
-    //properties vs expression body vs serialize fields vs getter
-    //make all GetComponents asserted / requireComponent
-    //string builder vs string concatetions
-    //wrzuc assembly definitions
-    //check for reasons for any null coalescing
-    //any unnecesarry object creations / updates / foreach's?
+//czy klasa odpowiada tylko za logikę / kontrolę
+//czy nie ma hardcodowanych konkrecji
+//---------------------------
+//czy regiony sa dobrze nazwane, ulozone, w dobrej ilosci i gettery na gorze, namespacey w dobrej kolejnosci
+//properties vs expression body vs serialize fields vs getter
+//make all GetComponents asserted / requireComponent
+//string builder vs string concatetions
+//wrzuc assembly definitions
+//check for reasons for any null coalescing
+//any unnecesarry object creations / updates / foreach's?
 
 //object pool & caching
 //solid
 //inne wzorce
 //prep for translations
 //script template
-    //scriptable object template
-    //adjust lenght of slashes / max width of code
+//scriptable object template
+//adjust lenght of slashes / max width of code
 //child object with no config mono behaviours?
 //custom inspector with searching with names
 //find ALL references to script / object in editor
@@ -53,18 +54,18 @@ using RPG.Attributes;
 ////////////////////////////////////////////
 
 //refactor: overlook everything
-    //asserts & requireComponents
-    //updates & foreaches
-    //single responsibility
-    //shop.cs, fighter.cs - single responsibility
-    //getComponents
-    //resources structure SO/<type>/resources
-    //dialogue conditions as non-stringa
+//asserts & requireComponents
+//updates & foreaches
+//single responsibility
+//shop.cs, fighter.cs - single responsibility
+//getComponents
+//resources structure SO/<type>/resources
+//dialogue conditions as non-stringa
 //bug: enemies hp bars not visible
 //bug: floating characters
 //bug: cannot add items in shop
 //bug: on enemy / player kill nullrefs
-    //archers
+//archers
 //bug: save creates "save.sav" file?
 //bug: guards dont patrol anymore after getting in agro range when in peaceful mode
 //bug: guards can be damaged with abilities in peaceful mode
@@ -81,10 +82,10 @@ using RPG.Attributes;
 //bug: if item is in action slot and stackable and then added it is added to inventory instead of action bar
 //add: interesting blog features
 //learn: if [hide in inspector] + onvalidate works in prod build
-    //save data in editor without serializefield for objects instantiated in runtime (hide in inspector + on validate does not work)
+//save data in editor without serializefield for objects instantiated in runtime (hide in inspector + on validate does not work)
 
 //refactor:
-    //base stats containing level up particle and should use modifiers?
+//base stats containing level up particle and should use modifiers?
 //learn: test performance of auto layout (current version) vs pure hand layoutui
 //learn: dialogueNode setter or field?
 //bug: upward rotation when facing enemy on elevation
@@ -108,25 +109,25 @@ using RPG.Attributes;
 //add: spoken dialogues
 //add: save deletion
 //dialogue
-    //saving state?
-    //dont trigger dialogue from any distance
-    //each dialogue only once
-    //scriptable objects instead of strings or enum?
-    //non-strings bindings
-        //https://community.gamedev.tv/t/for-those-interested-in-making-enum-predicates/171656
-        //https://community.gamedev.tv/t/another-approach-to-conditions/207975/2
+//saving state?
+//dont trigger dialogue from any distance
+//each dialogue only once
+//scriptable objects instead of strings or enum?
+//non-strings bindings
+//https://community.gamedev.tv/t/for-those-interested-in-making-enum-predicates/171656
+//https://community.gamedev.tv/t/another-approach-to-conditions/207975/2
 //dialogue editor
-    //zoom in out
-    //all fields in editor
-    //drag node to scroll
-    //some area that appears as node isnt draggable
-    //flexible scroll width & height
+//zoom in out
+//all fields in editor
+//drag node to scroll
+//some area that appears as node isnt draggable
+//flexible scroll width & height
 
 //////////////////////////////////////////
 
 //make any point input work
 //pass input action instead of doing it here
-    //what about component independency / plug & play
+//what about component independency / plug & play
 
 //move to clicked area component
 //decouple animations
@@ -140,17 +141,17 @@ using RPG.Attributes;
 //split ui to multiple canvas
 //draggable in game ui
 //ui scale options
-    //ui move option
+//ui move option
 //ui clicked on is on top
 //use addressables instead of resources
 //debug script calling functions on object's components
 //everything possible as standalone components (for any unity project)
 //add list of buffs like in bdo and prep phase
 //possible use of custom ienumerator with yield return
-    //get one card from deck? (or queue / stack? - lazily produce value?)
-    //wait for certain conditions (boss hp, player position)
-    //chain quests, story state
-    //book pages
+//get one card from deck? (or queue / stack? - lazily produce value?)
+//wait for certain conditions (boss hp, player position)
+//chain quests, story state
+//book pages
 
 namespace RPG.Movement
 {
@@ -319,6 +320,7 @@ namespace RPG.Movement
             // data.position = new SerializableVector3(transform.position);
             // data.rotation = new SerializableVector3(transform.eulerAngles);
 
+            CustomLogger.Log($"CaptureState {gameObject.name} position: {transform.position}", LogFrequency.Rare);
             return new SerializableVector3(transform.position);
         }
 
@@ -335,6 +337,7 @@ namespace RPG.Movement
 
             GetComponent<NavMeshAgent>().Warp(((SerializableVector3)state).ToVector());
             GetComponent<ActionScheduler>().CancelCurrentAction();
+            CustomLogger.Log($"RestoreState {gameObject.name} position: {transform.position}", LogFrequency.Rare);
         }
         #endregion
     }

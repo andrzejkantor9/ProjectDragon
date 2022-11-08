@@ -14,60 +14,37 @@ namespace GameDevTV.Inventories
     /// </remarks>
     public abstract class InventoryItem : ScriptableObject, ISerializationCallbackReceiver
     {
-        // CONFIG DATA
+        #region Config
+        [SerializeField]
         [Tooltip("Auto-generated UUID for saving/loading. Clear this field if you want to generate a new one.")]
-        [SerializeField] string itemID = null;
-        [Tooltip("Item name to be displayed in UI.")]
-        [SerializeField] string displayName = null;
-        [Tooltip("Item description to be displayed in UI.")]
-        [SerializeField][TextArea] string description = null;
-        [Tooltip("The UI icon to represent this item in the inventory.")]
-        [SerializeField] Sprite icon = null;
-        [Tooltip("The prefab that should be spawned when this item is dropped.")]
-        [SerializeField] Pickup pickup = null;
-        [Tooltip("If true, multiple items of this type can be stacked in the same inventory slot.")]
-        [SerializeField] bool stackable = false;
+        private string itemID = null;
+        [SerializeField] [Tooltip("Item name to be displayed in UI.")]
+        private string displayName = null;
+        [SerializeField] [TextArea] [Tooltip("Item description to be displayed in UI.")]
+        private string description = null;
+        [SerializeField] [Tooltip("The UI icon to represent this item in the inventory.")]
+        private Sprite icon = null;
+        [SerializeField] [Tooltip("The prefab that should be spawned when this item is dropped.")]
+        private Pickup pickup = null;
+        [SerializeField] [Tooltip("If true, multiple items of this type can be stacked in the same inventory slot.")]
+        private bool stackable = false;
+
         [SerializeField]
         private float _price;
         [SerializeField]
         private ItemCategory _category = ItemCategory.None;
+        #endregion
 
-        // STATE
+        #region States
         static Dictionary<string, InventoryItem> itemLookupCache;
+        #endregion
 
-        // PUBLIC
+        ////////////////////////////////////////////////////////////////////////////////////////////////
 
-        /// <summary>
-        /// Get the inventory item instance from its UUID.
-        /// </summary>
-        /// <param name="itemID">
-        /// String UUID that persists between game instances.
-        /// </param>
-        /// <returns>
-        /// Inventory item instance corresponding to the ID.
-        /// </returns>
-        public static InventoryItem GetFromID(string itemID)
-        {
-            if (itemLookupCache == null)
-            {
-                itemLookupCache = new Dictionary<string, InventoryItem>();
-                var itemList = Resources.LoadAll<InventoryItem>("");
-                foreach (var item in itemList)
-                {
-                    if (itemLookupCache.ContainsKey(item.itemID))
-                    {
-                        Debug.LogError(string.Format("Looks like there's a duplicate GameDevTV.UI.InventorySystem ID for objects: {0} and {1}", itemLookupCache[item.itemID], item));
-                        continue;
-                    }
+        #region Public
+        public float Price => _price;
+        public ItemCategory Category => _category;
 
-                    itemLookupCache[item.itemID] = item;
-                }
-            }
-
-            if (itemID == null || !itemLookupCache.ContainsKey(itemID)) return null;
-            return itemLookupCache[itemID];
-        }
-        
         /// <summary>
         /// Spawn the pickup gameobject into the world.
         /// </summary>
@@ -106,12 +83,42 @@ namespace GameDevTV.Inventories
         {
             return description;
         }
+        #endregion
 
-        public float Price => _price;
-        public ItemCategory Category => _category;
+        #region Events & Statics
+        /// <summary>
+        /// Get the inventory item instance from its UUID.
+        /// </summary>
+        /// <param name="itemID">
+        /// String UUID that persists between game instances.
+        /// </param>
+        /// <returns>
+        /// Inventory item instance corresponding to the ID.
+        /// </returns>
+        public static InventoryItem GetFromID(string itemID)
+        {
+            if (itemLookupCache == null)
+            {
+                itemLookupCache = new Dictionary<string, InventoryItem>();
+                var itemList = Resources.LoadAll<InventoryItem>("");
+                foreach (var item in itemList)
+                {
+                    if (itemLookupCache.ContainsKey(item.itemID))
+                    {
+                        Debug.LogError(string.Format("Looks like there's a duplicate GameDevTV.UI.InventorySystem ID for objects: {0} and {1}", itemLookupCache[item.itemID], item));
+                        continue;
+                    }
 
-        // PRIVATE
-        
+                    itemLookupCache[item.itemID] = item;
+                }
+            }
+
+            if (itemID == null || !itemLookupCache.ContainsKey(itemID)) return null;
+            return itemLookupCache[itemID];
+        }
+        #endregion
+
+        #region Private
         void ISerializationCallbackReceiver.OnBeforeSerialize()
         {
             // Generate and save a new UUID if this is blank.
@@ -123,8 +130,8 @@ namespace GameDevTV.Inventories
 
         void ISerializationCallbackReceiver.OnAfterDeserialize()
         {
-            // Require by the ISerializationCallbackReceiver but we don't need
-            // to do anything with it.
+            // Required by the ISerializationCallbackReceiver but we don't need to do anything with it.
         }
+        #endregion
     }
 }

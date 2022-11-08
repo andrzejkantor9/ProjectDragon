@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using RPG.Saving;
+using RPG.Debug;
 
 namespace GameDevTV.Inventories
 {
@@ -173,12 +174,15 @@ namespace GameDevTV.Inventories
                 record.number = pair.Value.number;
                 state[pair.Key] = record;
             }
+            CustomLogger.Log($"ActionStore capture elements count: {state.Count}", LogFrequency.Rare);
             return state;
         }
 
         void ISaveable.RestoreState(object state)
         {
             var stateDict = (Dictionary<int, DockedItemRecord>)state;
+            CustomLogger.Log($"ActionStore restore elements count: {stateDict.Count}", LogFrequency.Rare);
+
             foreach (var pair in stateDict)
             {
                 AddAction(InventoryItem.GetFromID(pair.Value.itemID), pair.Key, pair.Value.number);

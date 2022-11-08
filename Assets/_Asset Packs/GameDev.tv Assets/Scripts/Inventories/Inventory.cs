@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using RPG.Saving;
+using RPG.Debug;
 
 using GameDevTV.Utils;
 
@@ -285,12 +286,15 @@ namespace GameDevTV.Inventories
                     slotStrings[i].number = slots[i].number;
                 }
             }
+            CustomLogger.Log($"Inventory capture elements count: {slotStrings.Length}", LogFrequency.Rare);
             return slotStrings;
         }
 
         void ISaveable.RestoreState(object state)
         {
             var slotStrings = (InventorySlotRecord[])state;
+            CustomLogger.Log($"Inventory restore elements count: {slotStrings.Length}", LogFrequency.Rare);
+
             for (int i = 0; i < inventorySize; i++)
             {
                 slots[i].item = InventoryItem.GetFromID(slotStrings[i].itemID);

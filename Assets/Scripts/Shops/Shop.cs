@@ -285,7 +285,8 @@ namespace RPG.Shops
 
             foreach(KeyValuePair<string, int> soldObject in soldObjects)
             {
-                _stockSold[InventoryItem.GetFromID(soldObject.Key)] = soldObject.Value;
+                InventoryItem inventoryItem = InventoryItem.GetFromID(soldObject.Key);
+                _stockSold[inventoryItem] = soldObject.Value;
             }
         }
         #endregion

@@ -123,12 +123,13 @@ namespace RPG.Saving
 
         private void RestoreState(Dictionary<string, object> state)
         {
-            foreach (SaveableEntity saveable in FindObjectsOfType<SaveableEntity>())
+            SaveableEntity[] saveableEntities = FindObjectsOfType<SaveableEntity>();
+            foreach (SaveableEntity saveableEntity in saveableEntities)
             {
-                string id = saveable.GetUniqueIdentifier();
+                string id = saveableEntity.GetUniqueIdentifier();
                 if (state.ContainsKey(id))
                 {
-                    saveable.RestoreState(state[id]);
+                    saveableEntity.RestoreState(state[id]);
                 }
             }
         }

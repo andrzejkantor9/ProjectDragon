@@ -36,7 +36,8 @@ namespace RPG.Saving
         public void RestoreState(object state)
         {
             Dictionary<string, object> stateDictionary = (Dictionary<string, object>)state;
-            foreach (ISaveable saveable in GetComponents<ISaveable>())
+            ISaveable[] saveables = GetComponents<ISaveable>();
+            foreach (ISaveable saveable in saveables)
             {
                 string typeString = saveable.GetType().ToString();
                 if(stateDictionary.ContainsKey(typeString))

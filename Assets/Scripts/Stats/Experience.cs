@@ -22,6 +22,7 @@ namespace RPG.Stats
         ///////////////////////////////////////
 
         #region EngineMethods
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
         private void Update()
         {
             if(InputManager.IsDebugAddExperiencePressed())
@@ -29,6 +30,7 @@ namespace RPG.Stats
                 GainExperience(Time.deltaTime * 1000f);
             }
         }
+#endif
         #endregion
 
         #region PublicMethods

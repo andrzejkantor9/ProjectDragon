@@ -73,6 +73,8 @@ namespace RPG.Control
 
             _actionStore = GetComponent<ActionStore>();
             _hitPoints.onRespawn += Respawn;
+
+            GameManager.InjectPlayerControllerSetEnabledCallback((newEnabled) => enabled = newEnabled);
         }
 
         private void Start()

@@ -77,34 +77,34 @@ namespace RPG.SceneManagment
             DontDestroyOnLoad(gameObject);
             Fader fader = FindObjectOfType<Fader>();
             SavingWrapper savingWrapper = FindObjectOfType<SavingWrapper>();
-            // PlayerController playerController = GameManager.PlayerGameObject.GetComponent<PlayerController>();
-            // playerController.enabled = false;
-            GameManager.PlayerGameObject().SetActive(false);
-            
+            //GameManager.PlayerGameObject().SetActive(false);
+            GameManager.PlayerControllerSetEnabled(false);
+
             yield return fader.FadeOut(_fadeOutDuration);
             // _runningCoroutines.Remove(fadeOut);
 
+            CustomLogger.Log("saving scene", LogFrequency.Rare);
             savingWrapper.Save();
             CustomLogger.Log("loading scene", LogFrequency.Rare);
             yield return LoadSceneByIndexAsync(_sceneToLoad);
 
-            // PlayerController newPlayerController = GameManager.PlayerGameObject.GetComponent<PlayerController>();
-            // newPlayerController.enabled = false;
-            GameManager.PlayerGameObject().SetActive(false);
+            //GameManager.PlayerGameObject().SetActive(false);
+            GameManager.PlayerControllerSetEnabled(false);
 
             CustomLogger.Log("scene loaded", LogFrequency.Rare);
             savingWrapper.Load();
 
             Portal otherPortal = GetOtherPortal();
             UpdatePlayer(otherPortal);
+            CustomLogger.Log("saving scene", LogFrequency.Rare);
             savingWrapper.Save();
 
             yield return new WaitForSeconds(_fadeOutDelay);
             fader.FadeIn(_fadeInDuration);
             // _runningCoroutines.Remove(fadeIn);
-    
-            // newPlayerController.enabled = true;
-            GameManager.PlayerGameObject().SetActive(true);
+
+            //GameManager.PlayerGameObject().SetActive(true);
+            GameManager.PlayerControllerSetEnabled(true);
             Destroy(gameObject);
         }
 

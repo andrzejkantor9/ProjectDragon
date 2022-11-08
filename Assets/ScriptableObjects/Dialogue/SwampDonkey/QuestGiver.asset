@@ -83,7 +83,7 @@ MonoBehaviour:
   - ede5c848-901b-4a6c-94a3-5d814a414188
   _nodePosition:
     serializedVersion: 2
-    x: 1241
+    x: 1242
     y: 3
     width: 200
     height: 100
@@ -357,8 +357,8 @@ MonoBehaviour:
   - 1710c129-98b2-460a-8ca0-38a17ca6d436
   _nodePosition:
     serializedVersion: 2
-    x: 505
-    y: 277
+    x: 523
+    y: 272
     width: 200
     height: 100
   <OnEnterAction>k__BackingField: 

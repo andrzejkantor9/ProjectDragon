@@ -28,6 +28,11 @@ namespace RPG.Dialogue
             CalculateNodesLookup();
 #endif
         }
+
+        private void Awake()
+        {
+            CalculateNodesLookup();
+        }
         #endregion
 
         #region PublicMethods
@@ -120,6 +125,15 @@ namespace RPG.Dialogue
         #endregion
 
         #region PrivateMethods
+        private void CalculateNodesLookup()
+        {
+            _nodesLookup.Clear();
+            foreach (DialogueNode node in GetAllNodes())
+            {
+                _nodesLookup[node.name] = node;
+            }
+        }
+
 #if UNITY_EDITOR
         private DialogueNode CreateNewNode(bool isPlayerSpeaking)
         {
@@ -129,15 +143,6 @@ namespace RPG.Dialogue
             Undo.RecordObject(this, "add dialog node");
             AddNode(newNode);
             return newNode;
-        }
-
-        private void CalculateNodesLookup()
-        {
-            _nodesLookup.Clear();
-            foreach (DialogueNode node in GetAllNodes())
-            {
-                _nodesLookup[node.name] = node;
-            }
         }
 
         private void AddNode(DialogueNode newNode)

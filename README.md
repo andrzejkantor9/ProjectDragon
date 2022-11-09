@@ -4,7 +4,7 @@ It is using mouse-to-move controls. Project was done with usage of namespaces, a
 It has custom dialog node editor. 
 As of now some functionalities contain bugs.
 - [Project image album](https://imgur.com/a/JIdUpyz)
-- [Executable build](https://drive.google.com/file/d/1v_7MoZy_kdr87CNpV00Q6GHw_JxiG1hG/view?usp=sharing)
+- [Executable build](https://drive.google.com/file/d/1IFEEv4CHMImCX_l0aaTr2cxhMEMM1VII/view?usp=sharing)
 
 ### Input Information
 Input | Action
@@ -34,28 +34,30 @@ Esc | pause menu
 + Basic combat animations
 + Changing cursor icon depending on context
 + Mouse targeting movement and combat
-+ second scene, keeping state of scenes and player
 + Respawn with minimal health instead of reloading scene 
 	+  Restore some of enemies health on player death
 + Main menu, Pause menu
 + Saving and loading (unlimited number of saves)
 + Health & mana (mana used for fireball, fireball is unobtainable as of now)
 + Projectile weapons (bow and fireball, no way to obtain for player as of now, bow is weapon for one of enemies)
----
-+ Multiple choice dialogs with triggers for events (currently not working in non-editor due to reliance on editor funcitonality)
-+ Quests (currently not working in non-editor due to reliance on editor funcitonality)
++ Multiple choice dialogs with triggers for events
++ Quests
++ second scene, keeping state of scenes and player
 
 ### Limitations
 + Heavy reliance on mouse input
-+ No information about input in game, no ui to toggle menus
++ No information about input in game, no ui to toggle all menus
 + No way to delete saves from production build
-+ Some dialogue lines are skipped
 + Quest and dialogue system reliance on string references
 + Ability to interact with npcs from unlimited distance
-+ If potions (stackable items) are equipped to action bar, buying new potions does not add them to action bar, but to new inventory stack
-+ Only debug menu for health, mana, enemy health, experience, level
++ Only debug UI for health, mana, enemy health, experience, level
 + No background audio
 + Menus are always displayed in the same order
+---
++ If potions (stackable items) are equipped to action bar, buying new potions does not add them to action bar, but to new inventory stack
++ Some dialogue lines are skipped (if AI / player conversant has multiple dialogue line in a row)
++ Stackable action items multiply when added to action bar-> save -> load
++ When switching scenes enemy death sound play again and drops spawn again
 
 ### Courses links
 - [Core RPG](https://www.gamedev.tv/p/unity-rpg/?coupon_code=AUTUMN)

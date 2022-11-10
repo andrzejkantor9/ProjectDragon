@@ -31,6 +31,8 @@ namespace RPG.Attributes
         #region Events
         public event Action OnDeath;
         public event Action onRespawn;
+        public event Action onTakeDamage;
+
         [SerializeField]
         private UnityEvent<float> OnTakeDamage;
         [SerializeField]
@@ -82,7 +84,9 @@ namespace RPG.Attributes
             + $", taken damage: {damage}, dealt by: {instigator.name}", LogFrequency.MostFrames);
 
             CheckDeath(instigator);
-            OnTakeDamage.Invoke(damage);
+            if(OnTakeDamage != null)
+                OnTakeDamage.Invoke(damage);
+            onTakeDamage?.Invoke();
         }
 
         public float GetPercentage()

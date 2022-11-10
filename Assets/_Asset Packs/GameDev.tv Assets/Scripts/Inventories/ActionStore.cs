@@ -183,6 +183,7 @@ namespace GameDevTV.Inventories
             var stateDict = (Dictionary<int, DockedItemRecord>)state;
             CustomLogger.Log($"ActionStore restore elements count: {stateDict.Count}", LogFrequency.Rare);
 
+            dockedItems.Clear();
             foreach (var pair in stateDict)
             {
                 AddAction(InventoryItem.GetFromID(pair.Value.itemID), pair.Key, pair.Value.number);

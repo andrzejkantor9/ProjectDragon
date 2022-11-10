@@ -4,7 +4,7 @@ It is using mouse-to-move controls. Project was done with usage of namespaces, a
 It has custom dialog node editor. 
 As of now some functionalities contain bugs.
 - [Project image album](https://imgur.com/a/JIdUpyz)
-- [Executable build](https://drive.google.com/file/d/1IFEEv4CHMImCX_l0aaTr2cxhMEMM1VII/view?usp=sharing)
+- [Executable build](https://drive.google.com/file/d/1ufTz9bIQo5qI8KiQMWLaTee0uVV-acKL/view?usp=sharing)
 
 ### Input Information
 Input | Action
@@ -55,8 +55,7 @@ Esc | pause menu
 + Menus are always displayed in the same order
 ---
 + If potions (stackable items) are equipped to action bar, buying new potions does not add them to action bar, but to new inventory stack
-+ Some dialogue lines are skipped (if AI / player conversant has multiple dialogue line in a row)
-+ Stackable action items multiply when added to action bar-> save -> load
++ Some dialogue lines are skipped (if AI / player conversant has multiple dialogue lines in a row)
 + When switching scenes enemy death sound play again and drops spawn again
 
 ### Courses links
